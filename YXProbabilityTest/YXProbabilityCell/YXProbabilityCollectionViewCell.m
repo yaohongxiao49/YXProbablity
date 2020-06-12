@@ -12,10 +12,10 @@
 
 - (void)reloadValueByIndexPath:(NSIndexPath *)indexPath arr:(NSArray *)arr {
     
-    NSDictionary *dic = arr[indexPath.row];
-    [self.numBtn setTitle:[dic objectForKey:kValue] forState:UIControlStateNormal];
+    YXProbabilityBallInfoModel *model = arr[indexPath.row];
+    [self.numBtn setTitle:model.value forState:UIControlStateNormal];
     
-    if ([[dic objectForKey:kBoolBlue] boolValue]) {
+    if (model.boolBlue) {
         [self.numBtn setTitleColor:[UIColor colorWithRed:125 /255.0 green:174 /255.0 blue:253 /255.0 alpha:1] forState:UIControlStateNormal];
         self.numBtn.layer.borderColor = [[UIColor colorWithRed:125 /255.0 green:174 /255.0 blue:253 /255.0 alpha:1] CGColor];
     }

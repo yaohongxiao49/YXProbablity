@@ -16,6 +16,14 @@
 		847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB869249357BF0083A71A /* YXProbabilityManager.m */; };
 		847FB870249357DB0083A71A /* YXProbabilityRandomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB86F249357DB0083A71A /* YXProbabilityRandomVC.m */; };
 		847FB873249357E10083A71A /* YXProbabilityStatisticalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */; };
+		847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8C924937E710083A71A /* YXProbabilityListModel.m */; };
+		847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */; };
+		847FB8DA249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */; };
+		847FB8DB249382CD0083A71A /* YXPicChartGraphicsShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */; };
+		847FB8DC249382CD0083A71A /* YXPicChartGraphicsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */; };
+		847FB8DD249382CD0083A71A /* YXPieChartGraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */; };
+		847FB8DE249382CD0083A71A /* YXPicChartGraphicsShowCollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */; };
+		847FB8DF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */; };
 		84804A5924921D99009F160F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5824921D99009F160F /* AppDelegate.m */; };
 		84804A5C24921D99009F160F /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5B24921D99009F160F /* SceneDelegate.m */; };
 		84804A5F24921D99009F160F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5E24921D99009F160F /* ViewController.m */; };
@@ -62,6 +70,21 @@
 		847FB86F249357DB0083A71A /* YXProbabilityRandomVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRandomVC.m; sourceTree = "<group>"; };
 		847FB871249357E10083A71A /* YXProbabilityStatisticalVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityStatisticalVC.h; sourceTree = "<group>"; };
 		847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityStatisticalVC.m; sourceTree = "<group>"; };
+		847FB8C824937E710083A71A /* YXProbabilityListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityListModel.h; sourceTree = "<group>"; };
+		847FB8C924937E710083A71A /* YXProbabilityListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityListModel.m; sourceTree = "<group>"; };
+		847FB8CB24937F5E0083A71A /* YXProbabilityBallInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityBallInfoModel.h; sourceTree = "<group>"; };
+		847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityBallInfoModel.m; sourceTree = "<group>"; };
+		847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXPicChartGraphicsShowCollCell.xib; sourceTree = "<group>"; };
+		847FB8D0249382CD0083A71A /* YXPieChartGraphicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPieChartGraphicsView.h; sourceTree = "<group>"; };
+		847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowView.m; sourceTree = "<group>"; };
+		847FB8D2249382CD0083A71A /* YXPicChartGraphicsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsModel.h; sourceTree = "<group>"; };
+		847FB8D3249382CD0083A71A /* YXPicChartGraphicsShowCollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowCollView.h; sourceTree = "<group>"; };
+		847FB8D4249382CD0083A71A /* YXPicChartGraphicsShowCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowCollCell.h; sourceTree = "<group>"; };
+		847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsModel.m; sourceTree = "<group>"; };
+		847FB8D6249382CD0083A71A /* YXPicChartGraphicsShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowView.h; sourceTree = "<group>"; };
+		847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartGraphicsView.m; sourceTree = "<group>"; };
+		847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowCollView.m; sourceTree = "<group>"; };
+		847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowCollCell.m; sourceTree = "<group>"; };
 		84804A5424921D99009F160F /* YXProbabilityTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YXProbabilityTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A5724921D99009F160F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84804A5824921D99009F160F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -126,8 +149,12 @@
 		847FB868249357BF0083A71A /* YXProbabilityManager */ = {
 			isa = PBXGroup;
 			children = (
-				847FB869249357BF0083A71A /* YXProbabilityManager.m */,
 				847FB86A249357BF0083A71A /* YXProbabilityManager.h */,
+				847FB869249357BF0083A71A /* YXProbabilityManager.m */,
+				847FB8C824937E710083A71A /* YXProbabilityListModel.h */,
+				847FB8C924937E710083A71A /* YXProbabilityListModel.m */,
+				847FB8CB24937F5E0083A71A /* YXProbabilityBallInfoModel.h */,
+				847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */,
 			);
 			path = YXProbabilityManager;
 			sourceTree = "<group>";
@@ -144,10 +171,29 @@
 		847FB86C249357C00083A71A /* YXProbabilityStatisticalVC */ = {
 			isa = PBXGroup;
 			children = (
+				847FB8CE249382CD0083A71A /* YXPieChartGraphicsView */,
 				847FB871249357E10083A71A /* YXProbabilityStatisticalVC.h */,
 				847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */,
 			);
 			path = YXProbabilityStatisticalVC;
+			sourceTree = "<group>";
+		};
+		847FB8CE249382CD0083A71A /* YXPieChartGraphicsView */ = {
+			isa = PBXGroup;
+			children = (
+				847FB8D6249382CD0083A71A /* YXPicChartGraphicsShowView.h */,
+				847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */,
+				847FB8D3249382CD0083A71A /* YXPicChartGraphicsShowCollView.h */,
+				847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */,
+				847FB8D4249382CD0083A71A /* YXPicChartGraphicsShowCollCell.h */,
+				847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */,
+				847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */,
+				847FB8D0249382CD0083A71A /* YXPieChartGraphicsView.h */,
+				847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */,
+				847FB8D2249382CD0083A71A /* YXPicChartGraphicsModel.h */,
+				847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */,
+			);
+			path = YXPieChartGraphicsView;
 			sourceTree = "<group>";
 		};
 		84804A4B24921D98009F160F = {
@@ -333,6 +379,7 @@
 				847FB86724934AE50083A71A /* YXProbabilityAllHeaderView.xib in Resources */,
 				84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */,
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
+				847FB8DA249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib in Resources */,
 				84804A6224921D99009F160F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,8 +405,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847FB8DE249382CD0083A71A /* YXPicChartGraphicsShowCollView.m in Sources */,
+				847FB8DD249382CD0083A71A /* YXPieChartGraphicsView.m in Sources */,
 				847FB870249357DB0083A71A /* YXProbabilityRandomVC.m in Sources */,
+				847FB8DC249382CD0083A71A /* YXPicChartGraphicsModel.m in Sources */,
 				847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */,
+				847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */,
+				847FB8DB249382CD0083A71A /* YXPicChartGraphicsShowView.m in Sources */,
 				847FB85E249329030083A71A /* YXProbabilitySecHeaderView.m in Sources */,
 				84804A5F24921D99009F160F /* ViewController.m in Sources */,
 				84804A5924921D99009F160F /* AppDelegate.m in Sources */,
@@ -367,7 +419,9 @@
 				847FB86524934AD30083A71A /* YXProbabilityAllHeaderView.m in Sources */,
 				84804A9024922213009F160F /* YXProbabilityAllListCell.m in Sources */,
 				84804A5C24921D99009F160F /* SceneDelegate.m in Sources */,
+				847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */,
 				847FB873249357E10083A71A /* YXProbabilityStatisticalVC.m in Sources */,
+				847FB8DF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m in Sources */,
 				847FB8582493289A0083A71A /* YXProbabilityCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

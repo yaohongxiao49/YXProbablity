@@ -13,7 +13,7 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic) YXProbabilityManager *manager;
+@property (nonatomic, copy) NSMutableArray *dataSourceArr;
 @property (nonatomic, copy) YXProbabilityAllHeaderView *headerView;
 
 @end
@@ -36,12 +36,12 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return _manager.allArr.count;
+    return _dataSourceArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YXProbabilityAllListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
-    [cell reloadValueByIndexPath:indexPath arr:_manager.allArr];
+    [cell reloadValueByIndexPath:indexPath arr:_dataSourceArr];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,7 +56,6 @@
 #pragma mark - 初始化视图
 - (void)initView {
     
-    _manager = [YXProbabilityManager sharedManager];
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 64) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -69,6 +68,8 @@
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
     _headerView.baseVC = self;
     _tableView.tableHeaderView = _headerView;
+    
+    _dataSourceArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]];
 }
 
 @end

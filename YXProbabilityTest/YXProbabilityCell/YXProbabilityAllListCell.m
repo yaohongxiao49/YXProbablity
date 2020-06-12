@@ -19,8 +19,9 @@
 
 - (void)reloadValueByIndexPath:(NSIndexPath *)indexPath arr:(NSMutableArray *)arr {
     
-    _secTitle = [arr[indexPath.row] objectForKey:kDate];
-    _dataSourceArr = [arr[indexPath.row] objectForKey:kValueArr];
+    YXProbabilityListModel *model = arr[indexPath.row];
+    _secTitle = model.date;
+    _dataSourceArr = model.valueArr;
     
     [self.collectionView reloadData];
 }
