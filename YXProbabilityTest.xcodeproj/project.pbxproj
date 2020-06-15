@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8428D914249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428D913249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m */; };
+		8479577D249751430010BC08 /* YXProbabilityRandomHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8479577C249751430010BC08 /* YXProbabilityRandomHeaderView.m */; };
+		8479577F2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8479577E2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib */; };
 		847FB8582493289A0083A71A /* YXProbabilityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8562493289A0083A71A /* YXProbabilityCollectionViewCell.m */; };
 		847FB8592493289A0083A71A /* YXProbabilityCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847FB8572493289A0083A71A /* YXProbabilityCollectionViewCell.xib */; };
 		847FB85E249329030083A71A /* YXProbabilitySecHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB85C249329030083A71A /* YXProbabilitySecHeaderView.m */; };
@@ -55,6 +58,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8428D912249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityStatisticalHeaderView.h; sourceTree = "<group>"; };
+		8428D913249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityStatisticalHeaderView.m; sourceTree = "<group>"; };
+		8479577B249751430010BC08 /* YXProbabilityRandomHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityRandomHeaderView.h; sourceTree = "<group>"; };
+		8479577C249751430010BC08 /* YXProbabilityRandomHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRandomHeaderView.m; sourceTree = "<group>"; };
+		8479577E2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXProbabilityRandomHeaderView.xib; sourceTree = "<group>"; };
 		847FB8552493289A0083A71A /* YXProbabilityCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityCollectionViewCell.h; sourceTree = "<group>"; };
 		847FB8562493289A0083A71A /* YXProbabilityCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityCollectionViewCell.m; sourceTree = "<group>"; };
 		847FB8572493289A0083A71A /* YXProbabilityCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXProbabilityCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -164,6 +172,9 @@
 			children = (
 				847FB86E249357DB0083A71A /* YXProbabilityRandomVC.h */,
 				847FB86F249357DB0083A71A /* YXProbabilityRandomVC.m */,
+				8479577B249751430010BC08 /* YXProbabilityRandomHeaderView.h */,
+				8479577C249751430010BC08 /* YXProbabilityRandomHeaderView.m */,
+				8479577E2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib */,
 			);
 			path = YXProbabilityRandomVC;
 			sourceTree = "<group>";
@@ -174,6 +185,8 @@
 				847FB8CE249382CD0083A71A /* YXPieChartGraphicsView */,
 				847FB871249357E10083A71A /* YXProbabilityStatisticalVC.h */,
 				847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */,
+				8428D912249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.h */,
+				8428D913249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m */,
 			);
 			path = YXProbabilityStatisticalVC;
 			sourceTree = "<group>";
@@ -377,6 +390,7 @@
 				84804A9124922213009F160F /* YXProbabilityAllListCell.xib in Resources */,
 				847FB85F249329030083A71A /* YXProbabilitySecHeaderView.xib in Resources */,
 				847FB86724934AE50083A71A /* YXProbabilityAllHeaderView.xib in Resources */,
+				8479577F2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib in Resources */,
 				84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */,
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
 				847FB8DA249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib in Resources */,
@@ -409,10 +423,12 @@
 				847FB8DD249382CD0083A71A /* YXPieChartGraphicsView.m in Sources */,
 				847FB870249357DB0083A71A /* YXProbabilityRandomVC.m in Sources */,
 				847FB8DC249382CD0083A71A /* YXPicChartGraphicsModel.m in Sources */,
+				8428D914249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m in Sources */,
 				847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */,
 				847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */,
 				847FB8DB249382CD0083A71A /* YXPicChartGraphicsShowView.m in Sources */,
 				847FB85E249329030083A71A /* YXProbabilitySecHeaderView.m in Sources */,
+				8479577D249751430010BC08 /* YXProbabilityRandomHeaderView.m in Sources */,
 				84804A5F24921D99009F160F /* ViewController.m in Sources */,
 				84804A5924921D99009F160F /* AppDelegate.m in Sources */,
 				84804A6A24921D9A009F160F /* main.m in Sources */,

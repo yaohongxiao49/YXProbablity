@@ -110,8 +110,8 @@
     //标签坐标
     float r = _width /4;
     CGFloat labWidth = _width /6 + 5 >= 45 ? 40 : _width /6;
-    CGFloat labX = _centerPoint.x + (r + labWidth /2) * cos((startAngle + (endAngle - startAngle) /2)) - labWidth /2;
-    CGFloat labY = _centerPoint.y + (r + labWidth *3 /8) * sin((startAngle + (endAngle - startAngle) /2)) - labWidth *3 /8 + 3;
+    CGFloat labX = _centerPoint.x + (r + labWidth /2) *cos((startAngle + (endAngle - startAngle) /2)) - labWidth /2;
+    CGFloat labY = _centerPoint.y + (r + labWidth *3 /8) *sin((startAngle + (endAngle - startAngle) /2)) - labWidth *3 /8 + 3;
     
     //加字
     CATextLayer *textLayer = [[CATextLayer alloc]init];
