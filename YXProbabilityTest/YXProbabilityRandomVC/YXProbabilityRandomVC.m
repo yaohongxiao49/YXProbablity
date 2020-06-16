@@ -12,7 +12,7 @@
 #import "YXProbabilityRandomHeaderView.h"
 
 #define kCycleCount 100000//189704646
-#define kcalculateCount 2
+#define kcalculateCount 100
 
 @interface YXProbabilityRandomVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -56,19 +56,19 @@
     __weak typeof(self) weakSelf = self;
     NSInteger calculateCount = count /kcalculateCount;
     dispatch_group_t group = dispatch_group_create();
-    
+
+    weakSelf.begainTime = [[weakSelf currentTimeStr] integerValue];
     for (int i = 0; i < kcalculateCount; i ++) {
         dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            weakSelf.begainTime = [[weakSelf currentTimeStr] integerValue];
             for (int i = 0; i < calculateCount; i++) {
                 [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr];
             }
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        
-        
+
+
     });
 }
 
@@ -90,10 +90,10 @@
     NSString *randomStr = [randomArr componentsJoinedByString:@" "];
     
     __weak typeof(self) weakSelf = self;
+    weakSelf.count ++;
+    NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
-    
-        weakSelf.count ++;
-        NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
+
         [weakSelf.resultRandomArr addObject:randomStr];
         weakSelf.headerView.prgressValue = (float)weakSelf.count /kCycleCount;
     });
