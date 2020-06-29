@@ -24,6 +24,12 @@
         }
     });
 }
+- (IBAction)progressCloseBtn:(UIButton *)sender {
+    
+    if (self.yxProbabilityRandomHVEndBlock) {
+        self.yxProbabilityRandomHVEndBlock();
+    }
+}
 
 - (void)setPrgressValue:(CGFloat)prgressValue {
     

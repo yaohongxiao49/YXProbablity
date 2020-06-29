@@ -11,8 +11,8 @@
 #import "YXPicChartGraphicsModel.h"
 #import "YXProbabilityRandomHeaderView.h"
 
-#define kCycleCount 100000//189704646
-#define kcalculateCount 100
+#define kCycleCount 189704646
+#define kcalculateCount 10
 
 @interface YXProbabilityRandomVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +23,7 @@
 @property (nonatomic, copy) NSArray *endArr;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, strong) YXProbabilityRandomHeaderView *headerView;
+@property (nonatomic, assign) BOOL boolCancel;
 
 @property (nonatomic, assign) NSInteger begainTime;
 
@@ -54,13 +55,17 @@
 - (void)getRandomCollectionByCount:(NSInteger)count {
     
     __weak typeof(self) weakSelf = self;
+    
+    _begainTime = [[weakSelf currentTimeStr] integerValue];
     NSInteger calculateCount = count /kcalculateCount;
     dispatch_group_t group = dispatch_group_create();
-
-    weakSelf.begainTime = [[weakSelf currentTimeStr] integerValue];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
     for (int i = 0; i < kcalculateCount; i ++) {
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
+
+            dispatch_semaphore_signal(semaphore);
+            NSLog(@"thread-info:%@开始执行任务%d", [NSThread currentThread], (int)i);
             for (int i = 0; i < calculateCount; i++) {
                 [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr];
             }
@@ -68,12 +73,25 @@
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
-
+        NSInteger endTime = [[weakSelf currentTimeStr] integerValue];
+        NSLog(@"开始时间：%@\n结束时间：%@\n耗时 == %@", @(weakSelf.begainTime), @(endTime), @(endTime - weakSelf.begainTime));
+//        dispatch_queue_t queue = dispatch_queue_create("test.queue", DISPATCH_QUEUE_SERIAL);
+//        dispatch_async(queue, ^{
+//            
+//        });
+        weakSelf.endArr = [[NSMutableArray alloc] initWithArray:[[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]] subarrayWithRange:NSMakeRange(0, 3)]];
+        [weakSelf.tableView reloadData];
     });
 }
 
 #pragma mark - 取随机数
 - (void)getRandomByRedArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    if (weakSelf.boolCancel) {
+        return;
+    }
     
     NSMutableArray *randomArr = [[NSMutableArray alloc] init];
     
@@ -89,7 +107,6 @@
     
     NSString *randomStr = [randomArr componentsJoinedByString:@" "];
     
-    __weak typeof(self) weakSelf = self;
     weakSelf.count ++;
     NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -178,13 +195,17 @@
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 80);
     _headerView.yxProbabilityRandomHVBlock = ^{
       
+        weakSelf.boolCancel = NO;
         [weakSelf getRandomCollectionByCount:kCycleCount];
     };
     _headerView.yxProbabilityRandomHVEndBlock = ^{
       
+        weakSelf.boolCancel = YES;
         NSInteger endTime = [[weakSelf currentTimeStr] integerValue];
         NSLog(@"开始时间：%@\n结束时间：%@\n耗时 == %@", @(weakSelf.begainTime), @(endTime), @(endTime - weakSelf.begainTime));
-        weakSelf.endArr = [[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]] subarrayWithRange:NSMakeRange(0, 3)];
+        NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]];
+        NSArray *sortingArr = [[NSArray alloc] initWithArray:[weakSelf sortingByArr:repeatNumArr]];
+        weakSelf.endArr = [[NSMutableArray alloc] initWithArray:[sortingArr subarrayWithRange:NSMakeRange(0, sortingArr.count < 3 ? sortingArr.count : 3)]];
         [weakSelf.tableView reloadData];
     };
     

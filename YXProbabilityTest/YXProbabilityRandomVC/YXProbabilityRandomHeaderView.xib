@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -38,14 +38,28 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKK-IZ-PL9">
+                    <rect key="frame" x="339" y="10" width="60" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="关闭">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="progressCloseBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="dny-6b-qOs"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="KEq-bJ-Nkm" secondAttribute="trailing" constant="15" id="5r4-7K-Y7A"/>
+                <constraint firstItem="VKK-IZ-PL9" firstAttribute="top" secondItem="gbu-of-QKy" secondAttribute="top" id="8Ya-oB-pYI"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Oj0-IF-ZQJ"/>
                 <constraint firstItem="XCA-mT-rED" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PLr-T1-G8H"/>
+                <constraint firstAttribute="trailing" secondItem="VKK-IZ-PL9" secondAttribute="trailing" constant="15" id="ayg-3t-Tu5"/>
+                <constraint firstItem="VKK-IZ-PL9" firstAttribute="height" secondItem="gbu-of-QKy" secondAttribute="height" id="due-yv-S1e"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="ekB-1M-9YU"/>
                 <constraint firstAttribute="bottom" secondItem="KEq-bJ-Nkm" secondAttribute="bottom" constant="20" id="mNy-9H-rnw"/>
+                <constraint firstItem="VKK-IZ-PL9" firstAttribute="width" secondItem="gbu-of-QKy" secondAttribute="width" id="q4w-w1-Jwo"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="top" secondItem="XCA-mT-rED" secondAttribute="bottom" constant="10" id="tAG-GK-V8d"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="tVb-ll-Xjb"/>
             </constraints>

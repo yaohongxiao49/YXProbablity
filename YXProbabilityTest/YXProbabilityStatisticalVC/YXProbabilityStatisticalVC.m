@@ -111,6 +111,7 @@
     
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
     lab.backgroundColor = [UIColor whiteColor];
+    lab.numberOfLines = 0;
     if (section == 0) {
         lab.text = [NSString stringWithFormat:@"出现频率最高的号码：红球：%@ 篮球：%@", _mustRed, _mustBlue];
     }
@@ -125,7 +126,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 40;
+    return 50;
 }
 
 #pragma mark - 初始化视图
