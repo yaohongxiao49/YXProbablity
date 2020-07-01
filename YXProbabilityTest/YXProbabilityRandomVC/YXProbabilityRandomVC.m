@@ -51,6 +51,18 @@
     return timeString;
 }
 
+#pragma mark - 结束
+- (void)endCount {
+    
+    NSInteger endTime = [[self currentTimeStr] integerValue];
+    NSLog(@"开始时间：%@\n结束时间：%@\n耗时 == %@", @(_begainTime), @(endTime), @(endTime - _begainTime));
+
+    NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[self statisticalRepeatNum:_resultRandomArr]];
+    NSArray *sortingArr = [[NSArray alloc] initWithArray:[self sortingByArr:repeatNumArr]];
+    _endArr = [[NSMutableArray alloc] initWithArray:[sortingArr subarrayWithRange:NSMakeRange(0, sortingArr.count < 3 ? sortingArr.count : 3)]];
+    [_tableView reloadData];
+}
+
 #pragma mark - 循环取数
 - (void)getRandomCollectionByCount:(NSInteger)count {
     
@@ -62,10 +74,13 @@
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
     for (int i = 0; i < kcalculateCount; i ++) {
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_group_async(group, queue, ^{
 
+//            if (weakSelf.boolCancel) {
+//                dispatch_cancel(queue);
+//            }
             dispatch_semaphore_signal(semaphore);
-            NSLog(@"thread-info:%@开始执行任务%d", [NSThread currentThread], (int)i);
             for (int i = 0; i < calculateCount; i++) {
                 [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr];
             }
@@ -73,14 +88,7 @@
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
-        NSInteger endTime = [[weakSelf currentTimeStr] integerValue];
-        NSLog(@"开始时间：%@\n结束时间：%@\n耗时 == %@", @(weakSelf.begainTime), @(endTime), @(endTime - weakSelf.begainTime));
-//        dispatch_queue_t queue = dispatch_queue_create("test.queue", DISPATCH_QUEUE_SERIAL);
-//        dispatch_async(queue, ^{
-//            
-//        });
-        weakSelf.endArr = [[NSMutableArray alloc] initWithArray:[[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]] subarrayWithRange:NSMakeRange(0, 3)]];
-        [weakSelf.tableView reloadData];
+        [weakSelf endCount];
     });
 }
 
@@ -108,7 +116,7 @@
     NSString *randomStr = [randomArr componentsJoinedByString:@" "];
     
     weakSelf.count ++;
-    NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
+    NSLog(@"线程 == %@, randomStr == %@, count == %@", [NSThread currentThread], randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
 
         [weakSelf.resultRandomArr addObject:randomStr];
@@ -201,12 +209,7 @@
     _headerView.yxProbabilityRandomHVEndBlock = ^{
       
         weakSelf.boolCancel = YES;
-        NSInteger endTime = [[weakSelf currentTimeStr] integerValue];
-        NSLog(@"开始时间：%@\n结束时间：%@\n耗时 == %@", @(weakSelf.begainTime), @(endTime), @(endTime - weakSelf.begainTime));
-        NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]];
-        NSArray *sortingArr = [[NSArray alloc] initWithArray:[weakSelf sortingByArr:repeatNumArr]];
-        weakSelf.endArr = [[NSMutableArray alloc] initWithArray:[sortingArr subarrayWithRange:NSMakeRange(0, sortingArr.count < 3 ? sortingArr.count : 3)]];
-        [weakSelf.tableView reloadData];
+        [weakSelf endCount];
     };
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 100) style:UITableViewStylePlain];
