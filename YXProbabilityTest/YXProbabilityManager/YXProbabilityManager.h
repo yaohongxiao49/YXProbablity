@@ -10,6 +10,9 @@
 #import <Foundation/Foundation.h>
 #import "YXProbabilityListModel.h"
 
+#define kRandomListArr @"randomListArr"
+#define kYXToolLocalSaveDocDirectoryPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YXProbabilityManager : NSObject
@@ -18,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 数据数组 */
 @property (nonatomic, strong) NSMutableArray *allArr;
+
+/** 随机数据集合数组 */
+@property (nonatomic, copy) NSArray *randomListArr;
 
 @end
 

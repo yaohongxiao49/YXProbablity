@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <BmobSDK/Bmob.h>
+
+#define kBmobAppKey @"4870911a6413f14a1cd913884dde0bac"
+#define kTableName @"DoubleColorBallList"
+#define kTableValueKey @"doubleColorBallArr"
 
 NS_ASSUME_NONNULL_BEGIN
 

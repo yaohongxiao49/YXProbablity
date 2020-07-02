@@ -7,8 +7,6 @@
 //
 
 #import "YXProbabilityAllHeaderView.h"
-#import "YXProbabilityStatisticalVC.h"
-#import "YXProbabilityRandomVC.h"
 
 @implementation YXProbabilityAllHeaderView
 

@@ -29,6 +29,24 @@
     [self initView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self getBallHTTP];
+}
+
+#pragma mark - 获取双色球储存数据
+- (void)getBallHTTP {
+    
+    BmobQuery *bquery = [BmobQuery queryWithClassName:kTableName];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        
+        for (BmobObject *obj in array) {
+            [YXProbabilityManager sharedManager].randomListArr = [obj objectForKey:kTableValueKey];
+        }
+    }];
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     

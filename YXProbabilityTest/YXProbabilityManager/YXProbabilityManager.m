@@ -21,6 +21,19 @@
     return instance;
 }
 
+#pragma mark - setting
+- (void)setRandomListArr:(NSArray *)randomListArr {
+    
+    NSString *path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
+    [NSKeyedArchiver archiveRootObject:randomListArr toFile:path];
+}
+- (NSArray *)randomListArr {
+    
+    NSString *path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
+    NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
+    return arr;
+}
+
 #pragma mark - 懒加载
 - (NSMutableArray *)allArr {
     

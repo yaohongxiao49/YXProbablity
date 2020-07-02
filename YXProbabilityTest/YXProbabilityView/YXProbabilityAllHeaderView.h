@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXProbabilityStatisticalVC.h"
+#import "YXProbabilityRandomVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -14,7 +14,7 @@
     self = [super init];
     
     if (self) {
-        _date = [dic objectForKey:kDate];
+        _date = [NSString stringWithFormat:@"%@", [dic objectForKey:kDate]];
         
         _valueArr = [[NSMutableArray alloc] init];
         for (NSDictionary *dics in [dic objectForKey:kValueArr]) {

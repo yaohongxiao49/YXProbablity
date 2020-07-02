@@ -70,7 +70,7 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     
-    return CGSizeMake(90, 60);
+    return CGSizeMake(90, collectionView.bounds.size.height);
 }
 
 - (void)awakeFromNib {

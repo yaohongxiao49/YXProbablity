@@ -38,6 +38,19 @@
 		84804A7F24921D9A009F160F /* YXProbabilityTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */; };
 		84804A9024922213009F160F /* YXProbabilityAllListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A8E24922213009F160F /* YXProbabilityAllListCell.m */; };
 		84804A9124922213009F160F /* YXProbabilityAllListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84804A8F24922213009F160F /* YXProbabilityAllListCell.xib */; };
+		84E6A4D024ADD59A002ED2B3 /* BmobSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */; };
+		84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */; };
+		84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D424ADD66E002ED2B3 /* Security.framework */; };
+		84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */; };
+		84E6A4D924ADD67E002ED2B3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D824ADD67E002ED2B3 /* MobileCoreServices.framework */; };
+		84E6A4DB24ADD686002ED2B3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DA24ADD686002ED2B3 /* CFNetwork.framework */; };
+		84E6A4DD24ADD68F002ED2B3 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DC24ADD68F002ED2B3 /* CoreTelephony.framework */; };
+		84E6A4DF24ADD6A2002ED2B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DE24ADD6A2002ED2B3 /* SystemConfiguration.framework */; };
+		84E6A4E124ADD6A9002ED2B3 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4E024ADD6A9002ED2B3 /* libz.1.2.5.tbd */; };
+		84E6A4E324ADD6B4002ED2B3 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4E224ADD6B4002ED2B3 /* libicucore.tbd */; };
+		84E6A4E524ADD6C3002ED2B3 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4E424ADD6C3002ED2B3 /* libsqlite3.tbd */; };
+		84E6A4E724ADD6CC002ED2B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4E624ADD6CC002ED2B3 /* AVFoundation.framework */; };
+		84E6A4E924ADD6D6002ED2B3 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4E824ADD6D6002ED2B3 /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +127,19 @@
 		84804A8D24922213009F160F /* YXProbabilityAllListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityAllListCell.h; sourceTree = "<group>"; };
 		84804A8E24922213009F160F /* YXProbabilityAllListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityAllListCell.m; sourceTree = "<group>"; };
 		84804A8F24922213009F160F /* YXProbabilityAllListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXProbabilityAllListCell.xib; sourceTree = "<group>"; };
+		84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BmobSDK.framework; sourceTree = "<group>"; };
+		84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		84E6A4D424ADD66E002ED2B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		84E6A4D824ADD67E002ED2B3 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		84E6A4DA24ADD686002ED2B3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		84E6A4DC24ADD68F002ED2B3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		84E6A4DE24ADD6A2002ED2B3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		84E6A4E024ADD6A9002ED2B3 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		84E6A4E224ADD6B4002ED2B3 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		84E6A4E424ADD6C3002ED2B3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		84E6A4E624ADD6CC002ED2B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		84E6A4E824ADD6D6002ED2B3 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +147,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E6A4E924ADD6D6002ED2B3 /* MediaPlayer.framework in Frameworks */,
+				84E6A4E724ADD6CC002ED2B3 /* AVFoundation.framework in Frameworks */,
+				84E6A4E524ADD6C3002ED2B3 /* libsqlite3.tbd in Frameworks */,
+				84E6A4E324ADD6B4002ED2B3 /* libicucore.tbd in Frameworks */,
+				84E6A4E124ADD6A9002ED2B3 /* libz.1.2.5.tbd in Frameworks */,
+				84E6A4DF24ADD6A2002ED2B3 /* SystemConfiguration.framework in Frameworks */,
+				84E6A4DD24ADD68F002ED2B3 /* CoreTelephony.framework in Frameworks */,
+				84E6A4DB24ADD686002ED2B3 /* CFNetwork.framework in Frameworks */,
+				84E6A4D924ADD67E002ED2B3 /* MobileCoreServices.framework in Frameworks */,
+				84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */,
+				84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */,
+				84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */,
+				84E6A4D024ADD59A002ED2B3 /* BmobSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +255,7 @@
 				84804A7224921D9A009F160F /* YXProbabilityTestTests */,
 				84804A7D24921D9A009F160F /* YXProbabilityTestUITests */,
 				84804A5524921D99009F160F /* Products */,
+				84E6A4D124ADD664002ED2B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -232,6 +272,7 @@
 		84804A5624921D99009F160F /* YXProbabilityTest */ = {
 			isa = PBXGroup;
 			children = (
+				84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */,
 				847FB868249357BF0083A71A /* YXProbabilityManager */,
 				847FB85A249328E30083A71A /* YXProbabilityView */,
 				84804A8C249221E9009F160F /* YXProbabilityCell */,
@@ -281,6 +322,25 @@
 				847FB8572493289A0083A71A /* YXProbabilityCollectionViewCell.xib */,
 			);
 			path = YXProbabilityCell;
+			sourceTree = "<group>";
+		};
+		84E6A4D124ADD664002ED2B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84E6A4E824ADD6D6002ED2B3 /* MediaPlayer.framework */,
+				84E6A4E624ADD6CC002ED2B3 /* AVFoundation.framework */,
+				84E6A4E424ADD6C3002ED2B3 /* libsqlite3.tbd */,
+				84E6A4E224ADD6B4002ED2B3 /* libicucore.tbd */,
+				84E6A4E024ADD6A9002ED2B3 /* libz.1.2.5.tbd */,
+				84E6A4DE24ADD6A2002ED2B3 /* SystemConfiguration.framework */,
+				84E6A4DC24ADD68F002ED2B3 /* CoreTelephony.framework */,
+				84E6A4DA24ADD686002ED2B3 /* CFNetwork.framework */,
+				84E6A4D824ADD67E002ED2B3 /* MobileCoreServices.framework */,
+				84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */,
+				84E6A4D424ADD66E002ED2B3 /* Security.framework */,
+				84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,6 +669,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2HSQ24Z864;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXProbabilityTest",
+				);
 				INFOPLIST_FILE = YXProbabilityTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -627,6 +692,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2HSQ24Z864;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXProbabilityTest",
+				);
 				INFOPLIST_FILE = YXProbabilityTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

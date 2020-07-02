@@ -1,4 +1,5 @@
 #import "SceneDelegate.h"
+#import "YXProbabilityRandomVC.h"
 #import "ViewController.h"
 
 @interface SceneDelegate ()
@@ -27,6 +28,8 @@
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:rootVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    
+    [Bmob registerWithAppKey:kBmobAppKey];
 }
 
 
