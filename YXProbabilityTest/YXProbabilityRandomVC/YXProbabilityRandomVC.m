@@ -65,19 +65,44 @@
     
     __weak typeof(self) weakSelf = self;
     [_activityIndicatorView startAnimating];
-
-    BmobObject *bmobObj = [BmobObject objectWithClassName:kTableName];
-    [bmobObj setObject:arr forKey:kTableValueKey];
-    [bmobObj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+    
+    BmobQuery *bquery = [BmobQuery queryWithClassName:kTableName];
+    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         
-        if (!error) { //对象存在
-            NSLog(@"上传成功！");
+        if (array.count != 0) {
+            for (BmobObject *obj in array) { //修改Bmob数据信息
+                [bquery getObjectInBackgroundWithId:obj.objectId block:^(BmobObject *object, NSError *error) {
+                    
+                    if (!error) {
+                        if (object) { //对象存在
+                            BmobObject *obj = [BmobObject objectWithoutDatatWithClassName:object.className objectId:object.objectId];
+                            [obj setObject:arr forKey:kTableValueKey];
+                            [obj updateInBackground];
+                            NSLog(@"修改成功！");
+                        }
+                        
+                        [weakSelf.activityIndicatorView stopAnimating];
+                    }
+                    else { //进行错误处理
+                        NSLog(@"error == %@", error.localizedDescription);
+                    }
+                }];
+            }
         }
-        else { //进行错误处理
-            NSLog(@"error == %@", error.localizedDescription);
+        else { //创建Bmob数据信息
+            BmobObject *bmobObj = [BmobObject objectWithClassName:kTableName];
+            [bmobObj setObject:arr forKey:kTableValueKey];
+            [bmobObj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                
+                if (!error) { //对象存在
+                    NSLog(@"上传成功！");
+                }
+                else { //进行错误处理
+                    NSLog(@"error == %@", error.localizedDescription);
+                }
+                [weakSelf.activityIndicatorView stopAnimating];
+            }];
         }
-        
-        [weakSelf.activityIndicatorView stopAnimating];
     }];
 }
 
@@ -168,6 +193,14 @@
     
     __weak typeof(self) weakSelf = self;
     NSMutableArray *historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
+    NSString *minDiscribe = [[historyArr firstObject] objectForKey:@"kGraphicsCount"];
+    NSString *maxDiscribe = [[historyArr lastObject] objectForKey:@"kGraphicsCount"];
+    if ([minDiscribe isEqualToString:@"min"]) {
+        [historyArr removeObject:[historyArr firstObject]];
+    }
+    if ([maxDiscribe isEqualToString:@"max"]) {
+        [historyArr removeObject:[historyArr lastObject]];
+    }
     
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否需要保存当前随机数组" preferredStyle:UIAlertControllerStyleAlert];
     
@@ -242,8 +275,8 @@
 #pragma mark - 获取蓝球、红球数字机率
 - (void)getBallProbabilityByArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr finishedBlock:(void(^)(NSDictionary *minDic, NSDictionary *maxDic))finishedBlock {
     
-    NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr] type:NSOrderedDescending]];
-    NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedDescending]];
+    NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr] type:NSOrderedAscending]];
+    NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedAscending]];
     
     NSInteger redMin = redDicArr.count < 6 ? redDicArr.count : 6;
     NSInteger redMax = redDicArr.count > 6 ? redDicArr.count - 6 : redDicArr.count;

@@ -41,21 +41,12 @@
 - (NSMutableArray *)statisticalRepeatNum:(NSMutableArray *)arr {
     
     NSMutableArray *amountArr = [[NSMutableArray alloc] init];
-    NSSet *set = [NSSet setWithArray:(NSArray *)arr];
-
-    for (NSString *setStr in set) {
-        //需要去掉的元素数组
-        NSMutableArray *filteredArr = [[NSMutableArray alloc] initWithObjects:setStr, nil];
-
-        NSMutableArray *dataArr = arr;
-        NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", filteredArr];
-        //过滤数组
-        NSArray *reslutFilteredArr = [dataArr filteredArrayUsingPredicate:filterPredicate];
-
-        int number = (int)(dataArr.count - reslutFilteredArr.count);
+    
+    NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)arr];
+    for (id item in countSet) { //去重并统计
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:setStr forKey:kGraphicsTitle];
-        [dic setObject:@(number) forKey:kGraphicsCount];
+        [dic setObject:item forKey:kGraphicsTitle];
+        [dic setObject:@([countSet countForObject:item]) forKey:kGraphicsCount];
         [dic setObject:[UIColor colorWithRed:arc4random() %255 /255.0 green:arc4random() %255 /255.0 blue:arc4random() %255 /255.0 alpha:1.0] forKey:kGraphicsColor];
         [amountArr addObject:dic];
     }

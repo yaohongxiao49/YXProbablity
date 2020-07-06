@@ -41,10 +41,21 @@
 #pragma mark - 即时获取双色球数据
 - (void)getBallHTTPByIssueCount:(NSInteger)issueCount {
     
+    __weak typeof(self) weakSelf = self;
     [YXProbabilityRequest getBallHistoryListByIssueCount:issueCount successBlock:^(id responseObj) {
         
+        [weakSelf endRefresh];
+    } failBlock:^(NSError *error) {
         
-    } failBlock:^(NSError *error) {}];
+        [weakSelf endRefresh];
+    }];
+}
+
+#pragma mark - 结束刷新
+- (void)endRefresh {
+    
+    [_tableView.mj_header endRefreshing];
+    [_tableView.mj_footer endRefreshing];
 }
 
 #pragma mark - 获取双色球储存数据
@@ -110,7 +121,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:[YXProbabilityAllListCell.class description] bundle:nil] forCellReuseIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
     
-//    [_tableView.mj_header beginRefreshing];
+    [_tableView.mj_header beginRefreshing];
     
     _dataSourceArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]];
 }

@@ -22,7 +22,12 @@
         if (successBlock) {
             successBlock(responseObj);
         }
-    } failure:^(NSError *error) {}];
+    } failure:^(NSError *error) {
+        
+        if (failBlock) {
+            failBlock(error);
+        }
+    }];
 }
 
 @end
