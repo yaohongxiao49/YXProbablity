@@ -143,7 +143,7 @@
         
         NSLog(@"开始统计！");
         NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]];
-        NSArray *sortingArr = [[NSArray alloc] initWithArray:[weakSelf sortingByArr:repeatNumArr]];
+        NSArray *sortingArr = [[NSArray alloc] initWithArray:[weakSelf sortingByArr:repeatNumArr type:NSOrderedDescending]];
         NSLog(@"结果数组个数 == %@", @(repeatNumArr.count));
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -170,7 +170,7 @@
         
         [historyArr addObjectsFromArray:arr];
         
-        [YXProbabilityManager sharedManager].randomListArr = [weakSelf sortingByArr:historyArr];
+        [YXProbabilityManager sharedManager].randomListArr = [weakSelf sortingByArr:historyArr type:NSOrderedDescending];
         [weakSelf changeBmobValueHTTP:[YXProbabilityManager sharedManager].randomListArr];
         [weakSelf showChance];
     }];
@@ -269,18 +269,22 @@
     __weak typeof(self) weakSelf = self;
     
     NSMutableArray *randomArr = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < 6; i++) {
+    NSMutableSet *randomSet = [[NSMutableSet alloc] init];
+
+    while ([randomSet count] < 6) {
         NSInteger index = arc4random() %([redArr count] - 1);
         NSString *red = [redArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", redArr[index]] : redArr[index];
-        [randomArr addObject:red];
+        [randomSet addObject:red];
     }
+    [randomArr addObjectsFromArray:[randomSet allObjects]];
     
     NSInteger index = arc4random() %([blueArr count] - 1);
     NSString *blue = [blueArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", blueArr[index]] : blueArr[index];
     [randomArr addObject:blue];
     
-    NSString *randomStr = [randomArr componentsJoinedByString:@" "];
+    NSArray *sortingArr = [weakSelf sortingByArr:(NSArray *)randomArr type:NSOrderedDescending];
+    
+    NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
     
     weakSelf.count ++;
     NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
@@ -308,16 +312,26 @@
 }
 
 #pragma mark - 排序
-- (NSArray *)sortingByArr:(NSArray *)arr {
+- (NSArray *)sortingByArr:(NSArray *)arr type:(NSComparisonResult)type {
     
     NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         
-        NSNumber *number1 = [obj1 objectForKey:kGraphicsCount];
-        NSNumber *number2 = [obj2 objectForKey:kGraphicsCount];
-        
-        NSComparisonResult result = [number1 compare:number2];
-        
-        return result == NSOrderedDescending; //降序
+        if ([obj1 isKindOfClass:[NSDictionary class]]) {
+            NSNumber *number1 = [obj1 objectForKey:kGraphicsCount];
+            NSNumber *number2 = [obj2 objectForKey:kGraphicsCount];
+            
+            NSComparisonResult result = [number1 compare:number2];
+            
+            return result == type;
+        }
+        else {
+            NSNumber *number1 = @([obj1 integerValue]);
+            NSNumber *number2 = @([obj2 integerValue]);
+            
+            NSComparisonResult result = [number1 compare:number2];
+            
+            return result == type;
+        }
     }];
     return resultArray;
 }
