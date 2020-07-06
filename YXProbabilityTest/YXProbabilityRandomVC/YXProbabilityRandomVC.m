@@ -16,12 +16,16 @@
 #define kCycleCount 189704646
 #define kcalculateCount 10
 
+#define kShowCount 2
+
 @interface YXProbabilityRandomVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, copy) NSMutableArray *redArr;
 @property (nonatomic, copy) NSMutableArray *blueArr;
+@property (nonatomic, copy) NSMutableArray *redCollecArr;
+@property (nonatomic, copy) NSMutableArray *blueCollecArr;
 @property (nonatomic, copy) NSMutableArray *resultRandomArr;
 @property (nonatomic, strong) NSMutableArray *endArr;
 @property (nonatomic, assign) NSInteger count;
@@ -98,9 +102,9 @@
                         NSLog(@"删除成功！");
                     }
                 }
-                [weakSelf.activityIndicatorView stopAnimating];
             }];
         }
+        [weakSelf.activityIndicatorView stopAnimating];
     }];
 }
 
@@ -114,19 +118,20 @@
     return timeString;
 }
 
-#pragma mark - 显示出现频率最高的5位以及出现频率最低的五位
+#pragma mark - 显示出现频率最高的2位以及出现频率最低的2位
 - (void)showChance {
     
     NSArray *arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
     
-    NSInteger min = arr.count < 5 ? arr.count : 5;
-    NSInteger max = arr.count > 5 ? arr.count - 5 : arr.count;
+    NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
+    NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
     NSArray *minArr = [arr subarrayWithRange:NSMakeRange(0, min)];
     NSArray *maxArr = [arr subarrayWithRange:NSMakeRange(max, min)];
     
     NSMutableArray *valueArr = [[NSMutableArray alloc] init];
     [valueArr addObjectsFromArray:minArr];
     [valueArr addObjectsFromArray:maxArr];
+    
     [self assemblyValueByArr:valueArr min:min];
 }
 
@@ -147,8 +152,8 @@
         NSLog(@"结果数组个数 == %@", @(repeatNumArr.count));
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            [weakSelf.activityIndicatorView stopAnimating];
             if (sortingArr.count != 0) {
-                [weakSelf.activityIndicatorView stopAnimating];
                 [weakSelf showAlertView:sortingArr];
             }
             else {
@@ -169,8 +174,15 @@
     UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [historyArr addObjectsFromArray:arr];
-        
-        [YXProbabilityManager sharedManager].randomListArr = [weakSelf sortingByArr:historyArr type:NSOrderedDescending];
+        NSMutableArray *listArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:historyArr type:NSOrderedDescending]];
+        if (weakSelf.redCollecArr.count != 0 && weakSelf.blueCollecArr.count != 0) {
+            [weakSelf getBallProbabilityByArr:weakSelf.redCollecArr blueArr:weakSelf.blueCollecArr finishedBlock:^(NSDictionary *minDic, NSDictionary *maxDic) {
+                
+                [listArr insertObject:minDic atIndex:0];
+                [listArr addObject:maxDic];
+            }];
+        }
+        [YXProbabilityManager sharedManager].randomListArr = (NSArray *)listArr;
         [weakSelf changeBmobValueHTTP:[YXProbabilityManager sharedManager].randomListArr];
         [weakSelf showChance];
     }];
@@ -217,13 +229,60 @@
 #pragma mark - 界面更新弹窗
 - (void)reloadAlertView {
     
+    [_activityIndicatorView stopAnimating];
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"界面已更新" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
     [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [alertVC addAction:sureAlertAction];
     
     [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+#pragma mark - 获取蓝球、红球数字机率
+- (void)getBallProbabilityByArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr finishedBlock:(void(^)(NSDictionary *minDic, NSDictionary *maxDic))finishedBlock {
+    
+    NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr] type:NSOrderedDescending]];
+    NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedDescending]];
+    
+    NSInteger redMin = redDicArr.count < 6 ? redDicArr.count : 6;
+    NSInteger redMax = redDicArr.count > 6 ? redDicArr.count - 6 : redDicArr.count;
+    NSArray *minRedArr = [redDicArr subarrayWithRange:NSMakeRange(0, redMin)];
+    NSArray *maxRedArr = [redDicArr subarrayWithRange:NSMakeRange(redMax, redMin)];
+    
+    NSInteger blueMin = blueDicArr.count < 1 ? blueDicArr.count : 1;
+    NSInteger blueMax = blueDicArr.count > 1 ? blueDicArr.count - 1 : blueDicArr.count;
+    NSArray *minBlueArr = [blueDicArr subarrayWithRange:NSMakeRange(0, blueMin)];
+    NSArray *maxBlueArr = [blueDicArr subarrayWithRange:NSMakeRange(blueMax, blueMin)];
+    
+    NSMutableArray *minArr = [[NSMutableArray alloc] init];
+    [minRedArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        [minArr addObject:[obj objectForKey:kGraphicsTitle]];
+    }];
+    [minBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        [minArr addObject:[obj objectForKey:kGraphicsTitle]];
+    }];
+    
+    NSMutableArray *maxArr = [[NSMutableArray alloc] init];
+    [maxRedArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        [maxArr addObject:[obj objectForKey:kGraphicsTitle]];
+    }];
+    [maxBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        [maxArr addObject:[obj objectForKey:kGraphicsTitle]];
+    }];
+    
+    NSString *minShow = [minArr componentsJoinedByString:@" "];
+    NSString *maxShow = [maxArr componentsJoinedByString:@" "];
+    
+    NSDictionary *minShowDic = @{kGraphicsTitle:minShow, kGraphicsCount:@"min"};
+    NSDictionary *maxShowDic = @{kGraphicsTitle:maxShow, kGraphicsCount:@"max"};
+    if (finishedBlock) {
+        finishedBlock(minShowDic, maxShowDic);
+    }
 }
 
 #pragma mark - 循环取数
@@ -278,11 +337,11 @@
     }
     [randomArr addObjectsFromArray:[randomSet allObjects]];
     
+    NSMutableArray *sortingArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)randomArr type:NSOrderedDescending]];
+    
     NSInteger index = arc4random() %([blueArr count] - 1);
     NSString *blue = [blueArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", blueArr[index]] : blueArr[index];
-    [randomArr addObject:blue];
-    
-    NSArray *sortingArr = [weakSelf sortingByArr:(NSArray *)randomArr type:NSOrderedDescending];
+    [sortingArr addObject:blue];
     
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
     
@@ -290,6 +349,9 @@
     NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
 
+        [weakSelf.redCollecArr addObjectsFromArray:randomArr];
+        [weakSelf.blueCollecArr addObject:blue];
+        
         [weakSelf.resultRandomArr addObject:randomStr];
         weakSelf.headerView.prgressValue = (float)weakSelf.count /weakSelf.cycleCount;
     });
@@ -368,8 +430,9 @@
         [endArr addObject:valueDic];
     }];
     
+    NSInteger showCount = kShowCount;
     NSMutableArray *modelArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:endArr];
-    NSInteger max = modelArr.count > 5 ? modelArr.count - 5 : modelArr.count;
+    NSInteger max = modelArr.count > showCount ? modelArr.count - showCount : modelArr.count;
     NSArray *minArr = [modelArr subarrayWithRange:NSMakeRange(0, min)];
     NSArray *maxArr = [modelArr subarrayWithRange:NSMakeRange(max, min)];
     
@@ -469,6 +532,8 @@
     _resultRandomArr = [[NSMutableArray alloc] init];
     _redArr = [[NSMutableArray alloc] init];
     _blueArr = [[NSMutableArray alloc] init];
+    _redCollecArr = [[NSMutableArray alloc] init];
+    _blueCollecArr = [[NSMutableArray alloc] init];
     _endArr = [[NSMutableArray alloc] init];
     _boolCancel = NO;
     

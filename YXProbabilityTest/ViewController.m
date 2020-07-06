@@ -110,7 +110,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:[YXProbabilityAllListCell.class description] bundle:nil] forCellReuseIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
     
-    [_tableView.mj_header beginRefreshing];
+//    [_tableView.mj_header beginRefreshing];
     
     _dataSourceArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]];
 }
