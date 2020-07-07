@@ -30,6 +30,10 @@
     [self.window makeKeyAndVisible];
     
     [Bmob registerWithAppKey:kBmobAppKey];
+    
+    if (![UIDevice currentDevice].generatesDeviceOrientationNotifications) {
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    }
 }
 
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YXProbabilityManager.h"
-#import "YXPicChartGraphicsShowView.h"
+#import "YXPieChartLineGraphicsView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

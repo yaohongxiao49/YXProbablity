@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5D0F56B34C515145CE6037E6 /* libPods-YXProbabilityTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C863F9893EE76AD606A8AC9 /* libPods-YXProbabilityTest.a */; };
+		840E609124B44B1300B8D77C /* YXPieChartLineGraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E608B24B44B1300B8D77C /* YXPieChartLineGraphicsView.m */; };
+		840E609224B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E608F24B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.m */; };
+		840E609324B44B1300B8D77C /* YXPieChartLineGraphicsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E609024B44B1300B8D77C /* YXPieChartLineGraphicsModel.m */; };
+		840E609724B451FB00B8D77C /* NSObject+YXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E609624B451FB00B8D77C /* NSObject+YXCategory.m */; };
 		841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */; };
 		8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8415190824B2ED0B00EA8B9B /* HttpRequestManager.m */; };
 		8428D914249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428D913249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m */; };
@@ -24,12 +28,6 @@
 		847FB873249357E10083A71A /* YXProbabilityStatisticalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */; };
 		847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8C924937E710083A71A /* YXProbabilityListModel.m */; };
 		847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */; };
-		847FB8DA249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */; };
-		847FB8DB249382CD0083A71A /* YXPicChartGraphicsShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */; };
-		847FB8DC249382CD0083A71A /* YXPicChartGraphicsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */; };
-		847FB8DD249382CD0083A71A /* YXPieChartGraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */; };
-		847FB8DE249382CD0083A71A /* YXPicChartGraphicsShowCollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */; };
-		847FB8DF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */; };
 		84804A5924921D99009F160F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5824921D99009F160F /* AppDelegate.m */; };
 		84804A5C24921D99009F160F /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5B24921D99009F160F /* SceneDelegate.m */; };
 		84804A5F24921D99009F160F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5E24921D99009F160F /* ViewController.m */; };
@@ -76,6 +74,14 @@
 /* Begin PBXFileReference section */
 		1C863F9893EE76AD606A8AC9 /* libPods-YXProbabilityTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YXProbabilityTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58D2DE346F9B4E0605237F25 /* Pods-YXProbabilityTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXProbabilityTest.release.xcconfig"; path = "Target Support Files/Pods-YXProbabilityTest/Pods-YXProbabilityTest.release.xcconfig"; sourceTree = "<group>"; };
+		840E608B24B44B1300B8D77C /* YXPieChartLineGraphicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartLineGraphicsView.m; sourceTree = "<group>"; };
+		840E608C24B44B1300B8D77C /* YXPieChartLineGraphicsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPieChartLineGraphicsModel.h; sourceTree = "<group>"; };
+		840E608D24B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPieChartLineGraphicsCenterView.h; sourceTree = "<group>"; };
+		840E608E24B44B1300B8D77C /* YXPieChartLineGraphicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPieChartLineGraphicsView.h; sourceTree = "<group>"; };
+		840E608F24B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartLineGraphicsCenterView.m; sourceTree = "<group>"; };
+		840E609024B44B1300B8D77C /* YXPieChartLineGraphicsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartLineGraphicsModel.m; sourceTree = "<group>"; };
+		840E609524B451FB00B8D77C /* NSObject+YXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YXCategory.h"; sourceTree = "<group>"; };
+		840E609624B451FB00B8D77C /* NSObject+YXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YXCategory.m"; sourceTree = "<group>"; };
 		841518F624B2EB3900EA8B9B /* YXProbabilityRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXProbabilityRequest.h; sourceTree = "<group>"; };
 		841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRequest.m; sourceTree = "<group>"; };
 		8415190024B2ED0B00EA8B9B /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
@@ -104,17 +110,6 @@
 		847FB8C924937E710083A71A /* YXProbabilityListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityListModel.m; sourceTree = "<group>"; };
 		847FB8CB24937F5E0083A71A /* YXProbabilityBallInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityBallInfoModel.h; sourceTree = "<group>"; };
 		847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityBallInfoModel.m; sourceTree = "<group>"; };
-		847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXPicChartGraphicsShowCollCell.xib; sourceTree = "<group>"; };
-		847FB8D0249382CD0083A71A /* YXPieChartGraphicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPieChartGraphicsView.h; sourceTree = "<group>"; };
-		847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowView.m; sourceTree = "<group>"; };
-		847FB8D2249382CD0083A71A /* YXPicChartGraphicsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsModel.h; sourceTree = "<group>"; };
-		847FB8D3249382CD0083A71A /* YXPicChartGraphicsShowCollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowCollView.h; sourceTree = "<group>"; };
-		847FB8D4249382CD0083A71A /* YXPicChartGraphicsShowCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowCollCell.h; sourceTree = "<group>"; };
-		847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsModel.m; sourceTree = "<group>"; };
-		847FB8D6249382CD0083A71A /* YXPicChartGraphicsShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPicChartGraphicsShowView.h; sourceTree = "<group>"; };
-		847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartGraphicsView.m; sourceTree = "<group>"; };
-		847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowCollView.m; sourceTree = "<group>"; };
-		847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPicChartGraphicsShowCollCell.m; sourceTree = "<group>"; };
 		84804A5424921D99009F160F /* YXProbabilityTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YXProbabilityTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A5724921D99009F160F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84804A5824921D99009F160F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -191,6 +186,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840E608A24B44B1300B8D77C /* YXPieChartLineGraphicsView */ = {
+			isa = PBXGroup;
+			children = (
+				840E608E24B44B1300B8D77C /* YXPieChartLineGraphicsView.h */,
+				840E608B24B44B1300B8D77C /* YXPieChartLineGraphicsView.m */,
+				840E608D24B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.h */,
+				840E608F24B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.m */,
+				840E608C24B44B1300B8D77C /* YXPieChartLineGraphicsModel.h */,
+				840E609024B44B1300B8D77C /* YXPieChartLineGraphicsModel.m */,
+			);
+			path = YXPieChartLineGraphicsView;
+			sourceTree = "<group>";
+		};
+		840E609424B451FB00B8D77C /* YXCategoryNSObject */ = {
+			isa = PBXGroup;
+			children = (
+				840E609524B451FB00B8D77C /* NSObject+YXCategory.h */,
+				840E609624B451FB00B8D77C /* NSObject+YXCategory.m */,
+			);
+			path = YXCategoryNSObject;
+			sourceTree = "<group>";
+		};
 		841518F524B2EB3900EA8B9B /* YXProbabilityRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,31 +268,14 @@
 		847FB86C249357C00083A71A /* YXProbabilityStatisticalVC */ = {
 			isa = PBXGroup;
 			children = (
-				847FB8CE249382CD0083A71A /* YXPieChartGraphicsView */,
+				840E609424B451FB00B8D77C /* YXCategoryNSObject */,
+				840E608A24B44B1300B8D77C /* YXPieChartLineGraphicsView */,
 				847FB871249357E10083A71A /* YXProbabilityStatisticalVC.h */,
 				847FB872249357E10083A71A /* YXProbabilityStatisticalVC.m */,
 				8428D912249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.h */,
 				8428D913249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m */,
 			);
 			path = YXProbabilityStatisticalVC;
-			sourceTree = "<group>";
-		};
-		847FB8CE249382CD0083A71A /* YXPieChartGraphicsView */ = {
-			isa = PBXGroup;
-			children = (
-				847FB8D6249382CD0083A71A /* YXPicChartGraphicsShowView.h */,
-				847FB8D1249382CD0083A71A /* YXPicChartGraphicsShowView.m */,
-				847FB8D3249382CD0083A71A /* YXPicChartGraphicsShowCollView.h */,
-				847FB8D8249382CD0083A71A /* YXPicChartGraphicsShowCollView.m */,
-				847FB8D4249382CD0083A71A /* YXPicChartGraphicsShowCollCell.h */,
-				847FB8D9249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m */,
-				847FB8CF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib */,
-				847FB8D0249382CD0083A71A /* YXPieChartGraphicsView.h */,
-				847FB8D7249382CD0083A71A /* YXPieChartGraphicsView.m */,
-				847FB8D2249382CD0083A71A /* YXPicChartGraphicsModel.h */,
-				847FB8D5249382CD0083A71A /* YXPicChartGraphicsModel.m */,
-			);
-			path = YXPieChartGraphicsView;
 			sourceTree = "<group>";
 		};
 		84804A4B24921D98009F160F = {
@@ -497,7 +497,6 @@
 				8479577F2497516D0010BC08 /* YXProbabilityRandomHeaderView.xib in Resources */,
 				84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */,
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
-				847FB8DA249382CD0083A71A /* YXPicChartGraphicsShowCollCell.xib in Resources */,
 				84804A6224921D99009F160F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,27 +564,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				847FB8DE249382CD0083A71A /* YXPicChartGraphicsShowCollView.m in Sources */,
 				8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */,
-				847FB8DD249382CD0083A71A /* YXPieChartGraphicsView.m in Sources */,
 				847FB870249357DB0083A71A /* YXProbabilityRandomVC.m in Sources */,
-				847FB8DC249382CD0083A71A /* YXPicChartGraphicsModel.m in Sources */,
+				840E609124B44B1300B8D77C /* YXPieChartLineGraphicsView.m in Sources */,
+				840E609324B44B1300B8D77C /* YXPieChartLineGraphicsModel.m in Sources */,
 				8428D914249726A500EF49F3 /* YXProbabilityStatisticalHeaderView.m in Sources */,
 				847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */,
 				847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */,
-				847FB8DB249382CD0083A71A /* YXPicChartGraphicsShowView.m in Sources */,
 				847FB85E249329030083A71A /* YXProbabilitySecHeaderView.m in Sources */,
 				8479577D249751430010BC08 /* YXProbabilityRandomHeaderView.m in Sources */,
 				84804A5F24921D99009F160F /* ViewController.m in Sources */,
 				84804A5924921D99009F160F /* AppDelegate.m in Sources */,
+				840E609224B44B1300B8D77C /* YXPieChartLineGraphicsCenterView.m in Sources */,
 				841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */,
+				840E609724B451FB00B8D77C /* NSObject+YXCategory.m in Sources */,
 				84804A6A24921D9A009F160F /* main.m in Sources */,
 				847FB86524934AD30083A71A /* YXProbabilityAllHeaderView.m in Sources */,
 				84804A9024922213009F160F /* YXProbabilityAllListCell.m in Sources */,
 				84804A5C24921D99009F160F /* SceneDelegate.m in Sources */,
 				847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */,
 				847FB873249357E10083A71A /* YXProbabilityStatisticalVC.m in Sources */,
-				847FB8DF249382CD0083A71A /* YXPicChartGraphicsShowCollCell.m in Sources */,
 				847FB8582493289A0083A71A /* YXProbabilityCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

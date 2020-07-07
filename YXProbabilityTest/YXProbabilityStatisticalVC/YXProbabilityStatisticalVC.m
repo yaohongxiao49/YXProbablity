@@ -7,6 +7,7 @@
 //
 
 #import "YXProbabilityStatisticalVC.h"
+#import "NSObject+YXCategory.h"
 #import "YXProbabilityStatisticalHeaderView.h"
 
 @interface YXProbabilityStatisticalVC () <UITableViewDelegate, UITableViewDataSource>
@@ -26,15 +27,60 @@
 
 @implementation YXProbabilityStatisticalVC
 
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceOrientationChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     self.title = @"图形化";
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self initDataSource];
     [self initView];
+}
+
+#pragma mark - 设备方向改变的处理
+- (void)handleDeviceOrientationChange:(NSNotification *)notification {
+    
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationFaceUp:
+            NSLog(@"屏幕朝上平躺");
+            break;
+        case UIDeviceOrientationFaceDown:
+            NSLog(@"屏幕朝下平躺");
+            break;
+        case UIDeviceOrientationUnknown:
+            NSLog(@"未知方向");
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            NSLog(@"屏幕向左横置");
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            NSLog(@"屏幕向右橫置");
+            break;
+        case UIDeviceOrientationPortrait:
+            NSLog(@"屏幕直立");
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"屏幕直立，上下顛倒");
+            break;
+        default:
+            NSLog(@"无法辨识");
+            break;
+    }
+    
+    _tableView.frame = CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight);
+    CGFloat amount = (_redArr.count /2) + (_blueArr.count /2);
+    self.headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, amount *50);
+    [_tableView reloadData];
 }
 
 #pragma mark - 去重并统计重复的数
@@ -45,9 +91,8 @@
     NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)arr];
     for (id item in countSet) { //去重并统计
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:item forKey:kGraphicsTitle];
-        [dic setObject:@([countSet countForObject:item]) forKey:kGraphicsCount];
-        [dic setObject:[UIColor colorWithRed:arc4random() %255 /255.0 green:arc4random() %255 /255.0 blue:arc4random() %255 /255.0 alpha:1.0] forKey:kGraphicsColor];
+        [dic setObject:item forKey:kPieChartLineGraphicsName];
+        [dic setObject:@([countSet countForObject:item]) forKey:kPieChartLineGraphicsValue];
         [amountArr addObject:dic];
     }
     
@@ -59,8 +104,8 @@
     
     NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         
-        NSNumber *number1 = [obj1 objectForKey:kGraphicsCount];
-        NSNumber *number2 = [obj2 objectForKey:kGraphicsCount];
+        NSNumber *number1 = [obj1 objectForKey:kPieChartLineGraphicsValue];
+        NSNumber *number2 = [obj2 objectForKey:kPieChartLineGraphicsValue];
         
         NSComparisonResult result = [number1 compare:number2];
         
@@ -89,8 +134,8 @@
     }
     NSMutableArray *arr = indexPath.section == 1 ? _redArr : _blueArr;
     NSMutableArray *originalArr = indexPath.section == 1 ? _originalRedArr : _originalBlueArr;
-    YXPicChartGraphicsModel *model = arr[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"标题：%@，个数：%.f个，百分比：%.f%%", model.title, model.count, (model.count /originalArr.count) *100];
+    YXPieChartLineGraphicsModel *model = arr[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"标题：%@，个数：%.f个，百分比：%.f%%", model.name, model.value, (model.value /originalArr.count) *100];
     
     return cell;
 }
@@ -123,7 +168,7 @@
 #pragma mark - 初始化视图
 - (void)initView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 100) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -152,20 +197,20 @@
         }];
     }];
     
-    self.headerView.redArr = [YXPicChartGraphicsArrModel arrayOfModelsFromDictionaries:[self statisticalRepeatNum:redBallArr]];
-    self.headerView.blueArr = [YXPicChartGraphicsArrModel arrayOfModelsFromDictionaries:[self statisticalRepeatNum:blueBallArr]];
-    
     _originalRedArr = [[NSMutableArray alloc] initWithArray:(NSArray *)redBallArr];
     _originalBlueArr = [[NSMutableArray alloc] initWithArray:(NSArray *)blueBallArr];
     
-    _redArr = [YXPicChartGraphicsArrModel arrayOfModelsFromDictionaries:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redBallArr]]];
-    _blueArr = [YXPicChartGraphicsArrModel arrayOfModelsFromDictionaries:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueBallArr]]];
+    _redArr = [YXPieChartLineGraphicsArrModel arrayOfModelsFromDictionaries:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redBallArr]]];
+    _blueArr = [YXPieChartLineGraphicsArrModel arrayOfModelsFromDictionaries:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueBallArr]]];
+    
+    self.headerView.redArr = [YXPieChartLineGraphicsArrModel arrayOfModelsFromDictionaries:[self statisticalRepeatNum:redBallArr]];
+    self.headerView.blueArr = [YXPieChartLineGraphicsArrModel arrayOfModelsFromDictionaries:[self statisticalRepeatNum:blueBallArr]];
     
     NSMutableArray *mustRedArr = [[NSMutableArray alloc] init];
     [[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redBallArr]] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         if (idx < 6) {
-            [mustRedArr addObject:[obj objectForKey:kGraphicsTitle]];
+            [mustRedArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
         }
     }];
     _mustRed = [mustRedArr componentsJoinedByString:@" "];
@@ -174,7 +219,7 @@
     [[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueBallArr]] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         if (idx < 6) {
-            [mustBlueArr addObject:[obj objectForKey:kGraphicsTitle]];
+            [mustBlueArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
         }
     }];
     _mustBlue = [mustBlueArr firstObject];
@@ -184,7 +229,8 @@
 - (YXProbabilityStatisticalHeaderView *)headerView {
  
     if (!_headerView) {
-        _headerView = [[YXProbabilityStatisticalHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height /2)];
+        CGFloat amount = (_redArr.count /2) + (_blueArr.count /2);
+        _headerView = [[YXProbabilityStatisticalHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, amount *50)];
     }
     return _headerView;
 }

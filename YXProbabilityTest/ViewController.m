@@ -11,6 +11,7 @@
 #import "YXProbabilityAllHeaderView.h"
 #import <MJRefresh.h>
 #import "YXProbabilityRequest.h"
+#import "NSObject+YXCategory.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -102,7 +103,7 @@
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
     _headerView.baseVC = self;
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.estimatedRowHeight = 100;

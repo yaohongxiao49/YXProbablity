@@ -9,9 +9,10 @@
 
 #import "YXProbabilityRandomVC.h"
 #import "YXProbabilityManager.h"
-#import "YXPicChartGraphicsModel.h"
 #import "YXProbabilityRandomHeaderView.h"
 #import "YXProbabilityAllListCell.h"
+#import "YXPieChartLineGraphicsModel.h"
+#import "NSObject+YXCategory.h"
 
 #define kCycleCount 189704646
 #define kcalculateCount 10
@@ -193,8 +194,8 @@
     
     __weak typeof(self) weakSelf = self;
     NSMutableArray *historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
-    NSString *minDiscribe = [[historyArr firstObject] objectForKey:@"kGraphicsCount"];
-    NSString *maxDiscribe = [[historyArr lastObject] objectForKey:@"kGraphicsCount"];
+    NSString *minDiscribe = [[historyArr firstObject] objectForKey:@"kPieChartLineGraphicsValue"];
+    NSString *maxDiscribe = [[historyArr lastObject] objectForKey:@"kPieChartLineGraphicsValue"];
     if ([minDiscribe isEqualToString:@"min"]) {
         [historyArr removeObject:[historyArr firstObject]];
     }
@@ -292,28 +293,28 @@
     NSMutableArray *minArr = [[NSMutableArray alloc] init];
     [minRedArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        [minArr addObject:[obj objectForKey:kGraphicsTitle]];
+        [minArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
     [minBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        [minArr addObject:[obj objectForKey:kGraphicsTitle]];
+        [minArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
     
     NSMutableArray *maxArr = [[NSMutableArray alloc] init];
     [maxRedArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        [maxArr addObject:[obj objectForKey:kGraphicsTitle]];
+        [maxArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
     [maxBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        [maxArr addObject:[obj objectForKey:kGraphicsTitle]];
+        [maxArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
     
     NSString *minShow = [minArr componentsJoinedByString:@" "];
     NSString *maxShow = [maxArr componentsJoinedByString:@" "];
     
-    NSDictionary *minShowDic = @{kGraphicsTitle:minShow, kGraphicsCount:@"min"};
-    NSDictionary *maxShowDic = @{kGraphicsTitle:maxShow, kGraphicsCount:@"max"};
+    NSDictionary *minShowDic = @{kPieChartLineGraphicsName:minShow, kPieChartLineGraphicsValue:@"min"};
+    NSDictionary *maxShowDic = @{kPieChartLineGraphicsName:maxShow, kPieChartLineGraphicsValue:@"max"};
     if (finishedBlock) {
         finishedBlock(minShowDic, maxShowDic);
     }
@@ -399,8 +400,8 @@
     NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)arr];
     for (id item in countSet) { //去重并统计
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:item forKey:kGraphicsTitle];
-        [dic setObject:@([countSet countForObject:item]) forKey:kGraphicsCount];
+        [dic setObject:item forKey:kPieChartLineGraphicsName];
+        [dic setObject:@([countSet countForObject:item]) forKey:kPieChartLineGraphicsValue];
         [amountArr addObject:dic];
     }
     
@@ -413,8 +414,8 @@
     NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         
         if ([obj1 isKindOfClass:[NSDictionary class]]) {
-            NSNumber *number1 = [obj1 objectForKey:kGraphicsCount];
-            NSNumber *number2 = [obj2 objectForKey:kGraphicsCount];
+            NSNumber *number1 = [obj1 objectForKey:kPieChartLineGraphicsValue];
+            NSNumber *number2 = [obj2 objectForKey:kPieChartLineGraphicsValue];
             
             NSComparisonResult result = [number1 compare:number2];
             
@@ -442,11 +443,11 @@
         NSMutableDictionary *valueDic = [[NSMutableDictionary alloc] init];
         
         //组装出现频率信息
-        NSString *occurrences = [obj objectForKey:kGraphicsCount];
+        NSString *occurrences = [obj objectForKey:kPieChartLineGraphicsValue];
         [valueDic setValue:occurrences forKey:kDate];
         
         //组装球信息
-        NSString *ball = [obj objectForKey:kGraphicsTitle];
+        NSString *ball = [obj objectForKey:kPieChartLineGraphicsName];
         NSArray *ballArr = [ball componentsSeparatedByString:@" "];
         NSMutableArray *valueArr = [[NSMutableArray alloc] init];
         [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -543,7 +544,7 @@
         weakSelf.boolCancel = YES;
     };
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 100) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
