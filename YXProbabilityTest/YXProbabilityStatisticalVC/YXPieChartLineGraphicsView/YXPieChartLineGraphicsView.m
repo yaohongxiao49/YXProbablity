@@ -107,14 +107,10 @@
                 [self.modelArr addObject:model];
                 [self.colorArr addObject:color];
             }
-            
-            //绘出指引线
-//            [self addLineWithColor:color X:lineStartX Y:lineStartY name:model.name number:[NSString stringWithFormat:@"%.2f%%", percent *100] radianCenter:radianCenter];
         }
         
-        //通过pointArray绘制指引线
+        //通过pointArr绘制指引线
         [self drawLineWithPointArr:pointArr centerArr:centerArr];
-        
     }
     
     //在中心添加label
@@ -129,87 +125,13 @@
 }
 
 #pragma mark - 绘画指引线
-- (void)addLineWithColor:(UIColor *)color X:(CGFloat)x Y:(CGFloat)y name:(NSString *)name number:(NSString *)number radianCenter:(CGFloat)radianCenter {
-    
-    //指引线的折点
-    CGFloat breakPointX = x + 10 *cos(radianCenter);
-    CGFloat breakPointY = y + 10 *sin(radianCenter);
-    
-    //指引线的终点
-    CGFloat endX;
-    CGFloat endY;
-    
-    //数字的frame
-    CGFloat numberWidth = 80.f;
-    CGFloat numberHeight = 15.f;
-    CGFloat numberX = breakPointX;
-    CGFloat numberY = breakPointY - numberHeight;
-    
-    //title的frame
-    CGFloat titleWidth = numberWidth;
-    CGFloat titleHeight = numberHeight;
-    CGFloat titleX = breakPointX;
-    CGFloat titleY = breakPointY + 2;
-    
-    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-    paragraph.alignment = NSTextAlignmentRight;
-    
-    if (x > self.frame.size.width *0.5) {
-        endX = breakPointX + numberWidth;
-        endY = breakPointY;
-    }
-    else {
-        endX = breakPointX - numberWidth;
-        endY = breakPointY;
-        paragraph.alignment = NSTextAlignmentLeft;
-        numberX = endX;
-        titleX = endX;
-    }
-    
-    //绘制指引线
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(x, y)];
-    [path addLineToPoint:CGPointMake(breakPointX, breakPointY)];
-    [path addLineToPoint:CGPointMake(endX, endY)];
-    CGContextSetLineWidth(ctx, 1);
-    
-    [color set];
-    
-    CGContextAddPath(ctx, path.CGPath);
-    CGContextStrokePath(ctx);
-    
-    CGFloat point = -5;
-    if (x > self.frame.size.width *0.5) {
-        point = 0;
-    }
-    
-    //在终点处添加点
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = color;
-    [self addSubview:view];
-    CGRect rect = view.frame;
-    rect.size = CGSizeMake(5, 5);
-    rect.origin = CGPointMake(endX + point, endY - 2.5);
-    view.frame = rect;
-    view.layer.cornerRadius = 2.5;
-    view.layer.masksToBounds = true;
-    
-    UIColor *strColor = color;
-    //指引线上面的数字
-    [name drawInRect:CGRectMake(numberX, numberY, numberWidth, numberHeight) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:10.0], NSForegroundColorAttributeName:strColor, NSParagraphStyleAttributeName:paragraph}];
-    
-    //指引线下面的title
-    [number drawInRect:CGRectMake(titleX, titleY, titleWidth, titleHeight) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:10.0],NSForegroundColorAttributeName:strColor, NSParagraphStyleAttributeName:paragraph}];
-}
-
 - (void)drawLineWithPointArr:(NSArray *)pointArr centerArr:(NSArray *)centerArr {
     
     //记录每一个指引线包括数据所占用位置的和（总体位置）
     CGRect rect = CGRectZero;
     
     //用于计算指引线长度
-    CGFloat width = self.bounds.size.width * 0.5;
+    CGFloat width = self.bounds.size.width *0.5;
     
     CGFloat sum = 0;
     for (YXPieChartLineGraphicsModel *model in self.modelArr) {
@@ -218,32 +140,35 @@
     for (int i = 0; i < pointArr.count; i++) {
         //取出数据
         NSValue *value = pointArr[i];
-        //每个圆弧中心店的位置
+        //每个圆弧中心点的位置
         CGPoint point = value.CGPointValue;
         //每个圆弧中心点的角度
         CGFloat radianCenter = [centerArr[i] floatValue];
         //颜色（绘制数据时要用）
-        UIColor *color = self.colorArr[i %6];
+        UIColor *color = self.colorArr[i];
         
         //模型数据（绘制数据时要用）
         YXPieChartLineGraphicsModel *model = self.modelArr[i];
         NSString *name = model.name;
         NSString *number = [NSString stringWithFormat:@"%.2f%%", (model.value /sum) *100];
         
+        CGFloat showSingleWidth = (width /10 /2);
+        CGFloat showDoubleWidth = (width /10);
+        
         //圆弧中心点的x值和y值
         CGFloat x = point.x;
         CGFloat y = point.y;
         
         //指引线终点的位置（x, y）
-        CGFloat startX = x + 10 *cos(radianCenter);
-        CGFloat startY = y + 10 *sin(radianCenter);
+        CGFloat startX = x + showSingleWidth *cos(radianCenter);
+        CGFloat startY = y + showSingleWidth *sin(radianCenter);
         
         //指引线转折点的位置(x, y)
-        CGFloat breakPointX = x + 20 *cos(radianCenter);
-        CGFloat breakPointY = y + 20 *sin(radianCenter);
+        CGFloat breakPointX = x + showDoubleWidth *cos(radianCenter);
+        CGFloat breakPointY = y + showDoubleWidth *sin(radianCenter);
         
-        //转折点到中心竖线的垂直长度（为什么+20, 在实际做出的效果中，有的转折线很丑，+20为了美化）
-        CGFloat margin = fabs(width - breakPointX) + 20;
+        //转折点到中心竖线的垂直长度（为什么+showDoubleWidth, 在实际做出的效果中，有的转折线很丑，+showDoubleWidth为了美化）
+        CGFloat margin = fabs(width - breakPointX) + showDoubleWidth;
         
         //指引线长度
         CGFloat lineWidth = width - margin;
@@ -253,8 +178,7 @@
         CGFloat endY;
         
         //绘制文字和数字时，所占的size（width和height）
-        //width使用lineWidth更好，我这么写固定值是为了达到产品要求
-        CGFloat numberWidth = 80.f;
+        CGFloat numberWidth = lineWidth;
         CGFloat numberHeight = 15.f;
         
         CGFloat titleWidth = numberWidth;
@@ -275,14 +199,14 @@
         //根据需要变更指引线的起始位置
         //变更文字和数字的位置
         if (x <= width) { //在左边
-            endX = 10;
+            endX = showSingleWidth;
             endY = breakPointY;
             paragraph.alignment = NSTextAlignmentLeft;
             numberX = endX;
             titleX = endX;
         }
         else { //在右边
-            endX = self.bounds.size.width - 10;
+            endX = self.bounds.size.width - showSingleWidth;
             endY = breakPointY;
             numberX = endX - numberWidth;
             titleX = endX - titleWidth;
@@ -297,7 +221,7 @@
                         margin = CGRectGetMaxY(rect1) - rect.origin.y;
                         endY -= margin;
                     }
-                    else { // 将要绘制的位置在总位置偏下
+                    else { //将要绘制的位置在总位置偏下
                         margin = CGRectGetMaxY(rect) - rect1.origin.y;
                         endY += margin;
                     }
@@ -333,7 +257,7 @@
         }
         
         //重新制定转折点
-        if (endX == 10) {
+        if (endX == showSingleWidth) {
             breakPointX = endX + lineWidth;
         }
         else {

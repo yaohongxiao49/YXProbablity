@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        [self initView];
+        
     }
     return self;
 }
@@ -34,12 +34,6 @@
     [self.redView draw];
     self.blueView.frame = CGRectMake(0, self.bounds.size.height /2, self.bounds.size.width, self.bounds.size.height /2);
     [self.blueView draw];
-}
-
-#pragma mark - 初始化视图
-- (void)initView {
-    
-    
 }
 
 #pragma mark - setting
