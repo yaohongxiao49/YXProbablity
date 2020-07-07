@@ -97,7 +97,7 @@
     _desView.backgroundColor = [UIColor grayColor];
     _desView.layer.cornerRadius = 10;
     _desView.transform = CGAffineTransformMakeTranslation(0, self.frame.size.height);
-    [self addSubview:_desView];
+    [[[[UIApplication sharedApplication] delegate] window] addSubview:_desView];
     
     _desLab = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, _desView.bounds.size.width - 40, _desView.bounds.size.height - 40)];
     _desLab.textColor = [UIColor whiteColor];

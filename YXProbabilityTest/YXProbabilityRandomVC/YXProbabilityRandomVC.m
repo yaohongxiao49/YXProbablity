@@ -275,6 +275,7 @@
 #pragma mark - 获取蓝球、红球数字机率
 - (void)getBallProbabilityByArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr finishedBlock:(void(^)(NSDictionary *minDic, NSDictionary *maxDic))finishedBlock {
     
+    NSLog(@"开始获取蓝球、红球数字机率！");
     NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr] type:NSOrderedAscending]];
     NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedAscending]];
     
@@ -434,6 +435,7 @@
 #pragma mark - 组装数据
 - (void)assemblyValueByArr:(NSMutableArray *)arr min:(NSInteger)min {
     
+    NSLog(@"开始进行数据组装！");
     NSMutableArray *endArr = [[NSMutableArray alloc] init];
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        

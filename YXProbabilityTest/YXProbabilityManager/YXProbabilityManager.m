@@ -41,6 +41,116 @@
         _allArr = [[NSMutableArray alloc] init];
         NSMutableDictionary *dic;
         
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020059", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"02"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"04"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"10"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"17"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"22"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"25"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"14"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020058", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"01"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"03"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"11"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"12"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"19"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"26"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"07"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020057", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"09"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"14"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"21"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"23"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"26"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"32"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"03"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020056", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"02"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"05"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"08"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"12"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"26"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"31"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"14"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020055", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"01"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"05"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"07"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"23"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"28"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"30"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"12"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020054", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"03"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"10"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"19"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"25"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"26"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"31"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"02"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020053", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"02"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"14"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"15"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"16"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"32"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"33"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"01"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020052", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"02"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"08"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"13"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"29"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"32"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"33"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"15"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020051", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"03"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"06"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"08"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"11"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"19"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"28"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"08"}
+        ]}];
+        [_allArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020050", kValueArr:@[
+                                                                        @{kBoolBlue:@(NO), kValue:@"04"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"09"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"17"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"20"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"32"},
+                                                                        @{kBoolBlue:@(NO), kValue:@"33"},
+                                                                        @{kBoolBlue:@(YES), kValue:@"15"}
+        ]}];
+        [_allArr addObject:dic];
+        
         dic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:@"2020049", kValueArr:@[
                                                                         @{kBoolBlue:@(NO), kValue:@"01"},
                                                                         @{kBoolBlue:@(NO), kValue:@"07"},
