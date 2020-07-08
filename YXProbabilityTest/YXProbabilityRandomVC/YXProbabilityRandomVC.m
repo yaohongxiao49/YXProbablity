@@ -194,8 +194,8 @@
     
     __weak typeof(self) weakSelf = self;
     NSMutableArray *historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
-    NSString *minDiscribe = [[historyArr firstObject] objectForKey:@"kPieChartLineGraphicsValue"];
-    NSString *maxDiscribe = [[historyArr lastObject] objectForKey:@"kPieChartLineGraphicsValue"];
+    NSString *minDiscribe = [[historyArr firstObject] objectForKey:kPieChartLineGraphicsValue];
+    NSString *maxDiscribe = [[historyArr lastObject] objectForKey:kPieChartLineGraphicsValue];
     if ([minDiscribe isEqualToString:@"min"]) {
         [historyArr removeObject:[historyArr firstObject]];
     }
@@ -295,6 +295,8 @@
        
         [minArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
+    NSArray *minDescArr = [self sortingByArr:(NSArray *)minArr type:NSOrderedDescending];
+    minArr = [[NSMutableArray alloc] initWithArray:minDescArr];
     [minBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         [minArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
@@ -305,6 +307,8 @@
        
         [maxArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
     }];
+    NSArray *maxDescArr = [self sortingByArr:(NSArray *)maxArr type:NSOrderedDescending];
+    maxArr = [[NSMutableArray alloc] initWithArray:maxDescArr];
     [maxBlueArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         [maxArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
@@ -531,6 +535,8 @@
 - (void)initView {
     
     __weak typeof(self) weakSelf = self;
+    
+    NSLog(@"当前已统计 %@ 个", @([YXProbabilityManager sharedManager].randomListArr.count));
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 80);
