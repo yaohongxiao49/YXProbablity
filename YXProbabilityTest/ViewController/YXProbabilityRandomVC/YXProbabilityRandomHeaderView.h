@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^YXProbabilityRandomHVBlock)(void);
 typedef void(^YXProbabilityRandomHVEndBlock)(void);
+typedef void(^YXProbabilityRandomHVCompareBlock)(void);
 
 @interface YXProbabilityRandomHeaderView : UIView
 
@@ -22,6 +23,7 @@ typedef void(^YXProbabilityRandomHVEndBlock)(void);
 @property (nonatomic, assign) CGFloat prgressValue;
 @property (nonatomic, copy) YXProbabilityRandomHVBlock yxProbabilityRandomHVBlock;
 @property (nonatomic, copy) YXProbabilityRandomHVEndBlock yxProbabilityRandomHVEndBlock;
+@property (nonatomic, copy) YXProbabilityRandomHVCompareBlock yxProbabilityRandomHVCompareBlock;
 
 @end
 

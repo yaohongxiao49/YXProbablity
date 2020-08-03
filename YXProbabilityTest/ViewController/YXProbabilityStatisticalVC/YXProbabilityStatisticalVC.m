@@ -114,6 +114,63 @@
     return resultArray;
 }
 
+#pragma mark - 设置属性文字
+- (NSMutableAttributedString *)attString:(NSString *)string font:(UIFont *)font color:(UIColor *)color subString:(NSString *)subString subFont:(UIFont *)subFont subColor:(UIColor *)subColor {
+    
+    if (string.length == 0) {
+        return nil;
+    }
+    
+    //设置字符串
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:string];
+    //整个字符串的范围
+    NSRange range = [string rangeOfString:string];
+    //整个字符串字体类型和大小
+    [attString addAttribute:NSFontAttributeName value:font range:range];
+    //整个字符串字体颜色
+    [attString addAttribute:NSForegroundColorAttributeName value:color range:range];
+    
+    //改变某段字符串
+    if (subString.length > 0) {
+        //计算要改变的范围
+        NSRange subRange = [string rangeOfString:subString];
+        //改某段字体类型和大小
+        [attString addAttribute:NSFontAttributeName value:subFont range:subRange];
+        //改某段字体颜色
+        [attString addAttribute:NSForegroundColorAttributeName value:subColor range:subRange];
+    }
+    
+    return attString;
+}
++ (NSMutableAttributedString *)attString:(NSString *)string font:(UIFont *)font color:(UIColor *)color subStringArr:(NSArray *)subStringArr subFontArr:(NSArray *)subFontArr subColorArr:(NSArray *)subColorArr {
+    
+    if (string.length == 0) {
+        return nil;
+    }
+    
+    //设置字符串
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:string];
+    //整个字符串的范围
+    NSRange range = [string rangeOfString:string];
+    //整个字符串字体类型和大小
+    [attString addAttribute:NSFontAttributeName value:font range:range];
+    //整个字符串字体颜色
+    [attString addAttribute:NSForegroundColorAttributeName value:color range:range];
+    
+    //改变某段字符串
+    for (int i = 0; i < subStringArr.count; i++) {
+        NSString *subString = subStringArr[i];
+        //计算要改变的范围
+        NSRange subRange = [string rangeOfString:subString];
+        //改某段字体类型和大小
+        [attString addAttribute:NSFontAttributeName value:subFontArr[i] range:subRange];
+        //改某段字体颜色
+        [attString addAttribute:NSForegroundColorAttributeName value:subColorArr[i] range:subRange];
+    }
+    
+    return attString;
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -149,7 +206,9 @@
     lab.backgroundColor = [UIColor whiteColor];
     lab.numberOfLines = 0;
     if (section == 0) {
-        lab.text = [NSString stringWithFormat:@"出现频率最高的号码：红球：%@ 篮球：%@", _mustRed, _mustBlue];
+        NSString *subStr = [NSString stringWithFormat:@"红球：%@\n篮球：%@", _mustRed, _mustBlue];
+        lab.text = [NSString stringWithFormat:@"出现频率最高的号码：%@", subStr];
+        lab.attributedText = [self attString:lab.text font:lab.font color:[UIColor blackColor] subString:subStr subFont:[UIFont boldSystemFontOfSize:16] subColor:[UIColor orangeColor]];
     }
     else {
         lab.text = section == 1 ? @"红球" : @"蓝球";

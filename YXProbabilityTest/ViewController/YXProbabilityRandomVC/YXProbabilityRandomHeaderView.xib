@@ -48,17 +48,29 @@
                         <action selector="progressCloseBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="dny-6b-qOs"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPs-XD-27y">
+                    <rect key="frame" x="85" y="10" width="239" height="30"/>
+                    <state key="normal" title="与往期数据对比">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="progressCompareBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="Zo3-Ci-WHH"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="KEq-bJ-Nkm" secondAttribute="trailing" constant="15" id="5r4-7K-Y7A"/>
+                <constraint firstItem="DPs-XD-27y" firstAttribute="leading" secondItem="gbu-of-QKy" secondAttribute="trailing" constant="15" id="8MT-JJ-4uA"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="top" secondItem="gbu-of-QKy" secondAttribute="top" id="8Ya-oB-pYI"/>
+                <constraint firstItem="VKK-IZ-PL9" firstAttribute="leading" secondItem="DPs-XD-27y" secondAttribute="trailing" constant="15" id="Kxg-SP-zpH"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Oj0-IF-ZQJ"/>
                 <constraint firstItem="XCA-mT-rED" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PLr-T1-G8H"/>
                 <constraint firstAttribute="trailing" secondItem="VKK-IZ-PL9" secondAttribute="trailing" constant="15" id="ayg-3t-Tu5"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="height" secondItem="gbu-of-QKy" secondAttribute="height" id="due-yv-S1e"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="ekB-1M-9YU"/>
                 <constraint firstAttribute="bottom" secondItem="KEq-bJ-Nkm" secondAttribute="bottom" constant="20" id="mNy-9H-rnw"/>
+                <constraint firstItem="DPs-XD-27y" firstAttribute="centerY" secondItem="gbu-of-QKy" secondAttribute="centerY" id="oH4-sT-LIV"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="width" secondItem="gbu-of-QKy" secondAttribute="width" id="q4w-w1-Jwo"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="top" secondItem="XCA-mT-rED" secondAttribute="bottom" constant="10" id="tAG-GK-V8d"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="tVb-ll-Xjb"/>

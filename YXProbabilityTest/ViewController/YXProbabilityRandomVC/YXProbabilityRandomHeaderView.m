@@ -46,6 +46,13 @@
         self.yxProbabilityRandomHVEndBlock();
     }
 }
+#pragma mark - 与往期数据对比
+- (IBAction)progressCompareBtn:(UIButton *)sender {
+    
+    if (self.yxProbabilityRandomHVCompareBlock) {
+        self.yxProbabilityRandomHVCompareBlock();
+    }
+}
 
 #pragma mark - setting
 - (void)setPrgressValue:(CGFloat)prgressValue {

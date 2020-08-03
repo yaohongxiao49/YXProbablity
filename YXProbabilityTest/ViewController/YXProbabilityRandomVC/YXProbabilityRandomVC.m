@@ -13,8 +13,9 @@
 #import "YXProbabilityAllListCell.h"
 #import "YXPieChartLineGraphicsModel.h"
 #import "NSObject+YXCategory.h"
+#import "YXProbabilityCompareVC.h"
 
-#define kCycleCount 189704646
+#define kCycleCount 10000000//189704646
 #define kcalculateCount 10
 
 #define kShowCount 2
@@ -482,6 +483,15 @@
     [self reloadAlertView];
 }
 
+#pragma mark - 跳转至比较页面
+- (void)pushToCompareVC {
+    
+    YXProbabilityCompareVC *vc = [[YXProbabilityCompareVC alloc] init];
+    vc.randomArr = _endArr;
+    vc.realArr = [[YXProbabilityManager sharedManager] allArr];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -539,7 +549,7 @@
     NSLog(@"当前已统计 %@ 个", @([YXProbabilityManager sharedManager].randomListArr.count));
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
-    _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 80);
+    _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
     _headerView.yxProbabilityRandomHVBlock = ^{
       
         [weakSelf initDataSource];
@@ -548,6 +558,10 @@
     _headerView.yxProbabilityRandomHVEndBlock = ^{
       
         weakSelf.boolCancel = YES;
+    };
+    _headerView.yxProbabilityRandomHVCompareBlock = ^{
+      
+        [weakSelf pushToCompareVC];
     };
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight) style:UITableViewStylePlain];
