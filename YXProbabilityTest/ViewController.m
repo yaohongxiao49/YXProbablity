@@ -43,9 +43,36 @@
 - (void)getBallHTTPByIssueCount:(NSInteger)issueCount {
     
     __weak typeof(self) weakSelf = self;
-    [YXProbabilityRequest getBallHistoryListByIssueCount:issueCount successBlock:^(id responseObj) {
+    [YXProbabilityRequest getBallHistoryListByIssueCount:issueCount successBlock:^(NSArray *arr) {
         
         [weakSelf endRefresh];
+        
+        if (arr.count != 0) {
+            NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+            [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+               
+                NSString *date = obj[@"code"];
+                NSString *blue = obj[@"blue"];
+                NSString *red = obj[@"red"];
+                NSArray *redArr = [red componentsSeparatedByString:@","];
+                
+                NSMutableDictionary *endDic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:date, kValueArr:@[
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[0]},
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[1]},
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[2]},
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[3]},
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[4]},
+                                                                                @{kBoolBlue:@(NO), kValue:redArr[5]},
+                                                                                @{kBoolBlue:@(YES), kValue:blue}
+                ]}];
+                [valueArr addObject:endDic];
+            }];
+            
+            [[[YXProbabilityManager sharedManager] allArr] setArray:valueArr];
+            weakSelf.dataSourceArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:valueArr];
+        }
+        
+        [weakSelf.tableView reloadData];
     } failBlock:^(NSError *error) {
         
         [weakSelf endRefresh];
@@ -110,7 +137,7 @@
     _tableView.tableHeaderView = _headerView;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        weakSelf.issueCount = 20;
+        weakSelf.issueCount = 30;
         [weakSelf getBallHTTPByIssueCount:weakSelf.issueCount];
     }];
     _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{

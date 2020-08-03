@@ -20,7 +20,8 @@
     [HttpRequestManager getRequest:url params:params forHTTPHeaderField:nil success:^(id responseObj) {
         
         if (successBlock) {
-            successBlock(responseObj);
+            NSArray *arr = responseObj[@"result"];
+            successBlock(arr);
         }
     } failure:^(NSError *error) {
         
