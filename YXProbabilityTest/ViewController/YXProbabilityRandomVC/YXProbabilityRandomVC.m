@@ -10,9 +10,7 @@
 #import "YXProbabilityRandomVC.h"
 #import "YXProbabilityManager.h"
 #import "YXProbabilityRandomHeaderView.h"
-#import "YXProbabilityAllListCell.h"
 #import "YXPieChartLineGraphicsModel.h"
-#import "NSObject+YXCategory.h"
 #import "YXProbabilityCompareVC.h"
 
 #define kCycleCount 10000000//189704646

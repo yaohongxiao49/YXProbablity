@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXProbabilityAllListCell.h"
+#import "NSObject+YXCategory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
