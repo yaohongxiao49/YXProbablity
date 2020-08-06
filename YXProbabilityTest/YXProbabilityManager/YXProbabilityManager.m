@@ -33,6 +33,17 @@
     NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
     return arr;
 }
+- (void)setRealListArr:(NSArray *)realListArr {
+    
+    NSString *path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRealListArr];
+    [NSKeyedArchiver archiveRootObject:realListArr toFile:path];
+}
+- (NSArray *)realListArr {
+    
+    NSString *path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRealListArr];
+    NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
+    return arr;
+}
 
 #pragma mark - 懒加载
 - (NSMutableArray *)allArr {

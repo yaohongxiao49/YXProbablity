@@ -266,10 +266,14 @@
     self.headerView.blueArr = [YXPieChartLineGraphicsArrModel arrayOfModelsFromDictionaries:[self statisticalRepeatNum:blueBallArr]];
     
     NSMutableArray *mustRedArr = [[NSMutableArray alloc] init];
+    NSMutableArray *valueRedArr = [[NSMutableArray alloc] init];
     [[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redBallArr]] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         if (idx < 6) {
             [mustRedArr addObject:[obj objectForKey:kPieChartLineGraphicsName]];
+            
+            NSDictionary *dic = @{kBoolBlue:@(NO), kValue:[obj objectForKey:kPieChartLineGraphicsName]};
+            [valueRedArr addObject:dic];
         }
     }];
     _mustRed = [mustRedArr componentsJoinedByString:@" "];
@@ -282,6 +286,14 @@
         }
     }];
     _mustBlue = [mustBlueArr firstObject];
+    NSDictionary *dic = @{kBoolBlue:@(YES), kValue:_mustBlue};
+    [valueRedArr addObject:dic];
+    
+    //概率最大的数据集合
+    NSMutableDictionary *valueDic = [[NSMutableDictionary alloc] init];
+    [valueDic setValue:@"statistical" forKey:kDate];
+    [valueDic setObject:valueRedArr forKey:kValueArr];
+    [YXProbabilityManager sharedManager].realListArr = @[valueDic];
 }
 
 #pragma mark - 懒加载

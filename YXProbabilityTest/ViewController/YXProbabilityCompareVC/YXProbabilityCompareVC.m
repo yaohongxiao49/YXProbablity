@@ -125,7 +125,7 @@
     
     _dataSourceArr = [[NSMutableArray alloc] init];
     _randomMutArr = [[NSMutableArray alloc] initWithArray:self.randomArr];
-    _realMutArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:(NSArray *)self.realArr];
+    _realMutArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].realListArr];
     
     NSMutableArray *redArr = [[NSMutableArray alloc] init];
     NSMutableArray *blueArr = [[NSMutableArray alloc] init];

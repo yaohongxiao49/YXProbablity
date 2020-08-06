@@ -11,6 +11,7 @@
 #import "YXProbabilityListModel.h"
 
 #define kRandomListArr @"randomListArr"
+#define kRealListArr @"realListArr"
 #define kYXToolLocalSaveDocDirectoryPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 随机数据集合数组 */
 @property (nonatomic, copy) NSArray *randomListArr;
+/** 往期数据统计评率最大数集合 */
+@property (nonatomic, copy) NSArray *realListArr;
 
 @end
 
