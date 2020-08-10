@@ -11,17 +11,19 @@
 @interface YXProbabilityAllListCell () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, copy) NSString *secTitle;
-@property (nonatomic, strong) NSArray *dataSourceArr;
+@property (nonatomic, strong) NSMutableArray *dataSourceArr;
+@property (nonatomic, strong) NSMutableArray *oldArr;
 
 @end
 
 @implementation YXProbabilityAllListCell
 
-- (void)reloadValueByIndexPath:(NSIndexPath *)indexPath arr:(NSMutableArray *)arr {
+- (void)reloadValueByIndexPath:(NSIndexPath *)indexPath arr:(NSMutableArray *)arr oldArr:(NSMutableArray *)oldArr {
     
     YXProbabilityListModel *model = arr[indexPath.row];
     _secTitle = model.date;
     _dataSourceArr = model.valueArr;
+    _oldArr = oldArr;
     
     [self.collectionView reloadData];
 }
@@ -38,7 +40,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     YXProbabilityCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([YXProbabilityCollectionViewCell class]) forIndexPath:indexPath];
-    [cell reloadValueByIndexPath:indexPath arr:_dataSourceArr];
+    [cell reloadValueByIndexPath:indexPath arr:(NSArray *)_dataSourceArr oldArr:(NSArray *)_oldArr];
     
     return cell;
 }

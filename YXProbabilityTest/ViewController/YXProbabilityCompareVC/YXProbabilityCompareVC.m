@@ -11,9 +11,7 @@
 @interface YXProbabilityCompareVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataSourceArr;
-@property (nonatomic, strong) NSMutableArray *randomMutArr;
-@property (nonatomic, strong) NSMutableArray *realMutArr;
+@property (nonatomic, strong) NSMutableArray *secArr;
 
 @end
 
@@ -30,50 +28,103 @@
     [self initDataSource];
 }
 
+#pragma mark - 比较方法
+- (void)compareMethod {
+    
+    NSMutableArray *allArr = [[NSMutableArray alloc] initWithArray:(NSArray *)[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].allArr]];
+    
+    BOOL boolRuleOutLastObj = YES;
+    if (boolRuleOutLastObj) { //排除最近的一期
+        if (allArr.count != 0) [allArr removeObjectAtIndex:0];
+        [self compareExperimentMethodByArr:allArr];
+    }
+    else {
+        
+    }
+}
+
+#pragma mark - 实验比较数据（对比除最近一期数据，计算出可能数据）
+- (void)compareExperimentMethodByArr:(NSMutableArray *)arr {
+    
+    NSMutableArray *rFirstArr = [[NSMutableArray alloc] init];
+    NSMutableArray *rSecondArr = [[NSMutableArray alloc] init];
+    NSMutableArray *rThirdArr = [[NSMutableArray alloc] init];
+    NSMutableArray *rFourArr = [[NSMutableArray alloc] init];
+    NSMutableArray *rFiveArr = [[NSMutableArray alloc] init];
+    NSMutableArray *rSixArr = [[NSMutableArray alloc] init];
+    NSMutableArray *bFirstArr = [[NSMutableArray alloc] init];
+    
+    [arr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger idx, BOOL * _Nonnull stop) {
+           
+            if (infoModel.boolBlue) {
+                [bFirstArr addObject:infoModel.value];
+            }
+            else {
+                switch (idx) {
+                    case 0:
+                        [rFirstArr addObject:infoModel.value];
+                        break;
+                    case 1:
+                        [rSecondArr addObject:infoModel.value];
+                        break;
+                    case 2:
+                        [rThirdArr addObject:infoModel.value];
+                        break;
+                    case 3:
+                        [rFourArr addObject:infoModel.value];
+                        break;
+                    case 4:
+                        [rFiveArr addObject:infoModel.value];
+                        break;
+                    case 5:
+                        [rSixArr addObject:infoModel.value];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }];
+    }];
+    NSLog(@"rFirstArr == %@", rFirstArr);
+}
+
+#pragma mark - 修改数组数据
+- (void)changeCellValue:(YXProbabilityCompareVCType)key keyTitle:(NSString *)keyTitle value:(id)value {
+    
+    [self changeToolArrayForSetDic:key keyTitle:keyTitle keyValue:value];
+}
+- (void)changeToolArrayForSetDic:(YXProbabilityCompareVCType)key keyTitle:(NSString *)keyTitle keyValue:(id)keyValue {
+    
+    [self.secArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([[obj objectForKey:@"tag"] integerValue] == key) {
+            [obj setObject:keyValue forKey:keyTitle];
+            *stop = YES;
+        }
+    }];
+    [_tableView reloadData];
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 4;
+    return self.secArr.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    switch (section) {
-        case 0: //比较数据
-            return _dataSourceArr.count;
-            break;
-        case 1: //综合往期数据
-            return _realMutArr.count;
-            break;
-        case 2: //随机数据频率小
-            return [[_randomMutArr firstObject] count];
-            break;
-        case 3: //随机数据概率大
-            return [[_randomMutArr lastObject] count];
-            break;
-        default:
-            break;
-    }
-    return 0;
+    NSMutableArray *arr = [self.secArr[section] objectForKey:@"valueArr"];
+    return arr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YXProbabilityAllListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
-    switch (indexPath.section) {
-        case 0:
-            [cell reloadValueByIndexPath:indexPath arr:_dataSourceArr];
-            break;
-        case 1:
-            [cell reloadValueByIndexPath:indexPath arr:_realMutArr];
-            break;
-        case 2:
-            [cell reloadValueByIndexPath:indexPath arr:[_randomMutArr firstObject]];
-            break;
-        case 3:
-            [cell reloadValueByIndexPath:indexPath arr:[_randomMutArr lastObject]];
-            break;
-        default:
-            break;
-    }
+    NSMutableArray *arr = [self.secArr[indexPath.section] objectForKey:@"valueArr"];
+    NSInteger type = [[self.secArr[indexPath.section] objectForKey:@"tag"] integerValue];
+    
+    NSMutableArray *oldArr = type != YXProbabilityCompareVCTypeOld ? [self.secArr[0] objectForKey:@"valueArr"] : (NSMutableArray *)@[];
+    [cell reloadValueByIndexPath:indexPath arr:arr oldArr:oldArr];
     
     return cell;
 }
@@ -83,22 +134,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     UILabel *lab = [UILabel new];
-    switch (section) {
-        case 0:
-            lab.text = @"比较数据";
-            break;
-        case 1:
-            lab.text = @"综合往期数据";
-            break;
-        case 2:
-            lab.text = @"随机频率最小";
-            break;
-        case 3:
-            lab.text = @"随机频率最大";
-            break;
-        default:
-            break;
-    }
+    lab.text = [self.secArr[section] objectForKey:@"title"];
     return lab;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,39 +159,40 @@
 }
 - (void)initDataSource {
     
-    _dataSourceArr = [[NSMutableArray alloc] init];
-    _randomMutArr = [[NSMutableArray alloc] initWithArray:self.randomArr];
-    _realMutArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].realListArr];
+    NSMutableArray *oldArr = [[NSMutableArray alloc] initWithObjects:[[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]] firstObject], nil];
+    NSMutableArray *randomMutArr = [[NSMutableArray alloc] initWithArray:self.randomArr];
+    NSMutableArray *realMutArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].realListArr];
     
-    NSMutableArray *redArr = [[NSMutableArray alloc] init];
-    NSMutableArray *blueArr = [[NSMutableArray alloc] init];
+    [self changeCellValue:YXProbabilityCompareVCTypeOld keyTitle:@"valueArr" value:oldArr];
+    [self changeCellValue:YXProbabilityCompareVCTypeStatistical keyTitle:@"valueArr" value:realMutArr];
+    [self changeCellValue:YXProbabilityCompareVCTypeRandomMin keyTitle:@"valueArr" value:[randomMutArr firstObject]];
+    [self changeCellValue:YXProbabilityCompareVCTypeRandomMax keyTitle:@"valueArr" value:[randomMutArr lastObject]];
     
+    [self compareMethod];
+}
+
+#pragma mark - 懒加载
+- (NSMutableArray *)secArr {
     
-    //组装蓝球数组、红球数组
-    [_realMutArr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull realModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        [realModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull realInfoModel, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-        }];
-    }];
-    
-    [_randomMutArr enumerateObjectsUsingBlock:^(NSArray *  _Nonnull arr, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (!_secArr) {
+        _secArr = [[NSMutableArray alloc] init];
+        NSMutableDictionary *dic;
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"往期数据", @"tag":@(YXProbabilityCompareVCTypeOld), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
         
-        [arr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull randomModel, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            [randomModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull randomInfoModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                if (randomInfoModel.boolBlue) {
-                    [blueArr addObject:randomInfoModel.value];
-                }
-                else {
-                    [redArr addObject:randomInfoModel.value];
-                }
-            }];
-        }];
-    }];
-    [self.randomArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"比较数据", @"tag":@(YXProbabilityCompareVCTypeCompare), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
         
-    }];
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"统计数据", @"tag":@(YXProbabilityCompareVCTypeStatistical), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"随机频率最大数据", @"tag":@(YXProbabilityCompareVCTypeRandomMax), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"随机频率最小数据", @"tag":@(YXProbabilityCompareVCTypeRandomMin), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
+    }
+    return _secArr;
 }
 
 @end
