@@ -31,7 +31,12 @@
             
             NSInteger value = [model.value integerValue];
             NSInteger oldValue = [oldModel.value integerValue];
-            boolBingo = value == oldValue ? YES : NO;
+            if (model.boolBlue && oldModel.boolBlue) {
+                boolBingo = value == oldValue ? YES : NO;
+            }
+            else if (!model.boolBlue && !oldModel.boolBlue) {
+                boolBingo = value == oldValue ? YES : NO;
+            }
             if (boolBingo == YES) {
                 *stop = YES;
             }
