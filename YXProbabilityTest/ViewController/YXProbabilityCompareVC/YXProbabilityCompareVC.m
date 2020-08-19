@@ -33,6 +33,7 @@
     
     NSMutableArray *allArr = [[NSMutableArray alloc] initWithArray:(NSArray *)[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].allArr]];
     
+#pragma mark - 排除最近一期
     BOOL boolRuleOutLastObj = YES;
     if (boolRuleOutLastObj) { //排除最近的一期
         if (allArr.count != 0) [allArr removeObjectAtIndex:0];
