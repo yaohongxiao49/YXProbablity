@@ -188,7 +188,7 @@
         CGFloat numberX;
         CGFloat numberY = breakPointY - numberHeight;
         
-        CGFloat titleX = breakPointX;
+        CGFloat titleX = 0;
         CGFloat titleY = breakPointY + 2;
         
         //文本段落属性(绘制文字和数字时需要)

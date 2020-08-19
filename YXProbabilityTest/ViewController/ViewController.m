@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) NSInteger issueCount;
-@property (nonatomic, copy) NSMutableArray *dataSourceArr;
+@property (nonatomic, strong) NSMutableArray *dataSourceArr;
 @property (nonatomic, copy) YXProbabilityAllHeaderView *headerView;
 
 @end

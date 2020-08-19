@@ -22,11 +22,11 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
-@property (nonatomic, copy) NSMutableArray *redArr;
-@property (nonatomic, copy) NSMutableArray *blueArr;
-@property (nonatomic, copy) NSMutableArray *redCollecArr;
-@property (nonatomic, copy) NSMutableArray *blueCollecArr;
-@property (nonatomic, copy) NSMutableArray *resultRandomArr;
+@property (nonatomic, strong) NSMutableArray *redArr;
+@property (nonatomic, strong) NSMutableArray *blueArr;
+@property (nonatomic, strong) NSMutableArray *redCollecArr;
+@property (nonatomic, strong) NSMutableArray *blueCollecArr;
+@property (nonatomic, strong) NSMutableArray *resultRandomArr;
 @property (nonatomic, strong) NSMutableArray *endArr;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, strong) YXProbabilityRandomHeaderView *headerView;
@@ -326,15 +326,13 @@
 #pragma mark - 循环取数
 - (void)getRandomCollectionByCount:(NSInteger)count {
     
-    __weak typeof(self) weakSelf = self;
-    
     if (count == 0) {
         [self showChance];
         return;
     }
     
     [_activityIndicatorView startAnimating];
-    _begainTime = [[weakSelf currentTimeStr] integerValue];
+    _begainTime = [[self currentTimeStr] integerValue];
     NSInteger calculateCount = count /kcalculateCount;
     dispatch_group_t group = dispatch_group_create();
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
@@ -345,18 +343,18 @@
 
             dispatch_semaphore_signal(semaphore);
             for (int i = 0; i < calculateCount; i++) {
-                if (weakSelf.boolCancel) {
+                if (self.boolCancel) {
                     break;
                 }
                 else {
-                    [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr];
+                    [self getRandomByRedArr:self.redArr blueArr:self.blueArr];
                 }
             }
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
-        [weakSelf endCount];
+        [self endCount];
     });
 }
 

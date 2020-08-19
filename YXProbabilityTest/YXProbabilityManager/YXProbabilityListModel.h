@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YXProbabilityListModel : NSObject
 
 @property (nonatomic, copy) NSString *date;
-@property (nonatomic, copy) NSMutableArray *valueArr;
+@property (nonatomic, strong) NSMutableArray *valueArr;
 
 - (instancetype)initWithDic:(NSDictionary *)dic;
 
