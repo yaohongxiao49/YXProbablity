@@ -25,9 +25,17 @@
     }
     
     if (oldArr.count != 0) {
+        __block BOOL boolBingo = NO;
         YXProbabilityListModel *oldListModel = oldArr[0];
-        YXProbabilityBallInfoModel *oldModel = oldListModel.valueArr[indexPath.row];
-        BOOL boolBingo = [model.value isEqualToString:oldModel.value] ? YES : NO;
+        [oldListModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull oldModel, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSInteger value = [model.value integerValue];
+            NSInteger oldValue = [oldModel.value integerValue];
+            boolBingo = value == oldValue ? YES : NO;
+            if (boolBingo == YES) {
+                *stop = YES;
+            }
+        }];
         self.numBtn.backgroundColor = boolBingo ? [UIColor greenColor] : [UIColor whiteColor];
     }
 }

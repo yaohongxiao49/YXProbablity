@@ -22,8 +22,8 @@
     
     YXProbabilityListModel *model = arr[indexPath.row];
     _secTitle = model.date;
-    _dataSourceArr = model.valueArr;
-    _oldArr = oldArr;
+    _dataSourceArr = [[NSMutableArray alloc] initWithArray:(NSArray *)model.valueArr];
+    _oldArr = [[NSMutableArray alloc] initWithArray:(NSArray *)oldArr];
     
     [self.collectionView reloadData];
 }

@@ -87,7 +87,6 @@
             }
         }];
     }];
-    NSLog(@"rFirstArr == %@", rFirstArr);
 }
 
 #pragma mark - 修改数组数据
