@@ -35,8 +35,6 @@
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
-    [Bmob registerWithAppKey:kBmobAppKey];
-    
     return YES;
 }
 

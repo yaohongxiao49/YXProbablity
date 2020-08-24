@@ -40,7 +40,6 @@
 		84804A6A24921D9A009F160F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A6924921D9A009F160F /* main.m */; };
 		84804A7424921D9A009F160F /* YXProbabilityTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7324921D9A009F160F /* YXProbabilityTestTests.m */; };
 		84804A7F24921D9A009F160F /* YXProbabilityTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */; };
-		84E6A4D024ADD59A002ED2B3 /* BmobSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */; };
 		84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */; };
 		84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D424ADD66E002ED2B3 /* Security.framework */; };
 		84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */; };
@@ -134,7 +133,6 @@
 		84804A7A24921D9A009F160F /* YXProbabilityTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YXProbabilityTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityTestUITests.m; sourceTree = "<group>"; };
 		84804A8024921D9A009F160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BmobSDK.framework; sourceTree = "<group>"; };
 		84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		84E6A4D424ADD66E002ED2B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,7 +165,6 @@
 				84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */,
 				84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */,
 				84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */,
-				84E6A4D024ADD59A002ED2B3 /* BmobSDK.framework in Frameworks */,
 				5D0F56B34C515145CE6037E6 /* libPods-YXProbabilityTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,7 +353,6 @@
 		84804A5624921D99009F160F /* YXProbabilityTest */ = {
 			isa = PBXGroup;
 			children = (
-				84E6A4CF24ADD59A002ED2B3 /* BmobSDK.framework */,
 				84804A5724921D99009F160F /* AppDelegate.h */,
 				84804A5824921D99009F160F /* AppDelegate.m */,
 				84804A5A24921D99009F160F /* SceneDelegate.h */,

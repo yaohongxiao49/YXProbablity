@@ -54,85 +54,8 @@
         if (!isFinished) {
             [weakSelf showChance];
         }
-        else {
-            [self removeBmobValueHTTP];
-        }
     }];
 }
-
-#pragma mark - 修改数据库数据
-- (void)changeBmobValueHTTP:(NSArray *)arr {
-    
-    __weak typeof(self) weakSelf = self;
-    [_activityIndicatorView startAnimating];
-    
-    BmobQuery *bquery = [BmobQuery queryWithClassName:kTableName];
-    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        
-        if (array.count != 0) {
-            for (BmobObject *obj in array) { //修改Bmob数据信息
-                [bquery getObjectInBackgroundWithId:obj.objectId block:^(BmobObject *object, NSError *error) {
-                    
-                    if (!error) {
-                        if (object) { //对象存在
-                            BmobObject *obj = [BmobObject objectWithoutDatatWithClassName:object.className objectId:object.objectId];
-                            [obj setObject:arr forKey:kTableValueKey];
-                            [obj updateInBackground];
-                            NSLog(@"修改成功！");
-                        }
-                        
-                        [weakSelf.activityIndicatorView stopAnimating];
-                    }
-                    else { //进行错误处理
-                        NSLog(@"error == %@", error.localizedDescription);
-                    }
-                }];
-            }
-        }
-        else { //创建Bmob数据信息
-            BmobObject *bmobObj = [BmobObject objectWithClassName:kTableName];
-            [bmobObj setObject:arr forKey:kTableValueKey];
-            [bmobObj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                
-                if (!error) { //对象存在
-                    NSLog(@"上传成功！");
-                }
-                else { //进行错误处理
-                    NSLog(@"error == %@", error.localizedDescription);
-                }
-                [weakSelf.activityIndicatorView stopAnimating];
-            }];
-        }
-    }];
-}
-
-#pragma mark - 删除数据库数据
-- (void)removeBmobValueHTTP {
-    
-    __weak typeof(self) weakSelf = self;
-    [_activityIndicatorView startAnimating];
-    
-    //获取服务器里的用户信息
-    BmobQuery *bquery = [BmobQuery queryWithClassName:kTableName];
-    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        
-        for (BmobObject *obj in array) {
-            [bquery getObjectInBackgroundWithId:obj.objectId block:^(BmobObject *object, NSError *error){
-                if (error) { //进行错误处理
-                    
-                }
-                else {
-                    if (object) { //异步删除object
-                        [object deleteInBackground];
-                        NSLog(@"删除成功！");
-                    }
-                }
-            }];
-        }
-        [weakSelf.activityIndicatorView stopAnimating];
-    }];
-}
-
 
 #pragma mark - 获取当前时间
 - (NSString *)currentTimeStr {
@@ -216,7 +139,6 @@
             }];
         }
         [YXProbabilityManager sharedManager].randomListArr = (NSArray *)listArr;
-        [weakSelf changeBmobValueHTTP:[YXProbabilityManager sharedManager].randomListArr];
         [weakSelf showChance];
     }];
     [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];

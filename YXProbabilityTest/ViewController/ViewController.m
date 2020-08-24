@@ -36,7 +36,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self getSaveBallHTTP];
 }
 
 #pragma mark - 即时获取双色球数据
@@ -84,18 +83,6 @@
     
     [_tableView.mj_header endRefreshing];
     [_tableView.mj_footer endRefreshing];
-}
-
-#pragma mark - 获取双色球储存数据
-- (void)getSaveBallHTTP {
-    
-    BmobQuery *bquery = [BmobQuery queryWithClassName:kTableName];
-    [bquery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        
-        for (BmobObject *obj in array) {
-            [YXProbabilityManager sharedManager].randomListArr = [obj objectForKey:kTableValueKey];
-        }
-    }];
 }
 
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
