@@ -294,6 +294,25 @@
     [valueDic setValue:@"statistical" forKey:kDate];
     [valueDic setObject:valueRedArr forKey:kValueArr];
     [YXProbabilityManager sharedManager].realListArr = @[valueDic];
+    
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray *probabilityRedArr = [[NSMutableArray alloc] init];
+    [_redArr enumerateObjectsUsingBlock:^(YXPieChartLineGraphicsModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        CGFloat probability = (model.value /weakSelf.originalRedArr.count) *100;
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{kProbability:@(probability), kValue:@(model.value)}];
+        [probabilityRedArr addObject:dic];
+    }];
+    [YXProbabilityManager sharedManager].probabilityRedArr = [[NSArray alloc] initWithArray:(NSArray *)probabilityRedArr];
+    
+    NSMutableArray *probabilityBlueArr = [[NSMutableArray alloc] init];
+    [_blueArr enumerateObjectsUsingBlock:^(YXPieChartLineGraphicsModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        CGFloat probability = (model.value /weakSelf.originalBlueArr.count) *100;
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{kProbability:@(probability), kValue:@(model.value)}];
+        [probabilityBlueArr addObject:dic];
+    }];
+    [YXProbabilityManager sharedManager].probabilityBlueArr = [[NSArray alloc] initWithArray:(NSArray *)probabilityBlueArr];
 }
 
 #pragma mark - 懒加载

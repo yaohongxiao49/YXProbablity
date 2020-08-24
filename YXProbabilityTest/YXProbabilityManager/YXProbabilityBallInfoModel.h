@@ -13,6 +13,8 @@
 #define kValue @"value"
 #define kBoolBlue @"boolBlue"
 
+#define kProbability @"probability"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YXProbabilityBallInfoModel : NSObject

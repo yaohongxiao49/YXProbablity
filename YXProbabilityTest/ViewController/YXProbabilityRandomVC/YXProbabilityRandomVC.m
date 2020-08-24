@@ -69,7 +69,13 @@
 #pragma mark - 显示出现频率最高的2位以及出现频率最低的2位
 - (void)showChance {
     
-    NSArray *arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
+    NSArray *arr;
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
+    }
+    else {
+        arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].probablityRandomListArr];
+    }
     
     NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
     NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
@@ -115,7 +121,13 @@
 - (void)showAlertView:(NSArray *)arr {
     
     __weak typeof(self) weakSelf = self;
-    NSMutableArray *historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
+    NSMutableArray *historyArr;
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
+    }
+    else {
+        historyArr = [[NSMutableArray alloc] initWithArray:[YXProbabilityManager sharedManager].probablityRandomListArr];
+    }
     NSString *minDiscribe = [[historyArr firstObject] objectForKey:kPieChartLineGraphicsValue];
     NSString *maxDiscribe = [[historyArr lastObject] objectForKey:kPieChartLineGraphicsValue];
     if ([minDiscribe isEqualToString:@"min"]) {
@@ -138,7 +150,12 @@
                 [listArr addObject:maxDic];
             }];
         }
-        [YXProbabilityManager sharedManager].randomListArr = (NSArray *)listArr;
+        if (self.vcType == YXProbabilityRandomVCTypeReal) {
+            [YXProbabilityManager sharedManager].randomListArr = (NSArray *)listArr;
+        }
+        else {
+            [YXProbabilityManager sharedManager].probablityRandomListArr = (NSArray *)listArr;
+        }
         [weakSelf showChance];
     }];
     [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
@@ -158,7 +175,14 @@
     
     UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"清除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        NSString *path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
+        NSString *path = [[NSString alloc] init];
+        if (self.vcType == YXProbabilityRandomVCTypeReal) {
+            path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
+        }
+        else {
+            path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kProbablityRandomListArr];
+        }
+        
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
         }
@@ -269,7 +293,7 @@
                     break;
                 }
                 else {
-                    [self getRandomByRedArr:self.redArr blueArr:self.blueArr];
+                    [self getRandomByRedArr:self.redArr blueArr:self.blueArr randomCount:kCycleCount];
                 }
             }
         });
@@ -281,25 +305,38 @@
 }
 
 #pragma mark - 取随机数
-- (void)getRandomByRedArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr {
+- (void)getRandomByRedArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr randomCount:(NSInteger)randomCount {
     
     __weak typeof(self) weakSelf = self;
     
     NSMutableArray *randomArr = [[NSMutableArray alloc] init];
     NSMutableSet *randomSet = [[NSMutableSet alloc] init];
 
+    NSArray *probabilityRedArr = [YXProbabilityManager sharedManager].probabilityRedArr;
+    NSArray *probabilityBlueArr = [YXProbabilityManager sharedManager].probabilityBlueArr;
+    
     while ([randomSet count] < 6) {
-        NSInteger index = arc4random() %([redArr count] - 1);
-        NSString *red = [redArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", redArr[index]] : redArr[index];
-        [randomSet addObject:red];
+        if (self.vcType == YXProbabilityRandomVCTypeReal) {
+            NSInteger index = arc4random() %([redArr count] - 1);
+            NSString *red = [redArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", redArr[index]] : redArr[index];
+            [randomSet addObject:red];
+        }
+        else { //组装概率数据
+            [[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES];
+        }
     }
     [randomArr addObjectsFromArray:[randomSet allObjects]];
-    
     NSMutableArray *sortingArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)randomArr type:NSOrderedDescending]];
     
-    NSInteger index = arc4random() %([blueArr count] - 1);
-    NSString *blue = [blueArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", blueArr[index]] : blueArr[index];
-    [sortingArr addObject:blue];
+    NSString *blue = [[NSString alloc] init];
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        NSInteger index = arc4random() %([blueArr count] - 1);
+        blue = [blueArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", blueArr[index]] : blueArr[index];
+        [sortingArr addObject:blue];
+    }
+    else { //组装概率数据
+        blue = [[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:sortingArr probabilityArr:probabilityBlueArr boolRed:NO];
+    }
     
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
     
@@ -459,12 +496,23 @@
     return 44;
 }
 
+#pragma mark - setting
+- (void)setVcType:(YXProbabilityRandomVCType)vcType {
+    
+    _vcType = vcType;
+}
+
 #pragma mark - 初始化视图
 - (void)initView {
     
     __weak typeof(self) weakSelf = self;
     
-    NSLog(@"当前已统计 %@ 个", @([YXProbabilityManager sharedManager].randomListArr.count));
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        NSLog(@"当前已统计 %@ 个", @([YXProbabilityManager sharedManager].randomListArr.count));
+    }
+    else {
+        NSLog(@"当前已统计 %@ 个", @([YXProbabilityManager sharedManager].probablityRandomListArr.count));
+    }
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
@@ -500,7 +548,13 @@
 #pragma mark - 初始化数据
 - (void)initDataSource {
     
-    _count = [YXProbabilityManager sharedManager].randomListArr.count;
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        _count = [YXProbabilityManager sharedManager].randomListArr.count;
+    }
+    else {
+        _count = [YXProbabilityManager sharedManager].probablityRandomListArr.count;
+    }
+    
     NSInteger count = kCycleCount - _count;
     _cycleCount = count > 0 ? count : 0;
     _resultRandomArr = [[NSMutableArray alloc] init];

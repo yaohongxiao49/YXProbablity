@@ -10,7 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, YXProbabilityRandomVCType) {
+    /** 真实随机 */
+    YXProbabilityRandomVCTypeReal,
+    /** 概率随机 */
+    YXProbabilityRandomVCTypeProbability,
+};
+
 @interface YXProbabilityRandomVC : UIViewController
+
+@property (nonatomic, assign) YXProbabilityRandomVCType vcType;
 
 @end
 

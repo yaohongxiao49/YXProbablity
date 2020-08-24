@@ -11,7 +11,11 @@
 #import "YXProbabilityListModel.h"
 
 #define kRandomListArr @"randomListArr"
+#define kProbablityRandomListArr @"probablityRandomListArr"
+
 #define kRealListArr @"realListArr"
+#define kProbabilityRedArr @"probabilityRedArr"
+#define kProbabilityBlueArr @"probabilityBlueArr"
 #define kYXToolLocalSaveDocDirectoryPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 
 NS_ASSUME_NONNULL_BEGIN
@@ -20,13 +24,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedManager;
 
+- (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed;
+
 /** 数据数组 */
 @property (nonatomic, strong) NSMutableArray *allArr;
-
 /** 随机数据集合数组 */
 @property (nonatomic, copy) NSArray *randomListArr;
+/** 概率随机数据集合数组 */
+@property (nonatomic, copy) NSArray *probablityRandomListArr;
+
 /** 往期数据统计评率最大数集合 */
 @property (nonatomic, copy) NSArray *realListArr;
+/** 概率数据集合 */
+@property (nonatomic, copy) NSArray *probabilityRedArr;
+@property (nonatomic, copy) NSArray *probabilityBlueArr;
 
 @end
 
