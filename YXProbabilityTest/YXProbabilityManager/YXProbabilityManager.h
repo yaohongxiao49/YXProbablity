@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedManager;
 
-- (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed;
++ (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed;
 
 /** 数据数组 */
 @property (nonatomic, strong) NSMutableArray *allArr;

@@ -22,22 +22,24 @@
 }
 
 #pragma mark - method
-- (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed {
++ (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed {
     
     if (probabilityArr.count == 0) {
         return @"";
     }
     if (boolRed) {
-        __block NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0, j = 0,
-        k = 0, l = 0, m = 0, n = 0, o = 0, p = 0, q = 0, r = 0, s = 0, t = 0, u = 0, v = 0,
-        w = 0, x = 0, y = 0, z = 0, aa = 0, bb = 0, cc = 0, dd = 0, ee = 0, ff = 0, gg = 0;
+        __block NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0,
+        j = 0, k = 0, l = 0, m = 0, n = 0, o = 0, p = 0, q = 0, r = 0, s = 0, t = 0,
+        u = 0, v = 0, w = 0, x = 0, y = 0, z = 0, aa = 0, bb = 0, cc = 0, dd = 0,
+        ee = 0, ff = 0, gg = 0;
         
         NSInteger index = arc4random() %100;
         __block NSInteger baseValue = 0;
+        __block NSInteger probability = 0;
         
         [probabilityArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            NSInteger probability = [[obj objectForKey:kProbability] integerValue];
+            probability = [[obj objectForKey:kProbability] integerValue];
             switch (idx) {
                 case 0: { a = probability + baseValue; break; }
                 case 1: { b = probability + baseValue; break; }
@@ -187,15 +189,16 @@
         return red;
     }
     else {
-        __block NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0, j = 0,
-        k = 0, l = 0, m = 0, n = 0, o = 0, p = 0;
+        __block NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0,
+        i = 0, j = 0, k = 0, l = 0, m = 0, n = 0, o = 0, p = 0;
         
         NSInteger index = arc4random() %100;
         __block NSInteger baseValue = 0;
+        __block NSInteger probability = 0;
         
         [probabilityArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-            NSInteger probability = [[obj objectForKey:kProbability] integerValue];
+            probability = [[obj objectForKey:kProbability] integerValue];
             switch (idx) {
                 case 0: { a = probability + baseValue; break; }
                 case 1: { b = probability + baseValue; break; }

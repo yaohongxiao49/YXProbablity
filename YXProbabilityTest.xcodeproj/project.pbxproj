@@ -43,7 +43,6 @@
 		84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */; };
 		84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D424ADD66E002ED2B3 /* Security.framework */; };
 		84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */; };
-		84E6A4D924ADD67E002ED2B3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D824ADD67E002ED2B3 /* MobileCoreServices.framework */; };
 		84E6A4DB24ADD686002ED2B3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DA24ADD686002ED2B3 /* CFNetwork.framework */; };
 		84E6A4DD24ADD68F002ED2B3 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DC24ADD68F002ED2B3 /* CoreTelephony.framework */; };
 		84E6A4DF24ADD6A2002ED2B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4DE24ADD6A2002ED2B3 /* SystemConfiguration.framework */; };
@@ -161,7 +160,6 @@
 				84E6A4DF24ADD6A2002ED2B3 /* SystemConfiguration.framework in Frameworks */,
 				84E6A4DD24ADD68F002ED2B3 /* CoreTelephony.framework in Frameworks */,
 				84E6A4DB24ADD686002ED2B3 /* CFNetwork.framework in Frameworks */,
-				84E6A4D924ADD67E002ED2B3 /* MobileCoreServices.framework in Frameworks */,
 				84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */,
 				84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */,
 				84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */,

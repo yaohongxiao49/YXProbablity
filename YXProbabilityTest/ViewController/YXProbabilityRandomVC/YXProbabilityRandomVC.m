@@ -14,7 +14,7 @@
 #import "YXProbabilityCompareVC.h"
 
 #define kCycleCount 10000000
-#define kcalculateCount 10
+#define kcalculateCount 4
 
 #define kShowCount 2
 
@@ -175,7 +175,7 @@
     
     UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"清除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        NSString *path = [[NSString alloc] init];
+        NSString *path = @"";
         if (self.vcType == YXProbabilityRandomVCTypeReal) {
             path = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
         }
@@ -322,20 +322,20 @@
             [randomSet addObject:red];
         }
         else { //组装概率数据
-            [randomSet addObject:[[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES]];
+            [randomSet addObject:[YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES]];
         }
     }
     [randomArr addObjectsFromArray:[randomSet allObjects]];
     NSMutableArray *sortingArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)randomArr type:NSOrderedDescending]];
     
-    NSString *blue = [[NSString alloc] init];
+    NSString *blue = @"";
     if (self.vcType == YXProbabilityRandomVCTypeReal) {
         NSInteger index = arc4random() %([blueArr count] - 1);
         blue = [blueArr[index] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", blueArr[index]] : blueArr[index];
         [sortingArr addObject:blue];
     }
     else { //组装概率数据
-        blue = [[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:sortingArr probabilityArr:probabilityBlueArr boolRed:NO];
+        blue = [YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:sortingArr probabilityArr:probabilityBlueArr boolRed:NO];
     }
     
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
