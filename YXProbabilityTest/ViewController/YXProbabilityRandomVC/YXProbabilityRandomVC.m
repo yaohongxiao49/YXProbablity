@@ -22,18 +22,20 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
-@property (nonatomic, strong) NSMutableArray *redArr;
-@property (nonatomic, strong) NSMutableArray *blueArr;
+@property (nonatomic, strong) NSMutableArray *redArr; //红球
+@property (nonatomic, strong) NSMutableArray *blueArr; //蓝球
 @property (nonatomic, strong) NSMutableArray *redCollecArr;
 @property (nonatomic, strong) NSMutableArray *blueCollecArr;
-@property (nonatomic, strong) NSMutableArray *resultRandomArr;
-@property (nonatomic, strong) NSMutableArray *endArr;
-@property (nonatomic, assign) NSInteger count;
+@property (nonatomic, strong) NSMutableArray *resultRandomArr; //结果随机
+@property (nonatomic, strong) NSMutableArray *endArr; //结果
+@property (nonatomic, assign) NSInteger count; //计数
 @property (nonatomic, strong) YXProbabilityRandomHeaderView *headerView;
-@property (nonatomic, assign) BOOL boolCancel;
-@property (nonatomic, assign) NSInteger cycleCount;
+@property (nonatomic, assign) BOOL boolCancel; //是否结束
+@property (nonatomic, assign) NSInteger cycleCount; //周期计数
 
 @property (nonatomic, assign) NSInteger begainTime;
+@property (nonatomic, copy) NSArray *probabilityRedArr; //随机概率红球
+@property (nonatomic, copy) NSArray *probabilityBlueArr; //随机概率蓝球
 
 @end
 
@@ -312,9 +314,6 @@
     NSMutableArray *randomArr = [[NSMutableArray alloc] init];
     NSMutableSet *randomSet = [[NSMutableSet alloc] init];
 
-    NSArray *probabilityRedArr = [YXProbabilityManager sharedManager].probabilityRedArr;
-    NSArray *probabilityBlueArr = [YXProbabilityManager sharedManager].probabilityBlueArr;
-    
     while ([randomSet count] < 6) {
         if (self.vcType == YXProbabilityRandomVCTypeReal) {
             NSInteger index = arc4random() %([redArr count] - 1);
@@ -322,7 +321,7 @@
             [randomSet addObject:red];
         }
         else { //组装概率数据
-            [randomSet addObject:[YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES]];
+            [randomSet addObject:[YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:_probabilityRedArr boolRed:YES]];
         }
     }
     [randomArr addObjectsFromArray:[randomSet allObjects]];
@@ -335,7 +334,7 @@
         [sortingArr addObject:blue];
     }
     else { //组装概率数据
-        blue = [YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:sortingArr probabilityArr:probabilityBlueArr boolRed:NO];
+        blue = [YXProbabilityManager assemblyProbabilityArrByRandomCount:randomCount valueSet:sortingArr probabilityArr:_probabilityBlueArr boolRed:NO];
     }
     
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
@@ -553,6 +552,8 @@
     }
     else {
         _count = [YXProbabilityManager sharedManager].probablityRandomListArr.count;
+        _probabilityRedArr = [YXProbabilityManager sharedManager].probabilityRedArr;
+        _probabilityBlueArr = [YXProbabilityManager sharedManager].probabilityBlueArr;
     }
     
     NSInteger count = kCycleCount - _count;
