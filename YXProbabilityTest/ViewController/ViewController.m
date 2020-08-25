@@ -55,15 +55,7 @@
                 NSString *red = obj[@"red"];
                 NSArray *redArr = [red componentsSeparatedByString:@","];
                 
-                NSMutableDictionary *endDic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:date, kValueArr:@[
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[0]},
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[1]},
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[2]},
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[3]},
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[4]},
-                                                                                @{kBoolBlue:@(NO), kValue:redArr[5]},
-                                                                                @{kBoolBlue:@(YES), kValue:blue}
-                ]}];
+                NSMutableDictionary *endDic = [[NSMutableDictionary alloc] initWithDictionary:@{kDate:date, kValueArr:@[@{kBoolBlue:@(NO), kValue:redArr[0]}, @{kBoolBlue:@(NO), kValue:redArr[1]}, @{kBoolBlue:@(NO), kValue:redArr[2]}, @{kBoolBlue:@(NO), kValue:redArr[3]}, @{kBoolBlue:@(NO), kValue:redArr[4]}, @{kBoolBlue:@(NO), kValue:redArr[5]}, @{kBoolBlue:@(YES), kValue:blue}]}];
                 [valueArr addObject:endDic];
             }];
             

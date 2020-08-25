@@ -226,12 +226,12 @@
     NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedAscending]];
     
     NSInteger redMin = redDicArr.count < 6 ? redDicArr.count : 6;
-    NSInteger redMax = redDicArr.count > 6 ? redDicArr.count - 6 : redDicArr.count;
+    NSInteger redMax = redDicArr.count >= 6 ? redDicArr.count - 6 : redDicArr.count;
     NSArray *minRedArr = [redDicArr subarrayWithRange:NSMakeRange(0, redMin)];
     NSArray *maxRedArr = [redDicArr subarrayWithRange:NSMakeRange(redMax, redMin)];
     
     NSInteger blueMin = blueDicArr.count < 1 ? blueDicArr.count : 1;
-    NSInteger blueMax = blueDicArr.count > 1 ? blueDicArr.count - 1 : blueDicArr.count;
+    NSInteger blueMax = blueDicArr.count >= 1 ? blueDicArr.count - 1 : blueDicArr.count;
     NSArray *minBlueArr = [blueDicArr subarrayWithRange:NSMakeRange(0, blueMin)];
     NSArray *maxBlueArr = [blueDicArr subarrayWithRange:NSMakeRange(blueMax, blueMin)];
     
@@ -322,7 +322,7 @@
             [randomSet addObject:red];
         }
         else { //组装概率数据
-            [[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES];
+            [randomSet addObject:[[YXProbabilityManager sharedManager] assemblyProbabilityArrByRandomCount:randomCount valueSet:randomSet probabilityArr:probabilityRedArr boolRed:YES]];
         }
     }
     [randomArr addObjectsFromArray:[randomSet allObjects]];

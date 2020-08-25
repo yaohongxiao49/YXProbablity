@@ -24,51 +24,61 @@
 #pragma mark - method
 - (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed {
     
+    if (probabilityArr.count == 0) {
+        return @"";
+    }
     if (boolRed) {
-        __block NSInteger a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, bb, cc, dd, ee, ff, gg;
+        NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0, j = 0,
+        k = 0, l = 0, m = 0, n = 0, o = 0, p = 0, q = 0, r = 0, s = 0, t = 0, u = 0, v = 0,
+        w = 0, x = 0, y = 0, z = 0, aa = 0, bb = 0, cc = 0, dd = 0, ee = 0, ff = 0, gg = 0;
         
         NSInteger index = arc4random() %100;
-        [probabilityArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           
-            NSInteger probability = [[obj objectForKey:kProbability] integerValue] *100;
+        NSInteger baseValue = 0;
+        NSInteger idx = 0;
+        
+        for (NSDictionary *dic in probabilityArr) {
+            NSInteger probability = [[dic objectForKey:kProbability] integerValue];
             switch (idx) {
-                case 0: { a = probability; break; }
-                case 1: { b = probability; break; }
-                case 2: { c = probability; break; }
-                case 3: { d = probability; break; }
-                case 4: { e = probability; break; }
-                case 5: { f = probability; break; }
-                case 6: { g = probability; break; }
-                case 7: { h = probability; break; }
-                case 8: { i = probability; break; }
-                case 9: { j = probability; break; }
-                case 10: { k = probability; break; }
-                case 11: { l = probability; break; }
-                case 12: { m = probability; break; }
-                case 13: { n = probability; break; }
-                case 14: { o = probability; break; }
-                case 15: { p = probability; break; }
-                case 16: { q = probability; break; }
-                case 17: { r = probability; break; }
-                case 18: { s = probability; break; }
-                case 19: { t = probability; break; }
-                case 20: { u = probability; break; }
-                case 21: { v = probability; break; }
-                case 22: { w = probability; break; }
-                case 23: { x = probability; break; }
-                case 24: { y = probability; break; }
-                case 25: { z = probability; break; }
-                case 26: { aa = probability; break; }
-                case 27: { bb = probability; break; }
-                case 28: { cc = probability; break; }
-                case 29: { dd = probability; break; }
-                case 30: { ee = probability; break; }
-                case 31: { ff = probability; break; }
-                case 32: { gg = probability; break; }
+                case 0: { a = probability + baseValue; break; }
+                case 1: { b = probability + baseValue; break; }
+                case 2: { c = probability + baseValue; break; }
+                case 3: { d = probability + baseValue; break; }
+                case 4: { e = probability + baseValue; break; }
+                case 5: { f = probability + baseValue; break; }
+                case 6: { g = probability + baseValue; break; }
+                case 7: { h = probability + baseValue; break; }
+                case 8: { i = probability + baseValue; break; }
+                case 9: { j = probability + baseValue; break; }
+                case 10: { k = probability + baseValue; break; }
+                case 11: { l = probability + baseValue; break; }
+                case 12: { m = probability + baseValue; break; }
+                case 13: { n = probability + baseValue; break; }
+                case 14: { o = probability + baseValue; break; }
+                case 15: { p = probability + baseValue; break; }
+                case 16: { q = probability + baseValue; break; }
+                case 17: { r = probability + baseValue; break; }
+                case 18: { s = probability + baseValue; break; }
+                case 19: { t = probability + baseValue; break; }
+                case 20: { u = probability + baseValue; break; }
+                case 21: { v = probability + baseValue; break; }
+                case 22: { w = probability + baseValue; break; }
+                case 23: { x = probability + baseValue; break; }
+                case 24: { y = probability + baseValue; break; }
+                case 25: { z = probability + baseValue; break; }
+                case 26: { aa = probability + baseValue; break; }
+                case 27: { bb = probability + baseValue; break; }
+                case 28: { cc = probability + baseValue; break; }
+                case 29: { dd = probability + baseValue; break; }
+                case 30: { ee = probability + baseValue; break; }
+                case 31: { ff = probability + baseValue; break; }
+                case 32: { gg = probability + baseValue; break; }
                 default:
                     break;
             }
-        }];
+            
+            baseValue += probability;
+            idx++;
+        }
         
         NSInteger tag = 0;
         if (index < a) {
@@ -170,40 +180,47 @@
         else if (index >= ff && index < gg) {
             tag = 32;
         }
-        else {}
+        else {
+            tag = arc4random() %(probabilityArr.count - 1);
+        }
         
-        NSString *red = [[probabilityArr[tag] objectForKey:kValue] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", [probabilityArr[tag] objectForKey:kValue]] : [probabilityArr[tag] objectForKey:kValue];
-        [valueSet addObject:red];
-        return @"";
+        NSString *red = [NSString stringWithFormat:@"%@", [probabilityArr[tag] objectForKey:kValue]];
+        return red;
     }
     else {
-        __block NSInteger a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p;
+        NSInteger a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0, j = 0,
+        k = 0, l = 0, m = 0, n = 0, o = 0, p = 0;
         
         NSInteger index = arc4random() %100;
-        [probabilityArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           
-            NSInteger probability = [[obj objectForKey:kProbability] integerValue] *100;
+        NSInteger baseValue = 0;
+        NSInteger idx = 0;
+        
+        for (NSDictionary *dic in probabilityArr) {
+            NSInteger probability = [[dic objectForKey:kProbability] integerValue];
             switch (idx) {
-                case 0: { a = probability; break; }
-                case 1: { b = probability; break; }
-                case 2: { c = probability; break; }
-                case 3: { d = probability; break; }
-                case 4: { e = probability; break; }
-                case 5: { f = probability; break; }
-                case 6: { g = probability; break; }
-                case 7: { h = probability; break; }
-                case 8: { i = probability; break; }
-                case 9: { j = probability; break; }
-                case 10: { k = probability; break; }
-                case 11: { l = probability; break; }
-                case 12: { m = probability; break; }
-                case 13: { n = probability; break; }
-                case 14: { o = probability; break; }
-                case 15: { p = probability; break; }
+                case 0: { a = probability + baseValue; break; }
+                case 1: { b = probability + baseValue; break; }
+                case 2: { c = probability + baseValue; break; }
+                case 3: { d = probability + baseValue; break; }
+                case 4: { e = probability + baseValue; break; }
+                case 5: { f = probability + baseValue; break; }
+                case 6: { g = probability + baseValue; break; }
+                case 7: { h = probability + baseValue; break; }
+                case 8: { i = probability + baseValue; break; }
+                case 9: { j = probability + baseValue; break; }
+                case 10: { k = probability + baseValue; break; }
+                case 11: { l = probability + baseValue; break; }
+                case 12: { m = probability + baseValue; break; }
+                case 13: { n = probability + baseValue; break; }
+                case 14: { o = probability + baseValue; break; }
+                case 15: { p = probability + baseValue; break; }
                 default:
                     break;
             }
-        }];
+            
+            baseValue += probability;
+            idx++;
+        }
         
         NSInteger tag = 0;
         if (index < a) {
@@ -254,9 +271,11 @@
         else if (index >= o && index < p) {
             tag = 15;
         }
-        else {}
+        else {
+            tag = arc4random() %(probabilityArr.count - 1);
+        }
         
-        NSString *blue = [probabilityArr[tag] integerValue] < 10 ? [NSString stringWithFormat:@"0%@", probabilityArr[tag]] : probabilityArr[tag];
+        NSString *blue = [NSString stringWithFormat:@"%@", [probabilityArr[tag] objectForKey:kValue]];
         [valueSet addObject:blue];
         return blue;
     }
