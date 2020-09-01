@@ -12,6 +12,7 @@
 #import "YXProbabilityRandomHeaderView.h"
 #import "YXPieChartLineGraphicsModel.h"
 #import "YXProbabilityCompareVC.h"
+#import "YXMinArrAssemblyMananger.h"
 
 #define kCycleCount 10000000
 #define kcalculateCount 4
@@ -36,6 +37,8 @@
 @property (nonatomic, assign) NSInteger begainTime;
 @property (nonatomic, copy) NSArray *probabilityRedArr; //随机概率红球
 @property (nonatomic, copy) NSArray *probabilityBlueArr; //随机概率蓝球
+
+@property (nonatomic, strong) NSMutableArray *minArr; //只出现一次的数据集合
 
 @end
 
@@ -89,6 +92,7 @@
     [valueArr addObjectsFromArray:maxArr];
     
     [self assemblyValueByArr:valueArr min:min];
+    [self assemblyEndMinValueByArr:[[YXMinArrAssemblyMananger sharedManager] assemblyRegularValueByArr:arr]];
 }
 
 #pragma mark - 结束
@@ -435,6 +439,42 @@
     [_tableView reloadData];
     
     [self reloadAlertView];
+}
+
+- (void)assemblyEndMinValueByArr:(NSMutableArray *)arr {
+    
+    NSLog(@"开始进行只出现过一次的数据组装！arr == %@", arr);
+    
+//    NSMutableArray *endArr = [[NSMutableArray alloc] init];
+//    [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//        NSMutableDictionary *valueDic = [[NSMutableDictionary alloc] init];
+//
+//        //组装出现频率信息
+//        NSString *occurrences = [obj objectForKey:kPieChartLineGraphicsValue];
+//        [valueDic setValue:occurrences forKey:kDate];
+//
+//        //组装球信息
+//        NSString *ball = [obj objectForKey:kPieChartLineGraphicsName];
+//        NSArray *ballArr = [ball componentsSeparatedByString:@" "];
+//        NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+//        [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//            NSDictionary *dic;
+//            if (idx == (ballArr.count - 1)) {
+//                dic = @{kBoolBlue:@(YES), kValue:obj};
+//            }
+//            else {
+//                dic = @{kBoolBlue:@(NO), kValue:obj};
+//            }
+//            [valueArr addObject:dic];
+//        }];
+//        [valueDic setObject:valueArr forKey:kValueArr];
+//
+//        [endArr addObject:valueDic];
+//    }];
+//
+//    _minArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:(NSArray *)endArr];
 }
 
 #pragma mark - 跳转至比较页面

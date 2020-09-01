@@ -29,6 +29,7 @@
 		845B87ED24D804F800944062 /* YXProbabilityAllListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87DB24D804F800944062 /* YXProbabilityAllListCell.m */; };
 		845B87EE24D804F800944062 /* YXProbabilityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87DC24D804F800944062 /* YXProbabilityCollectionViewCell.m */; };
 		845B87F124D8057500944062 /* YXProbabilityCompareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87F024D8057500944062 /* YXProbabilityCompareVC.m */; };
+		845DF72124FE3F6800D70629 /* YXMinArrAssemblyMananger.m in Sources */ = {isa = PBXBuildFile; fileRef = 845DF72024FE3F6800D70629 /* YXMinArrAssemblyMananger.m */; };
 		847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB869249357BF0083A71A /* YXProbabilityManager.m */; };
 		847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8C924937E710083A71A /* YXProbabilityListModel.m */; };
 		847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */; };
@@ -110,6 +111,8 @@
 		845B87DC24D804F800944062 /* YXProbabilityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityCollectionViewCell.m; sourceTree = "<group>"; };
 		845B87EF24D8057500944062 /* YXProbabilityCompareVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityCompareVC.h; sourceTree = "<group>"; };
 		845B87F024D8057500944062 /* YXProbabilityCompareVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityCompareVC.m; sourceTree = "<group>"; };
+		845DF71F24FE3F6800D70629 /* YXMinArrAssemblyMananger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXMinArrAssemblyMananger.h; sourceTree = "<group>"; };
+		845DF72024FE3F6800D70629 /* YXMinArrAssemblyMananger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXMinArrAssemblyMananger.m; sourceTree = "<group>"; };
 		847FB869249357BF0083A71A /* YXProbabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityManager.m; sourceTree = "<group>"; };
 		847FB86A249357BF0083A71A /* YXProbabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXProbabilityManager.h; sourceTree = "<group>"; };
 		847FB8C824937E710083A71A /* YXProbabilityListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityListModel.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				847FB8C924937E710083A71A /* YXProbabilityListModel.m */,
 				847FB8CB24937F5E0083A71A /* YXProbabilityBallInfoModel.h */,
 				847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */,
+				845DF71F24FE3F6800D70629 /* YXMinArrAssemblyMananger.h */,
+				845DF72024FE3F6800D70629 /* YXMinArrAssemblyMananger.m */,
 			);
 			path = YXProbabilityManager;
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845DF72124FE3F6800D70629 /* YXMinArrAssemblyMananger.m in Sources */,
 				8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */,
 				845B87F124D8057500944062 /* YXProbabilityCompareVC.m in Sources */,
 				845B87DD24D804F800944062 /* YXProbabilityStatisticalVC.m in Sources */,
