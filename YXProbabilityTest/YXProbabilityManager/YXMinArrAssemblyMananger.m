@@ -28,7 +28,7 @@
 - (NSMutableArray *)assemblyRegularValueByArr:(NSArray *)arr {
     
     __weak typeof(self) weakSelf = self;
-    NSDictionary *dic = [[YXProbabilityManager sharedManager] allArr][2];//[[[YXProbabilityManager sharedManager] allArr] firstObject];
+    NSDictionary *dic = [[YXProbabilityManager sharedManager] allArr][4];//[[[YXProbabilityManager sharedManager] allArr] firstObject];
     NSMutableDictionary *lastSingleDic = [[NSMutableDictionary alloc] init];
     [[dic objectForKey:kValueArr] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
@@ -97,59 +97,34 @@
             //去除蓝球后的集合字符串
             NSString *value = [bothValue substringWithRange:NSMakeRange(0, bothValue.length - 2)];
             
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + second)]]) {//if (first + second == 11) {
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + second)]]) {
                 count ++;
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - five)]]) {//if (six - five == 16) {
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - five)]]) {
+                count ++;//ok
+            }
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + six)]]) {
                 count ++;
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + six)]]) {//if (first + six == 33) {
-                count ++;
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(second + third)]]) {
+                count ++;//ok
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(second + third)]]) {//if (second + third == 18) {
-                count ++;
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + 6)]]) {
+                count ++;//ok
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(first + 6)]]) {//if (first + 6 == 9) {
-                count ++;
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - first)]]) {
+                count ++;//ok
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - first)]]) {//if (six - first == 27) {
-                count ++;
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(five - first)]]) {
+                count ++;//ok
             }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(five - first)]]) {//if (five - first == 11) {
-                count ++;
-            }
-            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - second)]]) {//if (six - second == 22) {
-                count ++;
-            }
-            
-            if (first + second == 11) {
-                count ++;
-            }
-            if (six - five == 16) {
-                count ++;
-            }
-            if (first + six == 33) {
-                count ++;
-            }
-            if (second + third == 18) {
-                count ++;
-            }
-            if (first + 6 == 9) {
-                count ++;
-            }
-            if (six - first == 27) {
-                count ++;
-            }
-            if (five - first == 11) {
-                count ++;
-            }
-            if (six - second == 22) {
+            if ([value containsString:[NSString stringWithFormat:@"%@", @(six - second)]]) {
                 count ++;
             }
             
             if ([value containsString:[NSString stringWithFormat:@"%@", @(20 - first)]]
                 || [value containsString:[NSString stringWithFormat:@"%@", @(29 - seven)]] || [value containsString:[NSString stringWithFormat:@"%@", @(29 - first)]]) {
-                count ++;
+                count ++;//ok
             }
             
             //各位之和
@@ -163,22 +138,22 @@
                 count ++;
             }
             if ([value containsString:[NSString stringWithFormat:@"%@", @(lastSumOfAll + [[lastSingleDic objectForKey:@"seven"] integerValue])]]) {
-                count ++;
+                count ++;//ok
             }
             if ([value containsString:[NSString stringWithFormat:@"%@", @(lastSumOfAll + [[lastSingleDic objectForKey:@"first"] integerValue])]]) {
-                count ++;
+                count ++;//ok
             }
             if ([value containsString:[NSString stringWithFormat:@"%@", @(first *3 /2)]]) {
-                count ++;
+                count ++;//ok
             }
             if ([value containsString:[NSString stringWithFormat:@"%@", @(33 - [[lastSingleDic objectForKey:@"seven"] integerValue])]]) {
                 count ++;
             }
             if ([value containsString:[NSString stringWithFormat:@"%@", @(first + 5)]]) {
-                count ++;
+                count ++;//ok
             }
             if ([value containsString:[lastSingleDic objectForKey:@"seven"]]) {
-                count ++;
+                count ++;//ok
             }
             
             [nowRedArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
