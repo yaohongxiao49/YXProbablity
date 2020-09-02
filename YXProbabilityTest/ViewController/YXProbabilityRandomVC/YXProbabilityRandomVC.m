@@ -92,7 +92,8 @@
     [valueArr addObjectsFromArray:maxArr];
     
     [self assemblyValueByArr:valueArr min:min];
-    [self assemblyEndMinValueByArr:[[YXMinArrAssemblyMananger sharedManager] assemblyRegularValueByArr:arr]];
+    if (arr.count != 0) [self assemblyEndMinValueByArr:[[YXMinArrAssemblyMananger sharedManager] assemblyRegularValueByArr:arr]];
+    [_activityIndicatorView stopAnimating];
 }
 
 #pragma mark - 结束
@@ -147,6 +148,7 @@
     
     UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
+        [weakSelf.activityIndicatorView startAnimating];
         [historyArr addObjectsFromArray:arr];
         NSMutableArray *listArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:historyArr type:NSOrderedDescending]];
         if (weakSelf.redCollecArr.count != 0 && weakSelf.blueCollecArr.count != 0) {
