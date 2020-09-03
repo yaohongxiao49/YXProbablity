@@ -172,7 +172,7 @@
 - (void)probabilityCalculationByArr:(NSMutableArray *)arr count:(NSInteger)count {
     
     NSMutableArray *amountArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self getStatisticalRepeatNum:arr] type:NSOrderedDescending]];
-    NSLog(@"count == %@, amountArr == %@", count, arr)
+    NSLog(@"count == %@, amountArr == %@", count, arr);
 }
 
 #pragma mark - 依据上一期杀红蓝
