@@ -152,9 +152,13 @@
         }
     }];
     
-    
-    
     NSMutableArray *sortMinArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)minArr type:NSOrderedDescending]];
+    
+//    [self probabilityCalculationByArr:sortMinArr count:5]; //2
+//    [self probabilityCalculationByArr:sortMinArr count:8]; //3
+//    [self probabilityCalculationByArr:sortMinArr count:11]; //4
+//    [self probabilityCalculationByArr:sortMinArr count:14]; //5
+//    [self probabilityCalculationByArr:sortMinArr count:17]; //6
     
     return sortMinArr;
 }
@@ -171,8 +175,15 @@
 #pragma mark - 多联数概率计算
 - (void)probabilityCalculationByArr:(NSMutableArray *)arr count:(NSInteger)count {
     
-    NSMutableArray *amountArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self getStatisticalRepeatNum:arr] type:NSOrderedDescending]];
-    NSLog(@"count == %@, amountArr == %@", count, arr);
+    NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+    [arr enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        NSString *value = [obj substringWithRange:NSMakeRange(0, count)];
+        [valueArr addObject:value];
+    }];
+    
+    NSMutableArray *amountArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self getStatisticalRepeatNum:valueArr] type:NSOrderedDescending]];
+    NSLog(@"count == %@, amountArrCount == %@, amountArr == %@", @(count), @(amountArr.count), amountArr);
 }
 
 #pragma mark - 依据上一期杀红蓝
