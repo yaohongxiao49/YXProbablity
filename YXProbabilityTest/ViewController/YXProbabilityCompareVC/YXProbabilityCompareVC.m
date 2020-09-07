@@ -34,7 +34,7 @@
     NSMutableArray *allArr = [[NSMutableArray alloc] initWithArray:(NSArray *)[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[YXProbabilityManager sharedManager].allArr]];
     
 #pragma mark - 排除最近一期
-    BOOL boolRuleOutLastObj = YES;
+    BOOL boolRuleOutLastObj = NO;
     if (boolRuleOutLastObj) { //排除最近的一期
         if (allArr.count != 0) [allArr removeObjectAtIndex:0];
         [self compareExperimentMethodByArr:allArr];
@@ -168,6 +168,9 @@
     [self changeCellValue:YXProbabilityCompareVCTypeRandomMin keyTitle:@"valueArr" value:[randomMutArr firstObject]];
     [self changeCellValue:YXProbabilityCompareVCTypeRandomMax keyTitle:@"valueArr" value:[randomMutArr lastObject]];
     
+    NSInteger calculateRandomIndex = arc4random() %([self.calculateRandomArr count] - 1);
+    [self changeCellValue:YXProbabilityCompareVCTypeCalculateRandom keyTitle:@"valueArr" value:@[self.calculateRandomArr[calculateRandomIndex]]];
+    
     [self compareMethod];
 }
 
@@ -190,6 +193,9 @@
         [_secArr addObject:dic];
         
         dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"随机频率最小数据", @"tag":@(YXProbabilityCompareVCTypeRandomMin), @"valueArr":(NSMutableArray *)@[]}];
+        [_secArr addObject:dic];
+        
+        dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":@"随机计算后的概率数据", @"tag":@(YXProbabilityCompareVCTypeCalculateRandom), @"valueArr":(NSMutableArray *)@[]}];
         [_secArr addObject:dic];
     }
     return _secArr;

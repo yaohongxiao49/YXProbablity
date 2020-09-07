@@ -28,7 +28,7 @@
 - (NSMutableArray *)assemblyRegularValueByArr:(NSArray *)arr {
     
     __weak typeof(self) weakSelf = self;
-    NSDictionary *dic = [[YXProbabilityManager sharedManager] allArr][3];//[[[YXProbabilityManager sharedManager] allArr] firstObject];
+    NSDictionary *dic = [[[YXProbabilityManager sharedManager] allArr] firstObject];
     NSMutableDictionary *lastSingleDic = [[NSMutableDictionary alloc] init];
     [[dic objectForKey:kValueArr] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
@@ -85,18 +85,12 @@
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         //出现次数统计
-        __block NSInteger count = 0;
+//        __block NSInteger count = 0;
         //包含红篮球的字符串
         NSString *bothValue = [obj objectForKey:kPieChartLineGraphicsName];
         //红蓝球单个数据拆分
         NSMutableDictionary *singleDic = [weakSelf getSingleValueByStr:bothValue];
-        NSInteger first = [[singleDic objectForKey:@"first"] integerValue];
-        NSInteger second = [[singleDic objectForKey:@"second"] integerValue];
-        NSInteger third = [[singleDic objectForKey:@"third"] integerValue];
-        NSInteger four = [[singleDic objectForKey:@"four"] integerValue];
-        NSInteger five = [[singleDic objectForKey:@"five"] integerValue];
         NSInteger six = [[singleDic objectForKey:@"six"] integerValue];
-        NSInteger seven = [[singleDic objectForKey:@"seven"] integerValue];
         
         //去除蓝球后的集合字符串
         NSString *value = [bothValue substringWithRange:NSMakeRange(0, bothValue.length - 2)];
@@ -160,7 +154,7 @@
 //    [self probabilityCalculationByArr:sortMinArr count:14]; //5
 //    [self probabilityCalculationByArr:sortMinArr count:17]; //6
     
-    return sortMinArr;
+    return [self getStatisticalRepeatNum:sortMinArr];
 }
 
 #pragma mark - 概率计算

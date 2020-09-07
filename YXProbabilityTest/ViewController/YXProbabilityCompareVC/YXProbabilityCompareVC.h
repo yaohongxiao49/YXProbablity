@@ -23,12 +23,15 @@ typedef NS_ENUM(NSUInteger, YXProbabilityCompareVCType) {
     YXProbabilityCompareVCTypeRandomMax,
     /** 随机频率最小 */
     YXProbabilityCompareVCTypeRandomMin,
+    /** 随机计算后概率数据 */
+    YXProbabilityCompareVCTypeCalculateRandom,
 };
 
 @interface YXProbabilityCompareVC : UIViewController
 
 @property (nonatomic, strong) NSMutableArray *realArr;
 @property (nonatomic, copy) NSArray *randomArr;
+@property (nonatomic, copy) NSArray *calculateRandomArr;
 
 @end
 

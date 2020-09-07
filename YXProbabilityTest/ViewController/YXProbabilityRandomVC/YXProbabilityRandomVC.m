@@ -14,7 +14,7 @@
 #import "YXProbabilityCompareVC.h"
 #import "YXMinArrAssemblyMananger.h"
 
-#define kCycleCount 10000000
+#define kCycleCount 5000000
 #define kcalculateCount 4
 
 #define kShowCount 2
@@ -84,11 +84,25 @@
     
     NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
     NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
-    NSArray *minArr = [arr subarrayWithRange:NSMakeRange(0, min)];
+    
+    NSMutableArray *minRandomArr = [[NSMutableArray alloc] init];
+    [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        if ([[obj objectForKey:kPieChartLineGraphicsValue] integerValue] == 1) {
+            [minRandomArr addObject:obj];
+        }
+    }];
+    
+    //最小随机数组
+    NSInteger minRandomIndex = arc4random() %([minRandomArr count] - 1);
+    NSArray *minRandomOneArr = [[NSArray alloc] initWithObjects:minRandomArr[minRandomIndex], nil];
+    
+    NSArray *minArr = [arr subarrayWithRange:NSMakeRange(0, (min - 1))];
     NSArray *maxArr = [arr subarrayWithRange:NSMakeRange(max, min)];
     
     NSMutableArray *valueArr = [[NSMutableArray alloc] init];
     [valueArr addObjectsFromArray:minArr];
+    [valueArr addObjectsFromArray:minRandomOneArr];
     [valueArr addObjectsFromArray:maxArr];
     
     [self assemblyValueByArr:valueArr min:min];
@@ -445,38 +459,38 @@
 
 - (void)assemblyEndMinValueByArr:(NSMutableArray *)arr {
     
-    NSLog(@"开始进行只出现过一次的数据组装！arr == %@", arr);
+    NSLog(@"开始进行只出现过一次的数据组装！");
     
-//    NSMutableArray *endArr = [[NSMutableArray alloc] init];
-//    [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//        NSMutableDictionary *valueDic = [[NSMutableDictionary alloc] init];
-//
-//        //组装出现频率信息
-//        NSString *occurrences = [obj objectForKey:kPieChartLineGraphicsValue];
-//        [valueDic setValue:occurrences forKey:kDate];
-//
-//        //组装球信息
-//        NSString *ball = [obj objectForKey:kPieChartLineGraphicsName];
-//        NSArray *ballArr = [ball componentsSeparatedByString:@" "];
-//        NSMutableArray *valueArr = [[NSMutableArray alloc] init];
-//        [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//            NSDictionary *dic;
-//            if (idx == (ballArr.count - 1)) {
-//                dic = @{kBoolBlue:@(YES), kValue:obj};
-//            }
-//            else {
-//                dic = @{kBoolBlue:@(NO), kValue:obj};
-//            }
-//            [valueArr addObject:dic];
-//        }];
-//        [valueDic setObject:valueArr forKey:kValueArr];
-//
-//        [endArr addObject:valueDic];
-//    }];
-//
-//    _minArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:(NSArray *)endArr];
+    NSMutableArray *endArr = [[NSMutableArray alloc] init];
+    [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        NSMutableDictionary *valueDic = [[NSMutableDictionary alloc] init];
+
+        //组装出现频率信息
+        NSString *occurrences = [obj objectForKey:kPieChartLineGraphicsValue];
+        [valueDic setValue:occurrences forKey:kDate];
+
+        //组装球信息
+        NSString *ball = [obj objectForKey:kPieChartLineGraphicsName];
+        NSArray *ballArr = [ball componentsSeparatedByString:@" "];
+        NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+        [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+            NSDictionary *dic;
+            if (idx == (ballArr.count - 1)) {
+                dic = @{kBoolBlue:@(YES), kValue:obj};
+            }
+            else {
+                dic = @{kBoolBlue:@(NO), kValue:obj};
+            }
+            [valueArr addObject:dic];
+        }];
+        [valueDic setObject:valueArr forKey:kValueArr];
+
+        [endArr addObject:valueDic];
+    }];
+
+    _minArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:(NSArray *)endArr];
 }
 
 #pragma mark - 跳转至比较页面
@@ -484,6 +498,7 @@
     
     YXProbabilityCompareVC *vc = [[YXProbabilityCompareVC alloc] init];
     vc.randomArr = _endArr;
+    vc.calculateRandomArr = _minArr;
     vc.realArr = [[YXProbabilityManager sharedManager] allArr];
     [self.navigationController pushViewController:vc animated:YES];
 }
