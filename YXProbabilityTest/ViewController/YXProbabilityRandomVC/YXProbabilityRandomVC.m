@@ -81,6 +81,9 @@
     else {
         arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].probablityRandomListArr];
     }
+    if (arr.count == 0) {
+        return;
+    }
     
     NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
     NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
@@ -93,16 +96,17 @@
         }
     }];
     
-    //最小随机数组
-    NSInteger minRandomIndex = arc4random() %([minRandomArr count] - 1);
-    NSArray *minRandomOneArr = [[NSArray alloc] initWithObjects:minRandomArr[minRandomIndex], nil];
-    
     NSArray *minArr = [arr subarrayWithRange:NSMakeRange(0, (min - 1))];
     NSArray *maxArr = [arr subarrayWithRange:NSMakeRange(max, min)];
     
     NSMutableArray *valueArr = [[NSMutableArray alloc] init];
     [valueArr addObjectsFromArray:minArr];
-    [valueArr addObjectsFromArray:minRandomOneArr];
+    //最小随机数组
+    if (minRandomArr.count != 0) {
+        NSInteger minRandomIndex = arc4random() %([minRandomArr count] - 1);
+        NSArray *minRandomOneArr = [[NSArray alloc] initWithObjects:minRandomArr[minRandomIndex], nil];
+        [valueArr addObjectsFromArray:minRandomOneArr];
+    }
     [valueArr addObjectsFromArray:maxArr];
     
     [self assemblyValueByArr:valueArr min:min];
