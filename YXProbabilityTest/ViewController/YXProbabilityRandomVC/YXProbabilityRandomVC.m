@@ -50,7 +50,12 @@
     
     __weak typeof(self) weakSelf = self;
     
-    self.title = @"随机数";
+    if (self.vcType == YXProbabilityRandomVCTypeReal) {
+        self.title = @"真实随机";
+    }
+    else {
+        self.title = @"概率随机";
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self removeAlertView:^(BOOL isFinished) {
