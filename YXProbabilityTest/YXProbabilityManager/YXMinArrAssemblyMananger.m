@@ -82,10 +82,15 @@
     NSDictionary *killBlueBallByLastDic = [self killBlueBallByLastDic:lastSingleDic];
     
     NSMutableArray *minArr = [[NSMutableArray alloc] init];
+    NSInteger centerCount = 1;
+    if (arr.count > 2) {
+        NSInteger minCount = [[arr[1] objectForKey:kPieChartLineGraphicsValue] integerValue];
+        NSInteger maxCount = [[arr[arr.count - 2] objectForKey:kPieChartLineGraphicsValue] integerValue];
+        centerCount = (maxCount - minCount) /2;
+    }
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        //出现次数统计
-//        __block NSInteger count = 0;
+        if ([[obj objectForKey:kPieChartLineGraphicsValue] integerValue] != centerCount) return;
         //包含红篮球的字符串
         NSString *bothValue = [obj objectForKey:kPieChartLineGraphicsName];
         //红蓝球单个数据拆分
@@ -121,17 +126,6 @@
                  || [value containsString:[killRedBallByLastDic objectForKey:@"3"]]
                  || [value containsString:[killRedBallByLastDic objectForKey:@"4"]]
                  || [[NSString stringWithFormat:@"%@", @(six)] containsString:[killRedBallByLastDic objectForKey:@"5"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"6"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"7"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"8"]]
-////                 || [value containsString:[killRedBallByLastDic objectForKey:@"9"]]
-////                 || [value containsString:[killRedBallByLastDic objectForKey:@"10"]]
-////                 || [value containsString:[killRedBallByLastDic objectForKey:@"11"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"12"]]
-////                 || [value containsString:[killRedBallByLastDic objectForKey:@"13"]]
-////                 || [value containsString:[killRedBallByLastDic objectForKey:@"14"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"15"]]
-//                 || [value containsString:[killRedBallByLastDic objectForKey:@"16"]]
                  || [value containsString:[killRedBallByLastDic objectForKey:@"17"]]
                  || [value containsString:[killRedBallByLastDic objectForKey:@"18"]]
                  ) {} //杀红
@@ -147,12 +141,6 @@
     }];
     
     NSMutableArray *sortMinArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)minArr type:NSOrderedDescending]];
-    
-//    [self probabilityCalculationByArr:sortMinArr count:5]; //2
-//    [self probabilityCalculationByArr:sortMinArr count:8]; //3
-//    [self probabilityCalculationByArr:sortMinArr count:11]; //4
-//    [self probabilityCalculationByArr:sortMinArr count:14]; //5
-//    [self probabilityCalculationByArr:sortMinArr count:17]; //6
     
     return [self getStatisticalRepeatNum:sortMinArr];
 }
