@@ -19,6 +19,8 @@
 
 #define kShowCount 2
 
+#define kGetValuesCount @"5"
+
 @interface YXProbabilityRandomVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -93,10 +95,11 @@
     NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
     NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
     
+    NSArray *countArr = kGetValuesCount.length != 0 ? [kGetValuesCount componentsSeparatedByString:@","] : @[];
     NSMutableArray *minRandomArr = [[NSMutableArray alloc] init];
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        if ([[obj objectForKey:kPieChartLineGraphicsValue] integerValue] == 1) {
+        if (countArr.count != 0 && [[obj objectForKey:kPieChartLineGraphicsValue] integerValue] == [countArr[0] integerValue]) {
             [minRandomArr addObject:obj];
         }
     }];
@@ -131,7 +134,7 @@
     dispatch_async(queue, ^{
         
         NSLog(@"开始统计！");
-        NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr]];
+        NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[weakSelf statisticalRepeatNum:weakSelf.resultRandomArr getValuesCount:kGetValuesCount]];
         NSArray *sortingArr = [[NSArray alloc] initWithArray:[weakSelf sortingByArr:repeatNumArr type:NSOrderedDescending]];
         NSLog(@"结果数组个数 == %@", @(repeatNumArr.count));
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -253,8 +256,8 @@
 - (void)getBallProbabilityByArr:(NSMutableArray *)redArr blueArr:(NSMutableArray *)blueArr finishedBlock:(void(^)(NSDictionary *minDic, NSDictionary *maxDic))finishedBlock {
     
     NSLog(@"开始获取蓝球、红球数字机率！");
-    NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr] type:NSOrderedAscending]];
-    NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr] type:NSOrderedAscending]];
+    NSMutableArray *redDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:redArr getValuesCount:kGetValuesCount] type:NSOrderedAscending]];
+    NSMutableArray *blueDicArr = [[NSMutableArray alloc] initWithArray:[self sortingByArr:(NSArray *)[self statisticalRepeatNum:blueArr getValuesCount:kGetValuesCount] type:NSOrderedAscending]];
     
     NSInteger redMin = redDicArr.count < 6 ? redDicArr.count : 6;
     NSInteger redMax = redDicArr.count >= 6 ? redDicArr.count - 6 : redDicArr.count;
@@ -369,7 +372,7 @@
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
     
     weakSelf.count ++;
-    NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
+//    NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
 
         [weakSelf.redCollecArr addObjectsFromArray:randomArr];
@@ -381,16 +384,29 @@
 }
 
 #pragma mark - 去重并统计重复的数
-- (NSMutableArray *)statisticalRepeatNum:(NSMutableArray *)arr {
+- (NSMutableArray *)statisticalRepeatNum:(NSMutableArray *)arr getValuesCount:(NSString *)getValuesCount {
     
+    NSArray *countArr = kGetValuesCount.length != 0 ? [kGetValuesCount componentsSeparatedByString:@","] : @[];
     NSMutableArray *amountArr = [[NSMutableArray alloc] init];
 
     NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)arr];
     for (id item in countSet) { //去重并统计
+        NSInteger count = [countSet countForObject:item];
+        
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:item forKey:kPieChartLineGraphicsName];
-        [dic setObject:@([countSet countForObject:item]) forKey:kPieChartLineGraphicsValue];
-        [amountArr addObject:dic];
+        [dic setObject:@(count) forKey:kPieChartLineGraphicsValue];
+        
+        if (countArr.count != 0) {
+            for (NSString *values in countArr) {
+                if ([values integerValue] == count) {
+                    [amountArr addObject:dic];
+                }
+            }
+        }
+        else {
+            [amountArr addObject:dic];
+        }
     }
     
     return amountArr;
@@ -467,8 +483,6 @@
 }
 
 - (void)assemblyEndMinValueByArr:(NSMutableArray *)arr {
-    
-    NSLog(@"开始进行只出现过一次的数据组装！");
     
     NSMutableArray *endArr = [[NSMutableArray alloc] init];
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

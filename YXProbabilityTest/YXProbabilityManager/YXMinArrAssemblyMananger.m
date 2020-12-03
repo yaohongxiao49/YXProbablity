@@ -90,7 +90,10 @@
     }
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
-        if ([[obj objectForKey:kPieChartLineGraphicsValue] integerValue] != centerCount) return;
+        if ([[obj objectForKey:kPieChartLineGraphicsValue] integerValue] != centerCount || ![[obj objectForKey:kPieChartLineGraphicsValue] isKindOfClass:[NSNumber class]]) {
+            return;
+        }
+        
         //包含红篮球的字符串
         NSString *bothValue = [obj objectForKey:kPieChartLineGraphicsName];
         //红蓝球单个数据拆分

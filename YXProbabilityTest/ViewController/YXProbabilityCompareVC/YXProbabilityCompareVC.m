@@ -168,8 +168,10 @@
     [self changeCellValue:YXProbabilityCompareVCTypeRandomMin keyTitle:@"valueArr" value:[randomMutArr firstObject]];
     [self changeCellValue:YXProbabilityCompareVCTypeRandomMax keyTitle:@"valueArr" value:[randomMutArr lastObject]];
     
-    NSInteger calculateRandomIndex = arc4random() %([self.calculateRandomArr count] - 1);
-    [self changeCellValue:YXProbabilityCompareVCTypeCalculateRandom keyTitle:@"valueArr" value:@[self.calculateRandomArr[calculateRandomIndex]]];
+    if (self.calculateRandomArr.count != 0) {
+        NSInteger calculateRandomIndex = arc4random() %([self.calculateRandomArr count] - 1);
+        [self changeCellValue:YXProbabilityCompareVCTypeCalculateRandom keyTitle:@"valueArr" value:@[self.calculateRandomArr[calculateRandomIndex]]];
+    }
     
     [self compareMethod];
 }
