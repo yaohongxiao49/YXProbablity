@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "YXProbabilityStatisticalVC.h"
 #import "YXProbabilityRandomVC.h"
+#import "YXProbabilityRuleOutVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

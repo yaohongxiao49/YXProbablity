@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,25 +13,32 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHA-Rn-05L">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHA-Rn-05L">
                     <rect key="frame" x="15" y="15" width="77" height="30"/>
                     <state key="normal" title="图形化统计"/>
                     <connections>
                         <action selector="progressStatisticalBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="Don-G2-mSS"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qw-G1-dH4">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qw-G1-dH4">
                     <rect key="frame" x="107" y="15" width="62" height="30"/>
                     <state key="normal" title="真实随机"/>
                     <connections>
                         <action selector="progressRandomBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="TYt-D3-RML"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-1K-pKc">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-1K-pKc">
                     <rect key="frame" x="184" y="15" width="62" height="30"/>
                     <state key="normal" title="概率随机"/>
                     <connections>
                         <action selector="progressProbabilityRandomBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="1eY-25-X9I"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vvd-Sd-DPh">
+                    <rect key="frame" x="15" y="55" width="62" height="30"/>
+                    <state key="normal" title="对比排除"/>
+                    <connections>
+                        <action selector="progressRuleOut:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZBC-pW-1Hw"/>
                     </connections>
                 </button>
             </subviews>
@@ -39,10 +46,12 @@
             <constraints>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="51h-GW-z7x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="9bw-10-wL0"/>
+                <constraint firstItem="Vvd-Sd-DPh" firstAttribute="top" secondItem="oHA-Rn-05L" secondAttribute="bottom" constant="10" id="HoN-gk-lPm"/>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="trailing" constant="15" id="RGb-XX-WDF"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xaN-1K-pKc" secondAttribute="trailing" constant="15" id="aYo-8U-BTN"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="centerY" secondItem="3qw-G1-dH4" secondAttribute="centerY" id="dc8-lz-x9d"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="leading" secondItem="3qw-G1-dH4" secondAttribute="trailing" constant="15" id="ec5-kC-0CE"/>
+                <constraint firstItem="Vvd-Sd-DPh" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="leading" id="xM4-Na-19x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="ySz-8x-eKf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

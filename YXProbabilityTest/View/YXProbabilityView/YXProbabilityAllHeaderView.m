@@ -24,6 +24,7 @@
     vc.vcType = YXProbabilityRandomVCTypeReal;
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
+
 #pragma mark - 随机概率
 - (IBAction)progressProbabilityRandomBtn:(UIButton *)sender {
     
@@ -32,6 +33,14 @@
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 对比排除
+- (IBAction)progressRuleOut:(UIButton *)sender {
+ 
+    YXProbabilityRuleOutVC *vc = [[YXProbabilityRuleOutVC alloc] init];
+    [self.baseVC.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - setting
 - (void)setBaseVC:(UIViewController *)baseVC {
     
     _baseVC = baseVC;

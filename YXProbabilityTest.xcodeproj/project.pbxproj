@@ -10,6 +10,7 @@
 		5D0F56B34C515145CE6037E6 /* libPods-YXProbabilityTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C863F9893EE76AD606A8AC9 /* libPods-YXProbabilityTest.a */; };
 		841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */; };
 		8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8415190824B2ED0B00EA8B9B /* HttpRequestManager.m */; };
+		8457F6F2259AC117001106FB /* YXProbabilityRuleOutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8457F6F1259AC117001106FB /* YXProbabilityRuleOutVC.m */; };
 		845B87DD24D804F800944062 /* YXProbabilityStatisticalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87B724D804F800944062 /* YXProbabilityStatisticalVC.m */; };
 		845B87DE24D804F800944062 /* YXPieChartLineGraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87B924D804F800944062 /* YXPieChartLineGraphicsView.m */; };
 		845B87DF24D804F800944062 /* YXPieChartLineGraphicsCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B87BD24D804F800944062 /* YXPieChartLineGraphicsCenterView.m */; };
@@ -78,6 +79,8 @@
 		841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRequest.m; sourceTree = "<group>"; };
 		8415190024B2ED0B00EA8B9B /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
 		8415190824B2ED0B00EA8B9B /* HttpRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestManager.m; sourceTree = "<group>"; };
+		8457F6F0259AC117001106FB /* YXProbabilityRuleOutVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityRuleOutVC.h; sourceTree = "<group>"; };
+		8457F6F1259AC117001106FB /* YXProbabilityRuleOutVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRuleOutVC.m; sourceTree = "<group>"; };
 		845B87B624D804F800944062 /* YXProbabilityStatisticalHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXProbabilityStatisticalHeaderView.h; sourceTree = "<group>"; };
 		845B87B724D804F800944062 /* YXProbabilityStatisticalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityStatisticalVC.m; sourceTree = "<group>"; };
 		845B87B924D804F800944062 /* YXPieChartLineGraphicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPieChartLineGraphicsView.m; sourceTree = "<group>"; };
@@ -206,11 +209,22 @@
 			path = Http;
 			sourceTree = "<group>";
 		};
+		8457F6EF259AC0F0001106FB /* YXProbabilityRuleOutVC */ = {
+			isa = PBXGroup;
+			children = (
+				8457F6F0259AC117001106FB /* YXProbabilityRuleOutVC.h */,
+				8457F6F1259AC117001106FB /* YXProbabilityRuleOutVC.m */,
+			);
+			name = YXProbabilityRuleOutVC;
+			path = YXProbabilityTest/ViewController/YXProbabilityRuleOutVC;
+			sourceTree = SOURCE_ROOT;
+		};
 		845B87B424D804F800944062 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				845B87B524D804F800944062 /* YXProbabilityStatisticalVC */,
 				845B87C524D804F800944062 /* YXProbabilityRandomVC */,
+				8457F6EF259AC0F0001106FB /* YXProbabilityRuleOutVC */,
 				845B87CB24D804F800944062 /* YXProbabilityCompareVC */,
 				845B87CC24D804F800944062 /* ViewController.h */,
 				845B87C424D804F800944062 /* ViewController.m */,
@@ -614,6 +628,7 @@
 				845B87E824D804F800944062 /* YXProbabilitySecHeaderView.m in Sources */,
 				841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */,
 				845B87EE24D804F800944062 /* YXProbabilityCollectionViewCell.m in Sources */,
+				8457F6F2259AC117001106FB /* YXProbabilityRuleOutVC.m in Sources */,
 				845B87E324D804F800944062 /* ViewController.m in Sources */,
 				84804A6A24921D9A009F160F /* main.m in Sources */,
 				84804A5C24921D99009F160F /* SceneDelegate.m in Sources */,
