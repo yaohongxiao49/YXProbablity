@@ -270,9 +270,10 @@
         }
     }
     
-    NSPredicate *nowPre = [NSPredicate predicateWithFormat:@"SELF IN %@", item];
-    NSArray *sameArr = [oldArr filteredArrayUsingPredicate:nowPre];
-    if (sameArr.count >= 1) {
+    NSMutableArray *newArr = [NSMutableArray arrayWithArray:[item componentsSeparatedByString:@" "]];
+    [newArr removeObjectsInArray:(NSArray *)oldArr];
+    
+    if ((7 - newArr.count) >= 1) {
         return NO;
     }
     else {
