@@ -238,19 +238,16 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:item forKey:kPieChartLineGraphicsName];
         [dic setObject:@(count) forKey:kPieChartLineGraphicsValue];
-        [self ruleOutByLastArr:item finishedBlock:^(BOOL boolInsert) {
-           
-            if (boolInsert) {
-                [amountArr addObject:dic];
-            }
-        }];
+        if ([self ruleOutByLastArr:item] && count != 1) {
+            [amountArr addObject:dic];
+        }
     }
     
     return amountArr;
 }
 
 #pragma mark - 对比上期排除
-- (void)ruleOutByLastArr:(id)item finishedBlock:(void(^)(BOOL boolInsert))finishedBlock {
+- (BOOL)ruleOutByLastArr:(id)item {
     
     //当前蓝
     NSString *nowBlue = [[item componentsSeparatedByString:@" "] lastObject];
@@ -258,10 +255,7 @@
     //往期蓝
     for (YXProbabilityBallInfoModel *oldBallInfoModel in _oldArr) {
         if (oldBallInfoModel.boolBlue && [oldBallInfoModel.value isEqualToString:nowBlue]) {
-            if (finishedBlock) {
-                finishedBlock(NO);
-            }
-            return;
+            return NO;
         }
     }
     
@@ -278,15 +272,11 @@
     
     NSPredicate *nowPre = [NSPredicate predicateWithFormat:@"SELF IN %@", item];
     NSArray *sameArr = [oldArr filteredArrayUsingPredicate:nowPre];
-    if (sameArr.count >= 2) {
-        if (finishedBlock) {
-            finishedBlock(NO);
-        }
+    if (sameArr.count >= 1) {
+        return NO;
     }
     else {
-        if (finishedBlock) {
-            finishedBlock(YES);
-        }
+        return YES;
     }
 }
 
