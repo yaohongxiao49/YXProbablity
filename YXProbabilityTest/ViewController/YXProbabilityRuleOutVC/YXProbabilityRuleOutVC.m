@@ -277,8 +277,25 @@
         return NO;
     }
     else {
+        if ([self judgeContinuousNumCountByArr:(NSArray *)newArr] >= 2) {
+            return NO;
+        }
         return YES;
     }
+}
+
+#pragma mark - 连号个数
+- (NSInteger)judgeContinuousNumCountByArr:(NSArray *)arr {
+    
+    NSInteger amount = 0;
+    for (NSInteger i = 0; i < arr.count; i++) {
+        NSInteger now = [arr[i] integerValue];
+        NSInteger next = i == arr.count - 1 ? 0 : [arr[i + 1] integerValue];
+        if ((now + 1) == next) {
+            amount++;
+        }
+    }
+    return amount;
 }
 
 #pragma mark - 界面更新弹窗
