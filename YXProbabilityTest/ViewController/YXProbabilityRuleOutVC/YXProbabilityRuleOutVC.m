@@ -238,6 +238,7 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:item forKey:kPieChartLineGraphicsName];
         [dic setObject:@(count) forKey:kPieChartLineGraphicsValue];
+        //满足排除条件并且重复个数不为1时
         if ([self ruleOutByLastArr:item] && count != 1) {
             [amountArr addObject:dic];
         }
@@ -271,17 +272,96 @@
     }
     
     NSMutableArray *newArr = [NSMutableArray arrayWithArray:[item componentsSeparatedByString:@" "]];
+    if ([self judgeProbabilityNumByNewArr:newArr oldArr:oldArr]) {
+        return NO;
+    }
+    
     [newArr removeObjectsInArray:(NSArray *)oldArr];
     
-    if ((7 - newArr.count) >= 1) {
+    //相同号数两个及以上
+    if ((7 - newArr.count) >= 2) {
         return NO;
     }
     else {
+        //两个及以上连号
         if ([self judgeContinuousNumCountByArr:(NSArray *)newArr] >= 2) {
             return NO;
         }
         return YES;
     }
+}
+
+#pragma mark - 个、十、二十、三十数
+- (BOOL)judgeProbabilityNumByNewArr:(NSMutableArray *)newArr oldArr:(NSMutableArray *)oldArr {
+    
+    NSInteger oldSingleAmount = 0; //个位计数
+    NSInteger oldTenAmount = 0; //十位计数
+    NSInteger oldTwentyAmount = 0; //二十位计数
+    NSInteger oldThirtyAmount = 0; //三十位计数
+    for (NSInteger i = 0; i < oldArr.count - 1; i++) {
+        if ([oldArr[i] integerValue] < 10) {
+            oldSingleAmount++;
+        }
+        else if ([oldArr[i] integerValue] >= 10 && [oldArr[i] integerValue] < 20) {
+            oldTenAmount++;
+        }
+        else if ([oldArr[i] integerValue] >= 20 && [oldArr[i] integerValue] < 30) {
+            oldTwentyAmount++;
+        }
+        else {
+            oldThirtyAmount++;
+        }
+    }
+    
+    NSInteger newSingleAmount = 0; //个位计数
+    NSInteger newTenAmount = 0; //十位计数
+    NSInteger newTwentyAmount = 0; //二十位计数
+    NSInteger newThirtyAmount = 0; //三十位计数
+    for (NSInteger i = 0; i < newArr.count - 1; i++) {
+        if ([newArr[i] integerValue] < 10) {
+            newSingleAmount++;
+        }
+        else if ([newArr[i] integerValue] >= 10 && [newArr[i] integerValue] < 20) {
+            newTenAmount++;
+        }
+        else if ([newArr[i] integerValue] >= 20 && [newArr[i] integerValue] < 30) {
+            newTwentyAmount++;
+        }
+        else {
+            newThirtyAmount++;
+        }
+    }
+    
+    if (oldSingleAmount == newSingleAmount || oldTenAmount == newTenAmount) { //旧个位数 等于 新个位数 || 旧十位数 等于 新十位数
+        return YES;
+    }
+    else if (oldTwentyAmount == 0 && newTwentyAmount == 0) { //旧二十位数 等于 新二十位数
+        return YES;
+    }
+    else if (oldThirtyAmount == 0 && newThirtyAmount == 0) { //旧三十位数 等于 新三十位数
+        return YES;
+    }
+    else if (newTwentyAmount >= 1 && newThirtyAmount > 1) { //新二十位上 大于等于 1个，新三十位数 大于 1个
+        return YES;
+    }
+    else if (newSingleAmount > 3 || newTenAmount > 3 || newTwentyAmount > 3) { //新个位数 大于 3个 || 新十位数 大于 3个 || 新二十位数 大于 3个
+        return YES;
+    }
+    else if (newSingleAmount > 1) { //新个位数大于1个时，前两位是否配套（01，02），（01，06），（01，09），（02，03），（02，06），（02，09）
+        if ([newArr[0] integerValue] == 1 && [oldArr[0] integerValue] != 1) {
+            if ([newArr[1] integerValue] == 2 || [newArr[1] integerValue] == 6 || [newArr[1] integerValue] == 9) {
+                return NO;
+            }
+        }
+        else if ([newArr[0] integerValue] == 2 && [oldArr[0] integerValue] != 2) {
+            if ([newArr[1] integerValue] == 3 || [newArr[1] integerValue] == 6 || [newArr[1] integerValue] == 9) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - 连号个数
@@ -320,6 +400,30 @@
 //    vc.calculateRandomArr = _minArr;
     vc.realArr = [[YXProbabilityManager sharedManager] allArr];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - 滚动到底部
+- (void)progressBearingBtn:(UIButton *)btn {
+    
+    if (_endArr.count == 0) {
+        return;
+    }
+    btn.selected =! btn.selected;
+    
+    if (btn.selected) {
+        [btn setTitle:@"置顶" forState:UIControlStateNormal];
+        NSInteger section = [_tableView numberOfSections];
+        if (section < 1) return;
+        NSInteger index = [_tableView numberOfRowsInSection:section -1];
+        if (index < 1) return;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index -1 inSection:section -1];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+    else {
+        [btn setTitle:@"置底" forState:UIControlStateNormal];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
@@ -378,6 +482,12 @@
     _activityIndicatorView.center = self.view.center;
     _activityIndicatorView.color = [UIColor redColor];
     [self.view addSubview:_activityIndicatorView];
+    
+    UIButton *bearingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    bearingBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds) - 64, CGRectGetHeight(self.view.bounds) - 100, 40, 20);
+    [bearingBtn setTitle:@"置底" forState:UIControlStateNormal];
+    [bearingBtn addTarget:self action:@selector(progressBearingBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bearingBtn];
 }
 
 #pragma mark - 初始化数据
