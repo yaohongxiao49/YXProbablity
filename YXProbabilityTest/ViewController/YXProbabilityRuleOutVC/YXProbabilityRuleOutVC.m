@@ -17,7 +17,7 @@
 #define kShowCount 2
 #define kGetValuesCount @"5"
 
-@interface YXProbabilityRuleOutVC () <UITableViewDataSource, UITableViewDelegate>
+@interface YXProbabilityRuleOutVC () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) YXProbabilityRandomHeaderView *headerView;
@@ -34,6 +34,7 @@
 @property (nonatomic, assign) NSInteger amount;
 
 @property (nonatomic, strong) NSMutableArray *oldArr; //上期数据
+@property (nonatomic, assign) NSInteger textfieldLenth; //输入框输入长度
 
 @end
 
@@ -347,18 +348,17 @@
     else if (newSingleAmount > 3 || newTenAmount > 3 || newTwentyAmount > 3) { //新个位数 大于 3个 || 新十位数 大于 3个 || 新二十位数 大于 3个
         return YES;
     }
-    else if (newSingleAmount > 1) { //新个位数大于1个时，前两位是否配套（01，02），（01，06），（01，09），（02，03），（02，06），（02，09）
-        if ([newArr[0] integerValue] == 1 && [oldArr[0] integerValue] != 1) {
-            if ([newArr[1] integerValue] == 2 || [newArr[1] integerValue] == 6 || [newArr[1] integerValue] == 9) {
-                return NO;
-            }
+    else if ([[newArr lastObject] integerValue] >= 10) { //蓝球 大于等于 10
+        NSString *redAmount = [NSString stringWithFormat:@"%ld%ld%ld%ld", newSingleAmount, newTenAmount, newTwentyAmount, newThirtyAmount];
+        if (!([redAmount isEqualToString:@"1221"] || [redAmount isEqualToString:@"2310"] || [redAmount isEqualToString:@"1320"] || [redAmount isEqualToString:@"1212"] || [redAmount isEqualToString:@"0321"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"2130"] || [redAmount isEqualToString:@"2031"] || [redAmount isEqualToString:@"0231"])) {
+            return YES;
         }
-        else if ([newArr[0] integerValue] == 2 && [oldArr[0] integerValue] != 2) {
-            if ([newArr[1] integerValue] == 3 || [newArr[1] integerValue] == 6 || [newArr[1] integerValue] == 9) {
-                return NO;
-            }
+    }
+    else if ([[newArr lastObject] integerValue] < 10) { //蓝球 小于 10
+        NSString *redAmount = [NSString stringWithFormat:@"%ld%ld%ld%ld", newSingleAmount, newTenAmount, newTwentyAmount, newThirtyAmount];
+        if (!([redAmount isEqualToString:@"1131"] || [redAmount isEqualToString:@"2211"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"3030"] || [redAmount isEqualToString:@"0312"] || [redAmount isEqualToString:@"3210"] || [redAmount isEqualToString:@"2121"] || [redAmount isEqualToString:@"2112"] || [redAmount isEqualToString:@"3120"] || [redAmount isEqualToString:@"1230"] || [redAmount isEqualToString:@"1032"])) {
+            return YES;
         }
-        return YES;
     }
     
     return NO;
@@ -448,10 +448,54 @@
     
 }
 
+#pragma mark - <UITextFieldDelegate>
+- (void)textFieldDidChange:(UITextField *)textField {
+    
+    if (textField.text.length > _textfieldLenth) {
+        if (textField.text.length == 3 || textField.text.length == 6 || textField.text.length == 9 || textField.text.length == 12 || textField.text.length == 15 || textField.text.length == 18) {
+            NSMutableString *str = [[NSMutableString alloc ] initWithString:textField.text];
+            [str insertString:@" " atIndex:(textField.text.length - 1)];
+            textField.text = str;
+        }
+        if (textField.text.length >= 20) {
+            textField.text = [textField.text substringToIndex:20];
+            [textField resignFirstResponder];
+        }
+        _textfieldLenth = textField.text.length;
+    }
+    else if (textField.text.length < _textfieldLenth) {
+        if (textField.text.length == 3 || textField.text.length == 6 || textField.text.length == 9 || textField.text.length == 12 || textField.text.length == 15 || textField.text.length == 18) {
+            textField.text = [NSString stringWithFormat:@"%@", textField.text];
+            textField.text = [textField.text substringToIndex:(textField.text.length - 1)];
+        }
+        _textfieldLenth = textField.text.length;
+    }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    
+}
+
 #pragma mark - 初始化视图
 - (void)initView {
     
     __weak typeof(self) weakSelf = self;
+    
+    UIButton *bearingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    bearingBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds) - 60, self.yxNaviHeight + 10, 40, 20);
+    [bearingBtn setTitle:@"置底" forState:UIControlStateNormal];
+    [bearingBtn addTarget:self action:@selector(progressBearingBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bearingBtn];
+    
+    UITextField *textField = [[UITextField alloc] init];
+    textField.frame = CGRectMake(20, self.yxNaviHeight + 10, CGRectGetWidth(self.view.bounds) - 140, 20);
+    textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.keyboardType = UIKeyboardTypePhonePad;
+    textField.delegate = self;
+    textField.placeholder = @"输入要搜索的号码";
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [self.view addSubview:textField];
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
@@ -469,7 +513,7 @@
         [weakSelf pushToCompareVC];
     };
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - self.yxNaviHeight) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.yxNaviHeight + 40, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - (self.yxNaviHeight + 40)) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.estimatedRowHeight = 100;
@@ -482,12 +526,6 @@
     _activityIndicatorView.center = self.view.center;
     _activityIndicatorView.color = [UIColor redColor];
     [self.view addSubview:_activityIndicatorView];
-    
-    UIButton *bearingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    bearingBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds) - 64, CGRectGetHeight(self.view.bounds) - 100, 40, 20);
-    [bearingBtn setTitle:@"置底" forState:UIControlStateNormal];
-    [bearingBtn addTarget:self action:@selector(progressBearingBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:bearingBtn];
 }
 
 #pragma mark - 初始化数据
