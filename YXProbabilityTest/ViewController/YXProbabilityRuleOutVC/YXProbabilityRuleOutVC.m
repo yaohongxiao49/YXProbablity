@@ -35,6 +35,7 @@
 
 @property (nonatomic, strong) NSMutableArray *oldArr; //上期数据
 @property (nonatomic, assign) NSInteger textfieldLenth; //输入框输入长度
+@property (nonatomic, strong) UITextField *textField; //搜索框
 
 @end
 
@@ -381,10 +382,15 @@
 #pragma mark - 界面更新弹窗
 - (void)reloadAlertView {
     
+    __weak typeof(self) weakSelf = self;
+    
     [_activityIndicatorView stopAnimating];
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"界面已更新" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        weakSelf.textField.userInteractionEnabled = YES;
+    }];
     [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [alertVC addAction:sureAlertAction];
     
@@ -473,7 +479,37 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray *ballArr = [[NSMutableArray alloc] init];
+    [self.endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [obj enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSMutableArray *infoArr = [[NSMutableArray alloc] init];
+            [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                            
+                [infoArr addObject:infoModel.value];
+                if (infoArr.count == 7) {
+                    NSString *infoStr = [infoArr componentsJoinedByString:@" "];
+                    [ballArr addObject:infoStr];
+                }
+            }];
+        }];
+    }];
     
+    [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        if ([obj containsString:textField.text]) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+            [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            *stop = YES;
+        }
+    }];
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+
+    [self.view endEditing:YES];
+    return YES;
 }
 
 #pragma mark - 初始化视图
@@ -487,15 +523,17 @@
     [bearingBtn addTarget:self action:@selector(progressBearingBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bearingBtn];
     
-    UITextField *textField = [[UITextField alloc] init];
-    textField.frame = CGRectMake(20, self.yxNaviHeight + 10, CGRectGetWidth(self.view.bounds) - 140, 20);
-    textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    textField.keyboardType = UIKeyboardTypePhonePad;
-    textField.delegate = self;
-    textField.placeholder = @"输入要搜索的号码";
-    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [self.view addSubview:textField];
+    _textField = [[UITextField alloc] init];
+    _textField.frame = CGRectMake(20, self.yxNaviHeight + 10, CGRectGetWidth(self.view.bounds) - 140, 20);
+    _textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    _textField.returnKeyType = UIReturnKeyDone;
+    _textField.delegate = self;
+    _textField.placeholder = @"输入要搜索的号码";
+    _textField.userInteractionEnabled = YES;
+    [_textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [self.view addSubview:_textField];
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);

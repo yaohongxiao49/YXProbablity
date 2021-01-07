@@ -35,13 +35,11 @@
 		847FB8CA24937E710083A71A /* YXProbabilityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8C924937E710083A71A /* YXProbabilityListModel.m */; };
 		847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847FB8CC24937F5E0083A71A /* YXProbabilityBallInfoModel.m */; };
 		84804A5924921D99009F160F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5824921D99009F160F /* AppDelegate.m */; };
-		84804A5C24921D99009F160F /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A5B24921D99009F160F /* SceneDelegate.m */; };
 		84804A6424921D9A009F160F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84804A6324921D9A009F160F /* Assets.xcassets */; };
 		84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84804A6524921D9A009F160F /* LaunchScreen.storyboard */; };
 		84804A6A24921D9A009F160F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A6924921D9A009F160F /* main.m */; };
 		84804A7424921D9A009F160F /* YXProbabilityTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7324921D9A009F160F /* YXProbabilityTestTests.m */; };
 		84804A7F24921D9A009F160F /* YXProbabilityTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */; };
-		84DB602225A59CA9000759B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DB602125A59CA9000759B2 /* Main.storyboard */; };
 		84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */; };
 		84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D424ADD66E002ED2B3 /* Security.framework */; };
 		84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */; };
@@ -125,8 +123,6 @@
 		84804A5424921D99009F160F /* 福利彩.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "福利彩.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A5724921D99009F160F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84804A5824921D99009F160F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		84804A5A24921D99009F160F /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		84804A5B24921D99009F160F /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		84804A6324921D9A009F160F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84804A6624921D9A009F160F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84804A6824921D9A009F160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,7 +133,6 @@
 		84804A7A24921D9A009F160F /* YXProbabilityTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YXProbabilityTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityTestUITests.m; sourceTree = "<group>"; };
 		84804A8024921D9A009F160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84DB602125A59CA9000759B2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		84E6A4D424ADD66E002ED2B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -372,8 +367,6 @@
 			children = (
 				84804A5724921D99009F160F /* AppDelegate.h */,
 				84804A5824921D99009F160F /* AppDelegate.m */,
-				84804A5A24921D99009F160F /* SceneDelegate.h */,
-				84804A5B24921D99009F160F /* SceneDelegate.m */,
 				845B87B424D804F800944062 /* ViewController */,
 				845B87CD24D804F800944062 /* View */,
 				845B87D524D804F800944062 /* Cell */,
@@ -381,7 +374,6 @@
 				841518F524B2EB3900EA8B9B /* YXProbabilityRequest */,
 				84804A6324921D9A009F160F /* Assets.xcassets */,
 				84804A6524921D9A009F160F /* LaunchScreen.storyboard */,
-				84DB602125A59CA9000759B2 /* Main.storyboard */,
 				84804A6824921D9A009F160F /* Info.plist */,
 				84804A6924921D9A009F160F /* main.m */,
 			);
@@ -543,7 +535,6 @@
 				845B87E724D804F800944062 /* YXProbabilityAllHeaderView.xib in Resources */,
 				84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */,
 				845B87E924D804F800944062 /* YXProbabilitySecHeaderView.xib in Resources */,
-				84DB602225A59CA9000759B2 /* Main.storyboard in Resources */,
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
 				845B87EC24D804F800944062 /* YXProbabilityAllListCell.xib in Resources */,
 				845B87EB24D804F800944062 /* YXProbabilityCollectionViewCell.xib in Resources */,
@@ -631,7 +622,6 @@
 				8457F6F2259AC117001106FB /* YXProbabilityRuleOutVC.m in Sources */,
 				845B87E324D804F800944062 /* ViewController.m in Sources */,
 				84804A6A24921D9A009F160F /* main.m in Sources */,
-				84804A5C24921D99009F160F /* SceneDelegate.m in Sources */,
 				845B87EA24D804F800944062 /* YXProbabilityAllHeaderView.m in Sources */,
 				845B87E124D804F800944062 /* NSObject+YXCategory.m in Sources */,
 				845B87E624D804F800944062 /* YXProbabilityRandomHeaderView.m in Sources */,
