@@ -36,6 +36,10 @@
 @property (nonatomic, strong) NSMutableArray *oldArr; //上期数据
 @property (nonatomic, assign) NSInteger textfieldLenth; //输入框输入长度
 @property (nonatomic, strong) UITextField *textField; //搜索框
+@property (nonatomic, strong) NSMutableArray *textFieldEndArr; //筛选结果数组
+@property (nonatomic, assign) NSInteger textFieldEndPage; //筛选结果页码
+@property (nonatomic, assign) NSInteger textFieldEndCurrent; //筛选结果当前显示
+@property (nonatomic, strong) UIButton *pointBtn; //搜索按钮
 
 @end
 
@@ -350,13 +354,13 @@
         return YES;
     }
     else if ([[newArr lastObject] integerValue] >= 10) { //蓝球 大于等于 10
-        NSString *redAmount = [NSString stringWithFormat:@"%ld%ld%ld%ld", newSingleAmount, newTenAmount, newTwentyAmount, newThirtyAmount];
+        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
         if (!([redAmount isEqualToString:@"1221"] || [redAmount isEqualToString:@"2310"] || [redAmount isEqualToString:@"1320"] || [redAmount isEqualToString:@"1212"] || [redAmount isEqualToString:@"0321"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"2130"] || [redAmount isEqualToString:@"2031"] || [redAmount isEqualToString:@"0231"])) {
             return YES;
         }
     }
     else if ([[newArr lastObject] integerValue] < 10) { //蓝球 小于 10
-        NSString *redAmount = [NSString stringWithFormat:@"%ld%ld%ld%ld", newSingleAmount, newTenAmount, newTwentyAmount, newThirtyAmount];
+        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
         if (!([redAmount isEqualToString:@"1131"] || [redAmount isEqualToString:@"2211"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"3030"] || [redAmount isEqualToString:@"0312"] || [redAmount isEqualToString:@"3210"] || [redAmount isEqualToString:@"2121"] || [redAmount isEqualToString:@"2112"] || [redAmount isEqualToString:@"3120"] || [redAmount isEqualToString:@"1230"] || [redAmount isEqualToString:@"1032"])) {
             return YES;
         }
@@ -432,6 +436,35 @@
     }
 }
 
+#pragma mark - 搜索事件
+- (void)progressPointBtn {
+    
+    [self.view endEditing:YES];
+    if (_textFieldEndArr.count == 0) {
+        [_pointBtn setTitle:[NSString stringWithFormat:@"%@", @"搜索"] forState:UIControlStateNormal];
+        return;
+    }
+    
+    if (_textFieldEndPage <= (_textFieldEndArr.count - 1)) {
+        _textFieldEndCurrent = [_textFieldEndArr[_textFieldEndPage] integerValue];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_textFieldEndCurrent inSection:0];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        _textFieldEndPage++;
+    }
+    else {
+        _textFieldEndPage = 0;
+        _textFieldEndCurrent = [_textFieldEndArr[_textFieldEndPage] integerValue];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_textFieldEndCurrent inSection:0];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    [_pointBtn setTitle:[NSString stringWithFormat:@"%@/%@", @(_textFieldEndPage), @(_textFieldEndArr.count - 1)] forState:UIControlStateNormal];
+    
+    [_activityIndicatorView startAnimating];
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -446,6 +479,13 @@
     
     YXProbabilityAllListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
     [cell reloadValueByIndexPath:indexPath arr:_endArr[indexPath.section] oldArr:(NSMutableArray *)@[]];
+    if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
+        cell.collectionView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
+        [_activityIndicatorView stopAnimating];
+    }
+    else {
+        cell.collectionView.backgroundColor = [UIColor whiteColor];
+    }
     
     return cell;
 }
@@ -479,32 +519,28 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
-    __weak typeof(self) weakSelf = self;
     NSMutableArray *ballArr = [[NSMutableArray alloc] init];
-    [self.endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        [obj enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
-            
+    for (NSMutableArray *arr in self.endArr) {
+        for (YXProbabilityListModel *listModel in arr) {
             NSMutableArray *infoArr = [[NSMutableArray alloc] init];
-            [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                            
+            for (YXProbabilityBallInfoModel *infoModel in listModel.valueArr) {
                 [infoArr addObject:infoModel.value];
                 if (infoArr.count == 7) {
                     NSString *infoStr = [infoArr componentsJoinedByString:@" "];
                     [ballArr addObject:infoStr];
                 }
-            }];
-        }];
-    }];
-    
-    [ballArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-       
-        if ([obj containsString:textField.text]) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
-            [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            *stop = YES;
+            }
         }
-    }];
+    }
+    
+    _textFieldEndArr = [[NSMutableArray alloc] init];
+    NSInteger i = 0;
+    for (NSString *obj in ballArr) {
+        if ([obj containsString:textField.text]) {
+            [_textFieldEndArr addObject:@(i)];
+        }
+        i++;
+    }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 
@@ -524,7 +560,7 @@
     [self.view addSubview:bearingBtn];
     
     _textField = [[UITextField alloc] init];
-    _textField.frame = CGRectMake(20, self.yxNaviHeight + 10, CGRectGetWidth(self.view.bounds) - 140, 20);
+    _textField.frame = CGRectMake(20, self.yxNaviHeight + 10, CGRectGetWidth(self.view.bounds) - 170, 20);
     _textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -534,6 +570,12 @@
     _textField.userInteractionEnabled = YES;
     [_textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_textField];
+    
+    _pointBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_pointBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    _pointBtn.frame = CGRectMake(CGRectGetMaxX(_textField.frame), CGRectGetMinY(_textField.frame), 80, 20);
+    [_pointBtn addTarget:self action:@selector(progressPointBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_pointBtn];
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
