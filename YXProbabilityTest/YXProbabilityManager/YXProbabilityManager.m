@@ -21,6 +21,87 @@
     return instance;
 }
 
+#pragma mark - 取出各位最多出现数
+- (void)getMaxNumByIndex:(NSInteger)index begainArr:(NSMutableArray *)begainArr baseVC:(UIViewController *)baseVC {
+    
+    NSMutableArray *breakUpValueArr = [[NSMutableArray alloc] init];
+    
+    [begainArr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger infoIdx, BOOL * _Nonnull stop) {
+            
+            if (index == infoIdx) {
+                [breakUpValueArr addObject:infoModel.value];
+            }
+        }];
+    }];
+    
+    NSMutableArray *amountArr = [[NSMutableArray alloc] init];
+    NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)breakUpValueArr];
+    for (id item in countSet) { //去重并统计
+        NSInteger count = [countSet countForObject:item];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:item forKey:@"item"];
+        [dic setObject:@(count) forKey:@"count"];
+        [amountArr addObject:dic];
+    }
+    NSArray *sortingArr = [self sortingByArr:(NSArray *)amountArr type:NSOrderedDescending];
+    NSDictionary *maxDic = [sortingArr lastObject];
+    
+    NSMutableArray *nextArr = [[NSMutableArray alloc] init];
+    [begainArr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger infoIdx, BOOL * _Nonnull stop) {
+            
+            if ((index == infoIdx) && [[maxDic objectForKey:@"item"] isEqualToString:infoModel.value]) {
+                [nextArr addObject:listModel];
+            }
+        }];
+    }];
+    
+    if (index == 6) {
+        NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+        [nextArr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger infoIdx, BOOL * _Nonnull stop) {
+                
+                [valueArr addObject:infoModel.value];
+            }];
+        }];
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"以往数据依次取最大，最可能出现的是" message:[valueArr componentsJoinedByString:@" "] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [alertVC addAction:sureAlertAction];        
+        [baseVC presentViewController:alertVC animated:YES completion:nil];
+    }
+    else {
+        [self getMaxNumByIndex:index + 1 begainArr:nextArr baseVC:baseVC];
+    }
+}
+- (NSArray *)sortingByArr:(NSArray *)arr type:(NSComparisonResult)type {
+    
+    NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        if ([obj1 isKindOfClass:[NSDictionary class]]) {
+            NSNumber *number1 = [obj1 objectForKey:@"count"];
+            NSNumber *number2 = [obj2 objectForKey:@"count"];
+            
+            NSComparisonResult result = [number1 compare:number2];
+            
+            return result == type;
+        }
+        else {
+            NSNumber *number1 = @([obj1 integerValue]);
+            NSNumber *number2 = @([obj2 integerValue]);
+            
+            NSComparisonResult result = [number1 compare:number2];
+            
+            return result == type;
+        }
+    }];
+    return resultArray;
+}
+
 #pragma mark - method
 + (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed {
     

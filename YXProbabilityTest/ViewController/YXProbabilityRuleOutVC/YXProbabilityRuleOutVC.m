@@ -353,18 +353,18 @@
     else if (newSingleAmount > 3 || newTenAmount > 3 || newTwentyAmount > 3) { //新个位数 大于 3个 || 新十位数 大于 3个 || 新二十位数 大于 3个
         return YES;
     }
-    else if ([[newArr lastObject] integerValue] >= 10) { //蓝球 大于等于 10
-        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
-        if (!([redAmount isEqualToString:@"1221"] || [redAmount isEqualToString:@"2310"] || [redAmount isEqualToString:@"1320"] || [redAmount isEqualToString:@"1212"] || [redAmount isEqualToString:@"0321"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"2130"] || [redAmount isEqualToString:@"2031"] || [redAmount isEqualToString:@"0231"])) {
-            return YES;
-        }
-    }
-    else if ([[newArr lastObject] integerValue] < 10) { //蓝球 小于 10
-        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
-        if (!([redAmount isEqualToString:@"1131"] || [redAmount isEqualToString:@"2211"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"3030"] || [redAmount isEqualToString:@"0312"] || [redAmount isEqualToString:@"3210"] || [redAmount isEqualToString:@"2121"] || [redAmount isEqualToString:@"2112"] || [redAmount isEqualToString:@"3120"] || [redAmount isEqualToString:@"1230"] || [redAmount isEqualToString:@"1032"])) {
-            return YES;
-        }
-    }
+//    else if ([[newArr lastObject] integerValue] >= 10) { //蓝球 大于等于 10
+//        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
+//        if (!([redAmount isEqualToString:@"1221"] || [redAmount isEqualToString:@"2310"] || [redAmount isEqualToString:@"1320"] || [redAmount isEqualToString:@"1212"] || [redAmount isEqualToString:@"0321"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"2130"] || [redAmount isEqualToString:@"2031"] || [redAmount isEqualToString:@"0231"])) {
+//            return YES;
+//        }
+//    }
+//    else if ([[newArr lastObject] integerValue] < 10) { //蓝球 小于 10
+//        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
+//        if (!([redAmount isEqualToString:@"1131"] || [redAmount isEqualToString:@"2211"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"3030"] || [redAmount isEqualToString:@"0312"] || [redAmount isEqualToString:@"3210"] || [redAmount isEqualToString:@"2121"] || [redAmount isEqualToString:@"2112"] || [redAmount isEqualToString:@"3120"] || [redAmount isEqualToString:@"1230"] || [redAmount isEqualToString:@"1032"])) {
+//            return YES;
+//        }
+//    }
     
     return NO;
 }

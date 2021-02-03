@@ -41,16 +41,26 @@
                         <action selector="progressRuleOut:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZBC-pW-1Hw"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-06-sBA">
+                    <rect key="frame" x="87" y="55" width="37" height="30"/>
+                    <state key="normal" title="other"/>
+                    <connections>
+                        <action selector="progressOtherBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="Vts-4c-Sk1"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="51h-GW-z7x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="9bw-10-wL0"/>
                 <constraint firstItem="Vvd-Sd-DPh" firstAttribute="top" secondItem="oHA-Rn-05L" secondAttribute="bottom" constant="10" id="HoN-gk-lPm"/>
+                <constraint firstItem="BOu-06-sBA" firstAttribute="leading" secondItem="Vvd-Sd-DPh" secondAttribute="trailing" constant="10" id="LeH-V1-2m5"/>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="trailing" constant="15" id="RGb-XX-WDF"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xaN-1K-pKc" secondAttribute="trailing" constant="15" id="aYo-8U-BTN"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="centerY" secondItem="3qw-G1-dH4" secondAttribute="centerY" id="dc8-lz-x9d"/>
+                <constraint firstItem="BOu-06-sBA" firstAttribute="top" secondItem="Vvd-Sd-DPh" secondAttribute="top" id="eCL-qp-g16"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="leading" secondItem="3qw-G1-dH4" secondAttribute="trailing" constant="15" id="ec5-kC-0CE"/>
+                <constraint firstItem="BOu-06-sBA" firstAttribute="bottom" secondItem="Vvd-Sd-DPh" secondAttribute="bottom" id="wvD-Zc-Mgt"/>
                 <constraint firstItem="Vvd-Sd-DPh" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="leading" id="xM4-Na-19x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="ySz-8x-eKf"/>
             </constraints>

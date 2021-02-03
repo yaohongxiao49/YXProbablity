@@ -8,6 +8,7 @@
 // 红色球号码区由（1 - 33）共三十三个号码组成，蓝色球号码区由（1 - 16）共十六个号码组成
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "YXProbabilityListModel.h"
 
 #define kRandomListArr @"randomListArr"
@@ -23,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YXProbabilityManager : NSObject
 
 + (instancetype)sharedManager;
+
+/** 以往数据依次最大 */
+- (void)getMaxNumByIndex:(NSInteger)index begainArr:(NSMutableArray *)begainArr baseVC:(UIViewController *)baseVC;
 
 + (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed;
 

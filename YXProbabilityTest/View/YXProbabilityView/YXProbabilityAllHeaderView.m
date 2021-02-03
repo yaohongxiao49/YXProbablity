@@ -40,6 +40,12 @@
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - other
+- (IBAction)progressOtherBtn:(UIButton *)sender {
+    
+    [[YXProbabilityManager sharedManager] getMaxNumByIndex:0 begainArr:[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]] baseVC:self.baseVC];
+}
+
 #pragma mark - setting
 - (void)setBaseVC:(UIViewController *)baseVC {
     

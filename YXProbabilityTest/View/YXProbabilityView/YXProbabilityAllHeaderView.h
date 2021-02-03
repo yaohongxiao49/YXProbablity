@@ -10,6 +10,7 @@
 #import "YXProbabilityStatisticalVC.h"
 #import "YXProbabilityRandomVC.h"
 #import "YXProbabilityRuleOutVC.h"
+#import "YXProbabilityManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
