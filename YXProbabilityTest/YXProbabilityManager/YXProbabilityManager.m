@@ -78,6 +78,45 @@
         [self getMaxNumByIndex:index + 1 begainArr:nextArr baseVC:baseVC];
     }
 }
+- (void)getSingleMaxNumByIndex:(NSInteger)index begainArr:(NSMutableArray *)begainArr endArr:(NSMutableArray *)endArr baseVC:(UIViewController *)baseVC {
+    
+    NSMutableArray *breakUpValueArr = [[NSMutableArray alloc] init];
+    
+    [begainArr enumerateObjectsUsingBlock:^(YXProbabilityListModel *  _Nonnull listModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [listModel.valueArr enumerateObjectsUsingBlock:^(YXProbabilityBallInfoModel *  _Nonnull infoModel, NSUInteger infoIdx, BOOL * _Nonnull stop) {
+            
+            if (index == infoIdx) {
+                [breakUpValueArr addObject:infoModel.value];
+            }
+        }];
+    }];
+    
+    NSMutableArray *amountArr = [[NSMutableArray alloc] init];
+    NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)breakUpValueArr];
+    for (id item in countSet) { //去重并统计
+        NSInteger count = [countSet countForObject:item];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:item forKey:@"item"];
+        [dic setObject:@(count) forKey:@"count"];
+        [amountArr addObject:dic];
+    }
+    NSArray *sortingArr = [self sortingByArr:(NSArray *)amountArr type:NSOrderedDescending];
+    NSDictionary *maxDic = [sortingArr lastObject];
+    
+    [endArr addObject:[maxDic objectForKey:@"item"]];
+    
+    if (index == 6) {
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"以往数据依次取最大，最可能出现的是" message:[endArr componentsJoinedByString:@" "] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        [sureAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [alertVC addAction:sureAlertAction];
+        [baseVC presentViewController:alertVC animated:YES completion:nil];
+    }
+    else {
+        [self getSingleMaxNumByIndex:index + 1 begainArr:begainArr endArr:endArr baseVC:baseVC];
+    }
+}
 - (NSArray *)sortingByArr:(NSArray *)arr type:(NSComparisonResult)type {
     
     NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {

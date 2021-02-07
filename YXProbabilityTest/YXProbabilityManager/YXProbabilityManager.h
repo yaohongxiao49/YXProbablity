@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 以往数据依次最大 */
 - (void)getMaxNumByIndex:(NSInteger)index begainArr:(NSMutableArray *)begainArr baseVC:(UIViewController *)baseVC;
+- (void)getSingleMaxNumByIndex:(NSInteger)index begainArr:(NSMutableArray *)begainArr endArr:(NSMutableArray *)endArr baseVC:(UIViewController *)baseVC;
 
 + (NSString *)assemblyProbabilityArrByRandomCount:(NSInteger)randomCount valueSet:(id)valueSet probabilityArr:(NSArray *)probabilityArr boolRed:(BOOL)boolRed;
 

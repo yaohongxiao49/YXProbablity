@@ -42,10 +42,17 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-06-sBA">
-                    <rect key="frame" x="87" y="55" width="37" height="30"/>
-                    <state key="normal" title="other"/>
+                    <rect key="frame" x="87" y="55" width="123" height="30"/>
+                    <state key="normal" title="整体单个排除最大"/>
                     <connections>
-                        <action selector="progressOtherBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="Vts-4c-Sk1"/>
+                        <action selector="progressOtherFirstBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="h5z-PU-zOc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jq4-2L-9fd">
+                    <rect key="frame" x="220" y="55" width="92" height="30"/>
+                    <state key="normal" title="单个最大集合"/>
+                    <connections>
+                        <action selector="progressOtherSecondBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="gao-5B-9gF"/>
                     </connections>
                 </button>
             </subviews>
@@ -53,16 +60,19 @@
             <constraints>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="51h-GW-z7x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="9bw-10-wL0"/>
+                <constraint firstItem="Jq4-2L-9fd" firstAttribute="bottom" secondItem="BOu-06-sBA" secondAttribute="bottom" id="DOZ-aE-9TX"/>
                 <constraint firstItem="Vvd-Sd-DPh" firstAttribute="top" secondItem="oHA-Rn-05L" secondAttribute="bottom" constant="10" id="HoN-gk-lPm"/>
                 <constraint firstItem="BOu-06-sBA" firstAttribute="leading" secondItem="Vvd-Sd-DPh" secondAttribute="trailing" constant="10" id="LeH-V1-2m5"/>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="trailing" constant="15" id="RGb-XX-WDF"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xaN-1K-pKc" secondAttribute="trailing" constant="15" id="aYo-8U-BTN"/>
+                <constraint firstItem="Jq4-2L-9fd" firstAttribute="top" secondItem="BOu-06-sBA" secondAttribute="top" id="cp8-FN-c8y"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="centerY" secondItem="3qw-G1-dH4" secondAttribute="centerY" id="dc8-lz-x9d"/>
                 <constraint firstItem="BOu-06-sBA" firstAttribute="top" secondItem="Vvd-Sd-DPh" secondAttribute="top" id="eCL-qp-g16"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="leading" secondItem="3qw-G1-dH4" secondAttribute="trailing" constant="15" id="ec5-kC-0CE"/>
                 <constraint firstItem="BOu-06-sBA" firstAttribute="bottom" secondItem="Vvd-Sd-DPh" secondAttribute="bottom" id="wvD-Zc-Mgt"/>
                 <constraint firstItem="Vvd-Sd-DPh" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="leading" id="xM4-Na-19x"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="ySz-8x-eKf"/>
+                <constraint firstItem="Jq4-2L-9fd" firstAttribute="leading" secondItem="BOu-06-sBA" secondAttribute="trailing" constant="10" id="zdx-kg-kaX"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="132" y="136"/>

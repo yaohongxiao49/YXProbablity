@@ -41,9 +41,14 @@
 }
 
 #pragma mark - other
-- (IBAction)progressOtherBtn:(UIButton *)sender {
+- (IBAction)progressOtherFirstBtn:(UIButton *)sender {
     
     [[YXProbabilityManager sharedManager] getMaxNumByIndex:0 begainArr:[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]] baseVC:self.baseVC];
+}
+- (IBAction)progressOtherSecondBtn:(UIButton *)sender {
+ 
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    [[YXProbabilityManager sharedManager] getSingleMaxNumByIndex:0 begainArr:[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]] endArr:arr baseVC:self.baseVC];
 }
 
 #pragma mark - setting
