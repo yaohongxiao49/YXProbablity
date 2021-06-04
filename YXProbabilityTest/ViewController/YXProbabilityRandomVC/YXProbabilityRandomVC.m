@@ -14,12 +14,12 @@
 #import "YXProbabilityCompareVC.h"
 #import "YXMinArrAssemblyMananger.h"
 
-#define kCycleCount 5000000
+#define kCycleCount 10000000
 #define kcalculateCount 4
 
-#define kShowCount 2
+#define kShowSecCount 2
 
-#define kGetValuesCount @"5"
+#define kGetValuesCount @"1"
 
 @interface YXProbabilityRandomVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -92,8 +92,8 @@
         return;
     }
     
-    NSInteger min = arr.count < kShowCount ? arr.count : kShowCount;
-    NSInteger max = arr.count > kShowCount ? arr.count - kShowCount : arr.count;
+    NSInteger min = arr.count < kShowSecCount ? arr.count : kShowSecCount;
+    NSInteger max = arr.count > kShowSecCount ? arr.count - kShowSecCount : arr.count;
     
     NSArray *countArr = kGetValuesCount.length != 0 ? [kGetValuesCount componentsSeparatedByString:@","] : @[];
     NSMutableArray *minRandomArr = [[NSMutableArray alloc] init];
@@ -372,7 +372,6 @@
     NSString *randomStr = [sortingArr componentsJoinedByString:@" "];
     
     weakSelf.count ++;
-//    NSLog(@"randomStr == %@, count == %@", randomStr, @(weakSelf.count));
     dispatch_async(dispatch_get_main_queue(), ^{
 
         [weakSelf.redCollecArr addObjectsFromArray:randomArr];
@@ -386,7 +385,6 @@
 #pragma mark - 去重并统计重复的数
 - (NSMutableArray *)statisticalRepeatNum:(NSMutableArray *)arr getValuesCount:(NSString *)getValuesCount {
     
-    NSArray *countArr = kGetValuesCount.length != 0 ? [kGetValuesCount componentsSeparatedByString:@","] : @[];
     NSMutableArray *amountArr = [[NSMutableArray alloc] init];
 
     NSCountedSet *countSet = [[NSCountedSet alloc] initWithArray:(NSArray *)arr];
@@ -397,16 +395,7 @@
         [dic setObject:item forKey:kPieChartLineGraphicsName];
         [dic setObject:@(count) forKey:kPieChartLineGraphicsValue];
         
-        if (countArr.count != 0) {
-            for (NSString *values in countArr) {
-                if ([values integerValue] == count) {
-                    [amountArr addObject:dic];
-                }
-            }
-        }
-        else {
-            [amountArr addObject:dic];
-        }
+        [amountArr addObject:dic];
     }
     
     return amountArr;
@@ -470,7 +459,7 @@
         [endArr addObject:valueDic];
     }];
     
-    NSInteger showCount = kShowCount;
+    NSInteger showCount = kShowSecCount;
     NSMutableArray *modelArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:endArr];
     NSInteger max = modelArr.count > showCount ? modelArr.count - showCount : modelArr.count;
     NSArray *minArr = [modelArr subarrayWithRange:NSMakeRange(0, min)];
