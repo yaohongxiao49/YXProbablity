@@ -158,6 +158,7 @@
 #pragma mark - 显示储存提示弹窗并选择是否储存数据
 - (void)showAlertView:(NSArray *)arr {
     
+    NSLog(@"是否保存");
     __weak typeof(self) weakSelf = self;
     NSMutableArray *historyArr;
     if (self.vcType == YXProbabilityRandomVCTypeReal) {
@@ -247,6 +248,7 @@
 #pragma mark - 界面更新弹窗
 - (void)reloadAlertView {
     
+    NSLog(@"界面已更新");
     [_activityIndicatorView stopAnimating];
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"界面已更新" preferredStyle:UIAlertControllerStyleAlert];
     
