@@ -41,6 +41,7 @@
 @property (nonatomic, copy) NSArray *probabilityBlueArr; //随机概率蓝球
 
 @property (nonatomic, strong) NSMutableArray *minArr; //只出现一次的数据集合
+@property (nonatomic, strong) NSMutableArray *lastArr; //上一期数据集合
 
 @end
 
@@ -81,6 +82,7 @@
 #pragma mark - 显示出现频率最高的2位以及出现频率最低的2位
 - (void)showChance {
     
+    __weak typeof(self) weakSelf = self;
     NSArray *arr;
     if (self.vcType == YXProbabilityRandomVCTypeReal) {
         arr = [[NSArray alloc] initWithArray:[YXProbabilityManager sharedManager].randomListArr];
@@ -99,8 +101,11 @@
     NSMutableArray *minRandomArr = [[NSMutableArray alloc] init];
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
+        //判断所需出现次数数组是否为0，所需要显示次数是否为指定次数，是否排除上一期已经出现号数
         if (countArr.count != 0 && [[obj objectForKey:kPieChartLineGraphicsValue] integerValue] == [countArr[0] integerValue]) {
-            [minRandomArr addObject:obj];
+            if ([weakSelf getNowValueSameToOldValueByNowValue:[obj objectForKey:kPieChartLineGraphicsName]] <= 2) {
+                [minRandomArr addObject:obj];
+            }
         }
     }];
     
@@ -426,6 +431,22 @@
     return resultArray;
 }
 
+#pragma mark - 获取当前数值与上期数值相同位数
+- (NSInteger)getNowValueSameToOldValueByNowValue:(NSString *)nowValue {
+    
+    NSInteger i = 0;
+    NSArray *nowArr = [nowValue componentsSeparatedByString:@" "];
+    for (NSString *last in _lastArr) {
+        for (NSString *now in nowArr) {
+            if ([last isEqualToString:now]) {
+                i++;
+            }
+        }
+    }
+    
+    return i;
+}
+
 #pragma mark - 组装数据
 - (void)assemblyValueByArr:(NSMutableArray *)arr min:(NSInteger)min {
     
@@ -623,6 +644,11 @@
         _count = [YXProbabilityManager sharedManager].probablityRandomListArr.count;
         _probabilityRedArr = [YXProbabilityManager sharedManager].probabilityRedArr;
         _probabilityBlueArr = [YXProbabilityManager sharedManager].probabilityBlueArr;
+    }
+    
+    _lastArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in [[[[YXProbabilityManager sharedManager] allArr] firstObject] objectForKey:kValueArr]) {
+        [_lastArr addObject:[dic objectForKey:kValue]];
     }
     
     NSInteger count = kCycleCount - _count;
