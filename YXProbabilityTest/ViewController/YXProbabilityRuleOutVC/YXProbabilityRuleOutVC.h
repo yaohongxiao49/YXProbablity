@@ -11,7 +11,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, YXProbabilityRuleOutVCType) {
+    /** 按规则随机数据 */
+    YXProbabilityRuleOutVCTypeRule,
+    /** 往期数据 */
+    YXProbabilityRuleOutVCTypeReal,
+};
+
 @interface YXProbabilityRuleOutVC : UIViewController
+
+@property (nonatomic, assign) YXProbabilityRuleOutVCType type;
 
 @end
 

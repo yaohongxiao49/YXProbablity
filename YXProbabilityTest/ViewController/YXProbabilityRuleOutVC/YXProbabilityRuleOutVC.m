@@ -15,7 +15,7 @@
 #define kCycleCount 5000000
 #define kcalculateCount 4
 #define kShowCount 2
-#define kGetValuesCount @"5"
+#define kGetValuesCount @"1"
 
 @interface YXProbabilityRuleOutVC () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -33,6 +33,7 @@
 @property (nonatomic, assign) BOOL boolCancel; //是否结束
 @property (nonatomic, assign) NSInteger amount;
 
+@property (nonatomic, strong) NSMutableArray *oldListArr; //往期数据
 @property (nonatomic, strong) NSMutableArray *oldArr; //上期数据
 @property (nonatomic, assign) NSInteger textfieldLenth; //输入框输入长度
 @property (nonatomic, strong) UITextField *textField; //搜索框
@@ -353,18 +354,6 @@
     else if (newSingleAmount > 3 || newTenAmount > 3 || newTwentyAmount > 3) { //新个位数 大于 3个 || 新十位数 大于 3个 || 新二十位数 大于 3个
         return YES;
     }
-//    else if ([[newArr lastObject] integerValue] >= 10) { //蓝球 大于等于 10
-//        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
-//        if (!([redAmount isEqualToString:@"1221"] || [redAmount isEqualToString:@"2310"] || [redAmount isEqualToString:@"1320"] || [redAmount isEqualToString:@"1212"] || [redAmount isEqualToString:@"0321"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"2130"] || [redAmount isEqualToString:@"2031"] || [redAmount isEqualToString:@"0231"])) {
-//            return YES;
-//        }
-//    }
-//    else if ([[newArr lastObject] integerValue] < 10) { //蓝球 小于 10
-//        NSString *redAmount = [NSString stringWithFormat:@"%@%@%@%@", @(newSingleAmount), @(newTenAmount), @(newTwentyAmount), @(newThirtyAmount)];
-//        if (!([redAmount isEqualToString:@"1131"] || [redAmount isEqualToString:@"2211"] || [redAmount isEqualToString:@"2220"] || [redAmount isEqualToString:@"3030"] || [redAmount isEqualToString:@"0312"] || [redAmount isEqualToString:@"3210"] || [redAmount isEqualToString:@"2121"] || [redAmount isEqualToString:@"2112"] || [redAmount isEqualToString:@"3120"] || [redAmount isEqualToString:@"1230"] || [redAmount isEqualToString:@"1032"])) {
-//            return YES;
-//        }
-//    }
     
     return NO;
 }
@@ -406,8 +395,6 @@
 - (void)pushToCompareVC {
     
     YXProbabilityCompareVC *vc = [[YXProbabilityCompareVC alloc] init];
-//    vc.randomArr = _endArr;
-//    vc.calculateRandomArr = _minArr;
     vc.realArr = [[YXProbabilityManager sharedManager] allArr];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -468,17 +455,19 @@
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return _endArr.count;
+    return self.type == YXProbabilityRuleOutVCTypeReal ? _oldListArr.count != 0 ? 1 : 0 : _endArr.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSArray *valueArr = _endArr[section];
+    NSArray *valueArr = self.type == YXProbabilityRuleOutVCTypeReal ? _oldListArr : _endArr[section];
     return [valueArr count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YXProbabilityAllListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllListCell class])];
-    [cell reloadValueByIndexPath:indexPath arr:_endArr[indexPath.section] oldArr:(NSMutableArray *)@[]];
+    NSMutableArray *settlementArr = self.type == YXProbabilityRuleOutVCTypeReal ? _oldListArr : _endArr[indexPath.section];
+    [cell reloadValueByIndexPath:indexPath arr:settlementArr oldArr:(NSMutableArray *)@[]];
+    
     if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
         cell.collectionView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
         [_activityIndicatorView stopAnimating];
@@ -493,11 +482,15 @@
     
     
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 60;
+}
 
 #pragma mark - <UITextFieldDelegate>
 - (void)textFieldDidChange:(UITextField *)textField {
     
-    if (textField.text.length > _textfieldLenth) {
+    if (textField.text.length > _textfieldLenth) { //06 07 08 13 16 29 05
         if (textField.text.length == 3 || textField.text.length == 6 || textField.text.length == 9 || textField.text.length == 12 || textField.text.length == 15 || textField.text.length == 18) {
             NSMutableString *str = [[NSMutableString alloc ] initWithString:textField.text];
             [str insertString:@" " atIndex:(textField.text.length - 1)];
@@ -520,8 +513,8 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
     NSMutableArray *ballArr = [[NSMutableArray alloc] init];
-    for (NSMutableArray *arr in self.endArr) {
-        for (YXProbabilityListModel *listModel in arr) {
+    if (self.type == YXProbabilityRuleOutVCTypeReal) {
+        for (YXProbabilityListModel *listModel in _oldListArr) {
             NSMutableArray *infoArr = [[NSMutableArray alloc] init];
             for (YXProbabilityBallInfoModel *infoModel in listModel.valueArr) {
                 [infoArr addObject:infoModel.value];
@@ -532,6 +525,21 @@
             }
         }
     }
+    else {
+        for (NSMutableArray *arr in _endArr) {
+            for (YXProbabilityListModel *listModel in arr) {
+                NSMutableArray *infoArr = [[NSMutableArray alloc] init];
+                for (YXProbabilityBallInfoModel *infoModel in listModel.valueArr) {
+                    [infoArr addObject:infoModel.value];
+                    if (infoArr.count == 7) {
+                        NSString *infoStr = [infoArr componentsJoinedByString:@" "];
+                        [ballArr addObject:infoStr];
+                    }
+                }
+            }
+        }
+    }
+    
     
     _textFieldEndArr = [[NSMutableArray alloc] init];
     NSInteger i = 0;
@@ -621,6 +629,7 @@
     _resultRandomArr = [[NSMutableArray alloc] init];
     _endArr = [[NSMutableArray alloc] init];
     
+    _oldListArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]];
     YXProbabilityListModel *oldModel = [[YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]] firstObject];
     _oldArr = oldModel.valueArr;
     

@@ -33,10 +33,19 @@
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - 对比排除
+#pragma mark - 往期对比
+- (IBAction)progressOld:(UIButton *)sender {
+    
+    YXProbabilityRuleOutVC *vc = [[YXProbabilityRuleOutVC alloc] init];
+    vc.type = YXProbabilityRuleOutVCTypeReal;
+    [self.baseVC.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - 随机对比
 - (IBAction)progressRuleOut:(UIButton *)sender {
  
     YXProbabilityRuleOutVC *vc = [[YXProbabilityRuleOutVC alloc] init];
+    vc.type = YXProbabilityRuleOutVCTypeRule;
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
 
