@@ -49,6 +49,13 @@
     [self.baseVC.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 全统计
+- (IBAction)progressAll:(UIButton *)sender {
+    
+    YXProbabilityAllPossibleVC *vc = [[YXProbabilityAllPossibleVC alloc] init];
+    [self.baseVC.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - other
 - (IBAction)progressOtherFirstBtn:(UIButton *)sender {
     

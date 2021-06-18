@@ -11,6 +11,7 @@
 #import "YXProbabilityRandomVC.h"
 #import "YXProbabilityRuleOutVC.h"
 #import "YXProbabilityManager.h"
+#import "YXProbabilityAllPossibleVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

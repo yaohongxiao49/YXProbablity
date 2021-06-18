@@ -40,6 +40,10 @@
 		84804A6A24921D9A009F160F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A6924921D9A009F160F /* main.m */; };
 		84804A7424921D9A009F160F /* YXProbabilityTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7324921D9A009F160F /* YXProbabilityTestTests.m */; };
 		84804A7F24921D9A009F160F /* YXProbabilityTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */; };
+		84C0431E267C307400492D0B /* YXProbabilityAllPossibleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C0431D267C307400492D0B /* YXProbabilityAllPossibleVC.m */; };
+		84C04322267C31E700492D0B /* YXProbabilityAllPossibleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C04320267C31E700492D0B /* YXProbabilityAllPossibleCell.m */; };
+		84C04323267C31E700492D0B /* YXProbabilityAllPossibleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C04321267C31E700492D0B /* YXProbabilityAllPossibleCell.xib */; };
+		84C04328267C49D500492D0B /* YXProbabilityAllPossibleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C04327267C49D500492D0B /* YXProbabilityAllPossibleModel.m */; };
 		84E6A4D324ADD665002ED2B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */; };
 		84E6A4D524ADD66E002ED2B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D424ADD66E002ED2B3 /* Security.framework */; };
 		84E6A4D724ADD676002ED2B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */; };
@@ -133,6 +137,13 @@
 		84804A7A24921D9A009F160F /* YXProbabilityTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YXProbabilityTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84804A7E24921D9A009F160F /* YXProbabilityTestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityTestUITests.m; sourceTree = "<group>"; };
 		84804A8024921D9A009F160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84C0431C267C307400492D0B /* YXProbabilityAllPossibleVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityAllPossibleVC.h; sourceTree = "<group>"; };
+		84C0431D267C307400492D0B /* YXProbabilityAllPossibleVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityAllPossibleVC.m; sourceTree = "<group>"; };
+		84C0431F267C31E700492D0B /* YXProbabilityAllPossibleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityAllPossibleCell.h; sourceTree = "<group>"; };
+		84C04320267C31E700492D0B /* YXProbabilityAllPossibleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityAllPossibleCell.m; sourceTree = "<group>"; };
+		84C04321267C31E700492D0B /* YXProbabilityAllPossibleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXProbabilityAllPossibleCell.xib; sourceTree = "<group>"; };
+		84C04326267C49D500492D0B /* YXProbabilityAllPossibleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityAllPossibleModel.h; sourceTree = "<group>"; };
+		84C04327267C49D500492D0B /* YXProbabilityAllPossibleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityAllPossibleModel.m; sourceTree = "<group>"; };
 		84E6A4D224ADD665002ED2B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		84E6A4D424ADD66E002ED2B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84E6A4D624ADD676002ED2B3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -221,6 +232,7 @@
 				845B87C524D804F800944062 /* YXProbabilityRandomVC */,
 				8457F6EF259AC0F0001106FB /* YXProbabilityRuleOutVC */,
 				845B87CB24D804F800944062 /* YXProbabilityCompareVC */,
+				84C0431B267C305900492D0B /* YXProbabilityAllPossibleVC */,
 				845B87CC24D804F800944062 /* ViewController.h */,
 				845B87C424D804F800944062 /* ViewController.m */,
 			);
@@ -308,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				845B87D624D804F800944062 /* YXProbabilityCell */,
+				84C04324267C321700492D0B /* YXProbabilityAllPossibleCell */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -372,6 +385,7 @@
 				845B87D524D804F800944062 /* Cell */,
 				847FB868249357BF0083A71A /* YXProbabilityManager */,
 				841518F524B2EB3900EA8B9B /* YXProbabilityRequest */,
+				84C04325267C49B300492D0B /* Model */,
 				84804A6324921D9A009F160F /* Assets.xcassets */,
 				84804A6524921D9A009F160F /* LaunchScreen.storyboard */,
 				84804A6824921D9A009F160F /* Info.plist */,
@@ -396,6 +410,34 @@
 				84804A8024921D9A009F160F /* Info.plist */,
 			);
 			path = YXProbabilityTestUITests;
+			sourceTree = "<group>";
+		};
+		84C0431B267C305900492D0B /* YXProbabilityAllPossibleVC */ = {
+			isa = PBXGroup;
+			children = (
+				84C0431C267C307400492D0B /* YXProbabilityAllPossibleVC.h */,
+				84C0431D267C307400492D0B /* YXProbabilityAllPossibleVC.m */,
+			);
+			path = YXProbabilityAllPossibleVC;
+			sourceTree = "<group>";
+		};
+		84C04324267C321700492D0B /* YXProbabilityAllPossibleCell */ = {
+			isa = PBXGroup;
+			children = (
+				84C0431F267C31E700492D0B /* YXProbabilityAllPossibleCell.h */,
+				84C04320267C31E700492D0B /* YXProbabilityAllPossibleCell.m */,
+				84C04321267C31E700492D0B /* YXProbabilityAllPossibleCell.xib */,
+			);
+			path = YXProbabilityAllPossibleCell;
+			sourceTree = "<group>";
+		};
+		84C04325267C49B300492D0B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84C04326267C49D500492D0B /* YXProbabilityAllPossibleModel.h */,
+				84C04327267C49D500492D0B /* YXProbabilityAllPossibleModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		84E6A4D124ADD664002ED2B3 /* Frameworks */ = {
@@ -534,6 +576,7 @@
 			files = (
 				845B87E724D804F800944062 /* YXProbabilityAllHeaderView.xib in Resources */,
 				84804A6724921D9A009F160F /* LaunchScreen.storyboard in Resources */,
+				84C04323267C31E700492D0B /* YXProbabilityAllPossibleCell.xib in Resources */,
 				845B87E924D804F800944062 /* YXProbabilitySecHeaderView.xib in Resources */,
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
 				845B87EC24D804F800944062 /* YXProbabilityAllListCell.xib in Resources */,
@@ -616,6 +659,7 @@
 				84804A5924921D99009F160F /* AppDelegate.m in Sources */,
 				845B87E024D804F800944062 /* YXPieChartLineGraphicsModel.m in Sources */,
 				845B87ED24D804F800944062 /* YXProbabilityAllListCell.m in Sources */,
+				84C04322267C31E700492D0B /* YXProbabilityAllPossibleCell.m in Sources */,
 				845B87E824D804F800944062 /* YXProbabilitySecHeaderView.m in Sources */,
 				841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */,
 				845B87EE24D804F800944062 /* YXProbabilityCollectionViewCell.m in Sources */,
@@ -623,8 +667,10 @@
 				845B87E324D804F800944062 /* ViewController.m in Sources */,
 				84804A6A24921D9A009F160F /* main.m in Sources */,
 				845B87EA24D804F800944062 /* YXProbabilityAllHeaderView.m in Sources */,
+				84C04328267C49D500492D0B /* YXProbabilityAllPossibleModel.m in Sources */,
 				845B87E124D804F800944062 /* NSObject+YXCategory.m in Sources */,
 				845B87E624D804F800944062 /* YXProbabilityRandomHeaderView.m in Sources */,
+				84C0431E267C307400492D0B /* YXProbabilityAllPossibleVC.m in Sources */,
 				845B87E224D804F800944062 /* YXProbabilityStatisticalHeaderView.m in Sources */,
 				845B87E524D804F800944062 /* YXProbabilityRandomVC.m in Sources */,
 				847FB8CD24937F5E0083A71A /* YXProbabilityBallInfoModel.m in Sources */,

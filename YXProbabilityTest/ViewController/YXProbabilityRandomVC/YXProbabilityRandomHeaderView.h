@@ -19,6 +19,7 @@ typedef void(^YXProbabilityRandomHVCompareBlock)(void);
 @property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak, nonatomic) IBOutlet UILabel *progressLab;
+@property (weak, nonatomic) IBOutlet UIButton *compareBtn;
 
 @property (nonatomic, assign) CGFloat prgressValue;
 @property (nonatomic, copy) YXProbabilityRandomHVBlock yxProbabilityRandomHVBlock;

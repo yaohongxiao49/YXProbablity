@@ -62,16 +62,27 @@
                         <action selector="progressOld:" destination="iN0-l3-epB" eventType="touchUpInside" id="OEK-ZL-Ie6"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGK-pS-neI">
+                    <rect key="frame" x="327" y="55" width="30" height="30"/>
+                    <state key="normal" title="all"/>
+                    <connections>
+                        <action selector="progressAll:" destination="iN0-l3-epB" eventType="touchUpInside" id="If8-sw-5dp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="51h-GW-z7x"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qk6-fR-qPa" secondAttribute="trailing" constant="15" id="9bJ-iE-Y21"/>
                 <constraint firstItem="oHA-Rn-05L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="9bw-10-wL0"/>
+                <constraint firstItem="hGK-pS-neI" firstAttribute="top" secondItem="Jq4-2L-9fd" secondAttribute="top" id="BEW-Cr-dtp"/>
                 <constraint firstItem="Jq4-2L-9fd" firstAttribute="bottom" secondItem="BOu-06-sBA" secondAttribute="bottom" id="DOZ-aE-9TX"/>
+                <constraint firstItem="hGK-pS-neI" firstAttribute="leading" secondItem="Jq4-2L-9fd" secondAttribute="trailing" constant="15" id="FYu-jh-ioI"/>
+                <constraint firstItem="hGK-pS-neI" firstAttribute="bottom" secondItem="Jq4-2L-9fd" secondAttribute="bottom" id="HLy-qV-NSW"/>
                 <constraint firstItem="Vvd-Sd-DPh" firstAttribute="top" secondItem="oHA-Rn-05L" secondAttribute="bottom" constant="10" id="HoN-gk-lPm"/>
                 <constraint firstItem="BOu-06-sBA" firstAttribute="leading" secondItem="Vvd-Sd-DPh" secondAttribute="trailing" constant="10" id="LeH-V1-2m5"/>
                 <constraint firstItem="3qw-G1-dH4" firstAttribute="leading" secondItem="oHA-Rn-05L" secondAttribute="trailing" constant="15" id="RGb-XX-WDF"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hGK-pS-neI" secondAttribute="trailing" constant="15" id="Wu7-4A-uW4"/>
                 <constraint firstItem="Jq4-2L-9fd" firstAttribute="top" secondItem="BOu-06-sBA" secondAttribute="top" id="cp8-FN-c8y"/>
                 <constraint firstItem="xaN-1K-pKc" firstAttribute="centerY" secondItem="3qw-G1-dH4" secondAttribute="centerY" id="dc8-lz-x9d"/>
                 <constraint firstItem="BOu-06-sBA" firstAttribute="top" secondItem="Vvd-Sd-DPh" secondAttribute="top" id="eCL-qp-g16"/>
