@@ -11,7 +11,7 @@
 #import "YXProbabilityAllPossibleCell.h"
 #import "NSObject+YXCategory.h"
 
-#define kCycleCount 100000000
+#define kCycleCount 50000000
 #define kcalculateCount 4
 
 @interface YXProbabilityAllPossibleVC () <UITableViewDelegate, UITableViewDataSource>
@@ -113,9 +113,11 @@
     
     NSArray *resultArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         
-        if ([obj1 isKindOfClass:[NSDictionary class]]) {
-            NSNumber *number1 = [obj1 objectForKey:@"fourCount"];
-            NSNumber *number2 = [obj2 objectForKey:@"fourCount"];
+        if ([obj1 isKindOfClass:[YXProbabilityAllPossibleModel class]]) {
+            YXProbabilityAllPossibleModel *model1 = obj1;
+            YXProbabilityAllPossibleModel *model2 = obj2;
+            NSNumber *number1 = @(model1.fourCount);
+            NSNumber *number2 = @(model2.fourCount);
             
             NSComparisonResult result = [number1 compare:number2];
             
@@ -139,34 +141,83 @@
     __weak typeof(self) weakSelf = self;
     
     [self.activityIndicatorView startAnimating];
-    dispatch_queue_t queue = dispatch_queue_create("com.repeatNumQueue", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(queue, ^{
-        
+    NSLog(@"开始统计！");
+    
+    NSMutableArray *breakUpArr = [self breakUpSuperArrToSonArrBySubSize:(kCycleCount /kcalculateCount) arr:self.resultRandomArr];
+    NSLog(@"拆分完成!");
+    
+    NSMutableArray *repeatNumArr = [[NSMutableArray alloc] init];
+    
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
+    for (int i = 0; i < kcalculateCount; i ++) {
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_group_async(group, queue, ^{
+
+            dispatch_semaphore_signal(semaphore);
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[strongSelf statisticalRepeatNum:breakUpArr[i]]]];
+        });
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        NSLog(@"开始统计！");
-        NSArray *repeatNumArr = [[NSArray alloc] initWithArray:(NSArray *)[strongSelf statisticalRepeatNum:weakSelf.resultRandomArr]];
-        strongSelf.resultArr = [YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:[strongSelf sortingByArr:repeatNumArr type:NSOrderedDescending]];
-        NSLog(@"结果数组个数 == %@", @(strongSelf.resultArr.count));
+        NSLog(@"拆分统计完成，开始合并统计!");
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[strongSelf sortingByArr:(NSArray *)[strongSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedDescending]];
+        
+        dispatch_queue_t queue = dispatch_queue_create("com.resultArrCountQueue", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_async(queue, ^{
             
-            [strongSelf.activityIndicatorView stopAnimating];
-            if (strongSelf.resultArr.count != 0) {
-                [strongSelf.tableView reloadData];
-            }
-            else {
-                NSLog(@"数组为空！");
-                [weakSelf presentAlertByMsg:@"数组为空！" boolCancel:NO sureBlock:^{
-                  
-                    [strongSelf.navigationController popViewControllerAnimated:YES];
-                }];
-            }
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            strongSelf.resultArr = [[NSMutableArray alloc] initWithArray:(NSArray *)endArr];
+            NSLog(@"合并统计排序完成！结果个数 == %@", @(strongSelf.resultArr.count));
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [strongSelf.activityIndicatorView stopAnimating];
+                if (strongSelf.resultArr.count != 0) {
+                    [strongSelf.tableView reloadData];
+                }
+                else {
+                    NSLog(@"数组为空！");
+                    [weakSelf presentAlertByMsg:@"数组为空！" boolCancel:NO sureBlock:^{
+                      
+                        [strongSelf.navigationController popViewControllerAnimated:YES];
+                    }];
+                }
+            });
         });
     });
 }
 
-#pragma mark - 去重并统计重复的数，包括 4-7
+#pragma mark - 拆分数组
+- (NSMutableArray *)breakUpSuperArrToSonArrBySubSize:(NSInteger)subSize arr:(NSMutableArray *)arr {
+    
+    unsigned long breakUpCount = arr.count %subSize == 0 ? (arr.count /subSize) : (arr.count /subSize + 1);
+    NSMutableArray *breakUpArr = [[NSMutableArray alloc] init];
+    
+    for (NSInteger i = 0; i < breakUpCount; i ++) {
+        NSInteger index = i *subSize;
+        NSMutableArray *subArr = [[NSMutableArray alloc] init];
+        [subArr removeAllObjects];
+        
+        NSInteger j = index;
+        while (j < subSize *(i + 1) && j < arr.count) {
+            [subArr addObject:[arr objectAtIndex:j]];
+            j += 1;
+        }
+        [breakUpArr addObject:[subArr copy]];
+    }
+    
+    return [breakUpArr copy];
+}
+
+#pragma mark - 数组去重并统计重复的数，包括 4-7
 - (NSMutableArray *)statisticalRepeatNum:(NSMutableArray *)arr {
     
     NSMutableArray *fourArr = [[NSMutableArray alloc] init];
@@ -189,25 +240,85 @@
     
     for (NSString *item in sevenSet) { //去重并统计
         NSInteger fourCount = [fourSet countForObject:[item substringToIndex:11]];
-        if (fourCount == 0) continue;
         NSInteger fiveCount = [fiveSet countForObject:[item substringToIndex:14]];
-        if (fiveCount < 800 || fiveCount > 2000) continue;
         NSInteger sixCount = [sixSet countForObject:[item substringToIndex:17]];
-        if (sixCount < 60 || sixCount > 200) continue;
         NSInteger sevenCount = [sevenSet countForObject:[item substringToIndex:20]];
-        if (sevenCount > 20) continue;
         
-        if (((fourCount > fiveCount) && (fiveCount > sixCount) && (sixCount > sevenCount))) {
-            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-            [dic setObject:item forKey:kAllItem];
-            [dic setObject:@(fourCount) forKey:kFourCount];
-            [dic setObject:@(fiveCount) forKey:kFiveCount];
-            [dic setObject:@(sixCount) forKey:kSixCount];
-            [dic setObject:@(sevenCount) forKey:kSevenCount];
-            [amountArr addObject:dic];
-        }
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:item forKey:kAllItem];
+        [dic setObject:@(fourCount) forKey:kFourCount];
+        [dic setObject:@(fiveCount) forKey:kFiveCount];
+        [dic setObject:@(sixCount) forKey:kSixCount];
+        [dic setObject:@(sevenCount) forKey:kSevenCount];
+        [amountArr addObject:dic];
     }
     return amountArr;
+}
+
+#pragma mark - 字典去重并统计重复的数，包括 4-7
+- (NSMutableArray *)statisticalRepeatNumByModelArr:(NSMutableArray *)modelArr {
+    
+    NSMutableArray *fourArr = [[NSMutableArray alloc] init];
+    NSMutableArray *fiveArr = [[NSMutableArray alloc] init];
+    NSMutableArray *sixArr = [[NSMutableArray alloc] init];
+    NSMutableArray *sevenArr = [[NSMutableArray alloc] init];
+    for (YXProbabilityAllPossibleModel *model in modelArr) {
+        [fourArr addObject:[model.item substringToIndex:11]];
+        [fiveArr addObject:[model.item substringToIndex:14]];
+        [sixArr addObject:[model.item substringToIndex:17]];
+        [sevenArr addObject:[model.item substringToIndex:20]];
+    }
+    
+    NSCountedSet *fourSet = [[NSCountedSet alloc] initWithArray:(NSArray *)fourArr];
+    NSCountedSet *fiveSet = [[NSCountedSet alloc] initWithArray:(NSArray *)fiveArr];
+    NSCountedSet *sixSet = [[NSCountedSet alloc] initWithArray:(NSArray *)sixArr];
+    NSCountedSet *sevenSet = [[NSCountedSet alloc] initWithArray:(NSArray *)sevenArr];
+    
+    NSMutableArray *amountArr = [[NSMutableArray alloc] init];
+    NSMutableArray *endArr = [[NSMutableArray alloc] init];
+    for (YXProbabilityAllPossibleModel *model in modelArr) { //去重并统计
+        NSInteger fourCount = [fourSet countForObject:[model.item substringToIndex:11]];
+        if (fourCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:model.fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;
+        }
+        NSInteger fiveCount = [fiveSet countForObject:[model.item substringToIndex:14]];
+        if (fiveCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;
+        }
+        NSInteger sixCount = [sixSet countForObject:[model.item substringToIndex:17]];
+        if (sixCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;
+        }
+        NSInteger sevenCount = [sevenSet countForObject:[model.item substringToIndex:20]];
+        if (sevenCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
+            continue;
+        }
+        
+        endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
+    }
+    return endArr;
+}
+
+#pragma mark - 计算最终统计
+- (NSMutableArray *)assemblyEndArrByModel:(YXProbabilityAllPossibleModel *)model fourCount:(NSInteger)fourCount fiveCount:(NSInteger)fiveCount sixCount:(NSInteger)sixCount sevenCount:(NSInteger)sevenCount arr:(NSMutableArray *)arr {
+    
+    YXProbabilityAllPossibleModel *endModel = [[YXProbabilityAllPossibleModel alloc] init];
+    endModel.item = model.item;
+    endModel.fourCount = model.fourCount + fourCount < 2 ? 0 : fourCount;
+    endModel.fiveCount = model.fiveCount + fiveCount < 2 ? 0 : fiveCount;
+    endModel.sixCount = model.sixCount + sixCount < 2 ? 0 : sixCount;
+    endModel.sevenCount = model.sevenCount + sevenCount < 2 ? 0 : sevenCount;
+    
+    if (((endModel.fourCount > endModel.fiveCount) && (endModel.fiveCount > endModel.sixCount) && (endModel.sixCount > endModel.sevenCount))) {
+        if ((endModel.fourCount != 0) && (endModel.fiveCount >= 800 && endModel.fourCount <= 2000) && (endModel.sixCount >= 60 && endModel.sixCount <= 200) && (endModel.sevenCount <= 20)) {
+            [arr addObject:endModel];
+        }
+    }
+    return arr;
 }
 
 #pragma mark - 弹窗
