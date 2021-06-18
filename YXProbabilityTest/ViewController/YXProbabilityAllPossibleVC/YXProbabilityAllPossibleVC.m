@@ -11,8 +11,8 @@
 #import "YXProbabilityAllPossibleCell.h"
 #import "NSObject+YXCategory.h"
 
-#define kCycleCount 50000000
-#define kcalculateCount 4
+#define kCycleCount 20000000
+#define kCalculateCount 4
 
 @interface YXProbabilityAllPossibleVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -47,32 +47,29 @@
     __weak typeof(self) weakSelf = self;
     
     [self.activityIndicatorView startAnimating];
-    NSInteger calculateCount = count /kcalculateCount;
+    NSInteger calculateCount = count /kCalculateCount;
     dispatch_group_t group = dispatch_group_create();
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
-    for (int i = 0; i < kcalculateCount; i ++) {
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(kCalculateCount);
+    for (int i = 0; i < kCalculateCount; i ++) {
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_group_async(group, queue, ^{
 
             dispatch_semaphore_signal(semaphore);
-            __strong typeof(weakSelf) strongSelf = weakSelf;
             
             for (int i = 0; i < calculateCount; i++) {
-                if (strongSelf.boolCancel) {
+                if (weakSelf.boolCancel) {
                     break;
                 }
                 else {
-                    [strongSelf getRandomByRedArr:strongSelf.redArr blueArr:strongSelf.blueArr randomCount:kCycleCount];
+                    [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr randomCount:kCycleCount];
                 }
             }
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        [strongSelf endCount];
+        [weakSelf endCount];
     });
 }
 
@@ -100,11 +97,9 @@
     
     weakSelf.count ++;
     dispatch_async(dispatch_get_main_queue(), ^{
-
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [strongSelf.resultRandomArr addObject:randomStr];
-        strongSelf.headerView.prgressValue = (float)strongSelf.count /kCycleCount;
+        [weakSelf.resultRandomArr addObject:randomStr];
+        weakSelf.headerView.prgressValue = (float)weakSelf.count /kCycleCount;
     });
 }
 
@@ -143,51 +138,47 @@
     [self.activityIndicatorView startAnimating];
     NSLog(@"开始统计！");
     
-    NSMutableArray *breakUpArr = [self breakUpSuperArrToSonArrBySubSize:(kCycleCount /kcalculateCount) arr:self.resultRandomArr];
+    NSInteger breakUpNum = kCalculateCount > 10000000 ? kCalculateCount *10 : kCalculateCount;
+    NSMutableArray *breakUpArr = [self breakUpSuperArrToSonArrBySubSize:kCycleCount /breakUpNum arr:self.resultRandomArr];
     NSLog(@"拆分完成!");
     
     NSMutableArray *repeatNumArr = [[NSMutableArray alloc] init];
     
     dispatch_group_t group = dispatch_group_create();
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(kcalculateCount);
-    for (int i = 0; i < kcalculateCount; i ++) {
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(breakUpArr.count);
+    for (NSInteger i = 0; i < breakUpArr.count; i ++) {
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_group_async(group, queue, ^{
 
             dispatch_semaphore_signal(semaphore);
-            __strong typeof(weakSelf) strongSelf = weakSelf;
             
-            [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[strongSelf statisticalRepeatNum:breakUpArr[i]]]];
+            [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[weakSelf statisticalRepeatNum:breakUpArr[i]]]];
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         
         NSLog(@"拆分统计完成，开始合并统计!");
         
-        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[strongSelf sortingByArr:(NSArray *)[strongSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedDescending]];
+        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedDescending]];
         
         dispatch_queue_t queue = dispatch_queue_create("com.resultArrCountQueue", DISPATCH_QUEUE_CONCURRENT);
         dispatch_async(queue, ^{
             
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            strongSelf.resultArr = [[NSMutableArray alloc] initWithArray:(NSArray *)endArr];
-            NSLog(@"合并统计排序完成！结果个数 == %@", @(strongSelf.resultArr.count));
+            weakSelf.resultArr = [[NSMutableArray alloc] initWithArray:(NSArray *)endArr];
+            NSLog(@"合并统计排序完成！结果个数 == %@", @(weakSelf.resultArr.count));
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [strongSelf.activityIndicatorView stopAnimating];
-                if (strongSelf.resultArr.count != 0) {
-                    [strongSelf.tableView reloadData];
+                [weakSelf.activityIndicatorView stopAnimating];
+                if (weakSelf.resultArr.count != 0) {
+                    [weakSelf.tableView reloadData];
                 }
                 else {
                     NSLog(@"数组为空！");
                     [weakSelf presentAlertByMsg:@"数组为空！" boolCancel:NO sureBlock:^{
                       
-                        [strongSelf.navigationController popViewControllerAnimated:YES];
+                        [weakSelf.navigationController popViewControllerAnimated:YES];
                     }];
                 }
             });
@@ -392,20 +383,17 @@
     
     if (!_headerView) {
         __weak typeof(self) weakSelf = self;
+        
         _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
         _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
         _headerView.compareBtn.hidden = YES;
         _headerView.yxProbabilityRandomHVBlock = ^{
           
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            [strongSelf getRandomCollectionByCount:kCycleCount];
+            [weakSelf getRandomCollectionByCount:kCycleCount];
         };
         _headerView.yxProbabilityRandomHVEndBlock = ^{
           
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            strongSelf.boolCancel = YES;
+            weakSelf.boolCancel = YES;
         };
     }
     return _headerView;
