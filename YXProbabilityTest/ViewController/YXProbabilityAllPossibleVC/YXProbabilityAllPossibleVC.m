@@ -10,9 +10,10 @@
 #import "YXProbabilityRandomHeaderView.h"
 #import "YXProbabilityAllPossibleCell.h"
 #import "NSObject+YXCategory.h"
+#import "YXProbabilityManager.h"
 
-#define kCycleCount 20000000
-#define kCalculateCount 4
+#define kCycleCount 50000000
+#define kCalculateCount 5
 
 @interface YXProbabilityAllPossibleVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -27,6 +28,8 @@
 
 @property (nonatomic, assign) BOOL boolCancel; //是否结束
 @property (nonatomic, assign) NSInteger count; //计数
+
+@property (nonatomic, strong) NSMutableArray *lastArr; //上一期数据集合
 
 @end
 
@@ -62,7 +65,9 @@
                     break;
                 }
                 else {
-                    [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr randomCount:kCycleCount];
+                    @synchronized (weakSelf) {
+                        [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr randomCount:kCycleCount];
+                    }
                 }
             }
         });
@@ -97,7 +102,7 @@
     
     weakSelf.count ++;
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         [weakSelf.resultRandomArr addObject:randomStr];
         weakSelf.headerView.prgressValue = (float)weakSelf.count /kCycleCount;
     });
@@ -111,8 +116,8 @@
         if ([obj1 isKindOfClass:[YXProbabilityAllPossibleModel class]]) {
             YXProbabilityAllPossibleModel *model1 = obj1;
             YXProbabilityAllPossibleModel *model2 = obj2;
-            NSNumber *number1 = @(model1.fourCount);
-            NSNumber *number2 = @(model2.fourCount);
+            NSNumber *number1 = @(model1.sevenCount);
+            NSNumber *number2 = @(model2.sevenCount);
             
             NSComparisonResult result = [number1 compare:number2];
             
@@ -138,9 +143,9 @@
     [self.activityIndicatorView startAnimating];
     NSLog(@"开始统计！");
     
-    NSInteger breakUpNum = kCalculateCount > 10000000 ? kCalculateCount *10 : kCalculateCount;
+    NSInteger breakUpNum = kCycleCount > 10000000 ? kCalculateCount *10 : kCalculateCount;
     NSMutableArray *breakUpArr = [self breakUpSuperArrToSonArrBySubSize:kCycleCount /breakUpNum arr:self.resultRandomArr];
-    NSLog(@"拆分完成!");
+    NSLog(@"拆分完成！开始数组去重");
     
     NSMutableArray *repeatNumArr = [[NSMutableArray alloc] init];
     
@@ -153,7 +158,9 @@
 
             dispatch_semaphore_signal(semaphore);
             
-            [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[weakSelf statisticalRepeatNum:breakUpArr[i]]]];
+            @synchronized(weakSelf) {
+                [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[weakSelf statisticalRepeatNum:breakUpArr[i]]]];
+            }
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
@@ -305,11 +312,39 @@
     endModel.sevenCount = model.sevenCount + sevenCount < 2 ? 0 : sevenCount;
     
     if (((endModel.fourCount > endModel.fiveCount) && (endModel.fiveCount > endModel.sixCount) && (endModel.sixCount > endModel.sevenCount))) {
-        if ((endModel.fourCount != 0) && (endModel.fiveCount >= 800 && endModel.fourCount <= 2000) && (endModel.sixCount >= 60 && endModel.sixCount <= 200) && (endModel.sevenCount <= 20)) {
-            [arr addObject:endModel];
+        if ((endModel.fourCount != 0) && (endModel.fiveCount >= 800 && endModel.fiveCount <= 2000) && (endModel.sixCount >= 60 && endModel.sixCount <= 200) && (endModel.sevenCount <= 20)) {
+            if ([self getNowValueSameToOldValueByNowValue:model.item] <= 2 && ![self getBlueBallBoolSameByNowValue:model.item]) {
+                [arr addObject:endModel];
+            }
         }
     }
     return arr;
+}
+
+#pragma mark - 获取当前数值与上期数值相同位数
+- (NSInteger)getNowValueSameToOldValueByNowValue:(NSString *)nowValue {
+    
+    NSInteger i = 0;
+    NSArray *nowArr = [nowValue componentsSeparatedByString:@" "];
+    for (NSString *last in _lastArr) {
+        for (NSString *now in nowArr) {
+            if ([last isEqualToString:now]) {
+                i++;
+            }
+        }
+    }
+    return i;
+}
+
+#pragma mark - 获取蓝色球是否相同
+- (BOOL)getBlueBallBoolSameByNowValue:(NSString *)nowValue {
+    
+    NSArray *nowArr = [nowValue componentsSeparatedByString:@" "];
+    if ([[_lastArr lastObject] isEqualToString:[nowArr lastObject]]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - 弹窗
@@ -441,6 +476,16 @@
         _resultArr = [[NSMutableArray alloc] init];
     }
     return _resultArr;
+}
+- (NSMutableArray *)lastArr {
+    
+    if (!_lastArr) {
+        _lastArr = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in [[[[YXProbabilityManager sharedManager] allArr] firstObject] objectForKey:kValueArr]) {
+            [_lastArr addObject:[dic objectForKey:kValue]];
+        }
+    }
+    return _lastArr;
 }
 
 @end

@@ -28,6 +28,7 @@
 #pragma mark - 组装球数据
 - (void)judgeBallArrByBall:(NSString *)ball {
     
+    self.dataSourceArr = [[NSMutableArray alloc] init];
     NSArray *ballArr = [ball componentsSeparatedByString:@" "];
     for (NSInteger i = 0; i < ballArr.count; i++) {
         YXProbabilityBallInfoModel *ballModel = [[YXProbabilityBallInfoModel alloc] init];
