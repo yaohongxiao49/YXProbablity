@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YXProbabilityAllSecView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFR-H1-YfQ">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izD-6Q-1sg">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sEd-9d-RDR">
+                                    <rect key="frame" x="15" y="8" width="207" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="iN0-l3-epB" id="FQ6-CL-XQB"/>
+                                    </connections>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvI-Vk-dEz">
+                                    <rect key="frame" x="237" y="10" width="31" height="30"/>
+                                    <state key="normal" title="搜索"/>
+                                    <connections>
+                                        <action selector="progressSearchBtn:" destination="-1" eventType="touchUpInside" id="lQZ-sw-U5u"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="IvI-Vk-dEz" firstAttribute="centerY" secondItem="sEd-9d-RDR" secondAttribute="centerY" id="FQx-4Q-cmX"/>
+                                <constraint firstItem="IvI-Vk-dEz" firstAttribute="leading" secondItem="sEd-9d-RDR" secondAttribute="trailing" constant="15" id="OSf-Js-1PP"/>
+                                <constraint firstItem="sEd-9d-RDR" firstAttribute="width" secondItem="izD-6Q-1sg" secondAttribute="width" multiplier="0.5" id="iWS-5e-bvC"/>
+                                <constraint firstItem="sEd-9d-RDR" firstAttribute="leading" secondItem="izD-6Q-1sg" secondAttribute="leading" constant="15" id="jrq-rA-7lf"/>
+                                <constraint firstItem="sEd-9d-RDR" firstAttribute="centerY" secondItem="izD-6Q-1sg" secondAttribute="centerY" id="yzY-yR-2ZU"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FhR-1v-SbK">
+                            <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwn-eV-Su9">
+                                    <rect key="frame" x="15" y="10" width="62" height="30"/>
+                                    <state key="normal" title="综合排序"/>
+                                    <connections>
+                                        <action selector="progressAllSortingBtn:" destination="-1" eventType="touchUpInside" id="ks8-kZ-Tf3"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="fwn-eV-Su9" firstAttribute="centerY" secondItem="FhR-1v-SbK" secondAttribute="centerY" id="2uN-8l-RMg"/>
+                                <constraint firstItem="fwn-eV-Su9" firstAttribute="leading" secondItem="FhR-1v-SbK" secondAttribute="leading" constant="15" id="NCe-m6-3sj"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="FhR-1v-SbK" firstAttribute="top" secondItem="izD-6Q-1sg" secondAttribute="bottom" id="3NM-Cp-M3T"/>
+                        <constraint firstAttribute="trailing" secondItem="FhR-1v-SbK" secondAttribute="trailing" id="IdY-4P-Ctd"/>
+                        <constraint firstAttribute="bottom" secondItem="FhR-1v-SbK" secondAttribute="bottom" id="ZhD-9r-9c8"/>
+                        <constraint firstItem="izD-6Q-1sg" firstAttribute="top" secondItem="UFR-H1-YfQ" secondAttribute="top" id="kod-rf-Dfd"/>
+                        <constraint firstItem="FhR-1v-SbK" firstAttribute="leading" secondItem="UFR-H1-YfQ" secondAttribute="leading" id="qBH-fa-IKn"/>
+                        <constraint firstAttribute="trailing" secondItem="izD-6Q-1sg" secondAttribute="trailing" id="s5T-fB-ehM"/>
+                        <constraint firstItem="izD-6Q-1sg" firstAttribute="leading" secondItem="UFR-H1-YfQ" secondAttribute="leading" id="uRz-o1-tHv"/>
+                        <constraint firstItem="FhR-1v-SbK" firstAttribute="height" secondItem="izD-6Q-1sg" secondAttribute="height" id="zqu-FE-neG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstItem="UFR-H1-YfQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Y8-8V-D1o"/>
+                <constraint firstItem="UFR-H1-YfQ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Gz0-Rb-tqm"/>
+                <constraint firstItem="UFR-H1-YfQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Rru-PM-oOb"/>
+                <constraint firstItem="UFR-H1-YfQ" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="kX7-0a-r0V"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="allSortingBtn" destination="fwn-eV-Su9" id="aOS-MJ-Nmf"/>
+                <outlet property="bgView" destination="UFR-H1-YfQ" id="1kQ-L2-1rf"/>
+                <outlet property="searchBgV" destination="izD-6Q-1sg" id="NL8-p5-U2O"/>
+                <outlet property="searchBtn" destination="IvI-Vk-dEz" id="axv-h8-sXP"/>
+                <outlet property="sortingBgV" destination="FhR-1v-SbK" id="4fN-Po-MHS"/>
+                <outlet property="textField" destination="sEd-9d-RDR" id="tNR-8Z-Bpu"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="93.75"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

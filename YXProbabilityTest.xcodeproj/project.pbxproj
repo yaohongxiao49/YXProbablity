@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5D0F56B34C515145CE6037E6 /* libPods-YXProbabilityTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C863F9893EE76AD606A8AC9 /* libPods-YXProbabilityTest.a */; };
+		840B1BBD26805ECD00EE4AE0 /* YXProbabilityAllSecView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840B1BBC26805ECD00EE4AE0 /* YXProbabilityAllSecView.m */; };
+		840B1BBF26805ED900EE4AE0 /* YXProbabilityAllSecView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840B1BBE26805ED900EE4AE0 /* YXProbabilityAllSecView.xib */; };
 		841518F824B2EB3900EA8B9B /* YXProbabilityRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */; };
 		8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8415190824B2ED0B00EA8B9B /* HttpRequestManager.m */; };
 		8457F6F2259AC117001106FB /* YXProbabilityRuleOutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8457F6F1259AC117001106FB /* YXProbabilityRuleOutVC.m */; };
@@ -77,6 +79,9 @@
 /* Begin PBXFileReference section */
 		1C863F9893EE76AD606A8AC9 /* libPods-YXProbabilityTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YXProbabilityTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58D2DE346F9B4E0605237F25 /* Pods-YXProbabilityTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXProbabilityTest.release.xcconfig"; path = "Target Support Files/Pods-YXProbabilityTest/Pods-YXProbabilityTest.release.xcconfig"; sourceTree = "<group>"; };
+		840B1BBB26805ECD00EE4AE0 /* YXProbabilityAllSecView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YXProbabilityAllSecView.h; sourceTree = "<group>"; };
+		840B1BBC26805ECD00EE4AE0 /* YXProbabilityAllSecView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityAllSecView.m; sourceTree = "<group>"; };
+		840B1BBE26805ED900EE4AE0 /* YXProbabilityAllSecView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXProbabilityAllSecView.xib; sourceTree = "<group>"; };
 		841518F624B2EB3900EA8B9B /* YXProbabilityRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXProbabilityRequest.h; sourceTree = "<group>"; };
 		841518F724B2EB3900EA8B9B /* YXProbabilityRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXProbabilityRequest.m; sourceTree = "<group>"; };
 		8415190024B2ED0B00EA8B9B /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
@@ -196,6 +201,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840B1BBA26805EAC00EE4AE0 /* YXProbabilityAllView */ = {
+			isa = PBXGroup;
+			children = (
+				840B1BBB26805ECD00EE4AE0 /* YXProbabilityAllSecView.h */,
+				840B1BBC26805ECD00EE4AE0 /* YXProbabilityAllSecView.m */,
+				840B1BBE26805ED900EE4AE0 /* YXProbabilityAllSecView.xib */,
+			);
+			path = YXProbabilityAllView;
+			sourceTree = "<group>";
+		};
 		841518F524B2EB3900EA8B9B /* YXProbabilityRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				845B87CE24D804F800944062 /* YXProbabilityView */,
+				840B1BBA26805EAC00EE4AE0 /* YXProbabilityAllView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,6 +597,7 @@
 				84804A6424921D9A009F160F /* Assets.xcassets in Resources */,
 				845B87EC24D804F800944062 /* YXProbabilityAllListCell.xib in Resources */,
 				845B87EB24D804F800944062 /* YXProbabilityCollectionViewCell.xib in Resources */,
+				840B1BBF26805ED900EE4AE0 /* YXProbabilityAllSecView.xib in Resources */,
 				845B87E424D804F800944062 /* YXProbabilityRandomHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +669,7 @@
 				8415190C24B2ED0B00EA8B9B /* HttpRequestManager.m in Sources */,
 				845B87F124D8057500944062 /* YXProbabilityCompareVC.m in Sources */,
 				845B87DD24D804F800944062 /* YXProbabilityStatisticalVC.m in Sources */,
+				840B1BBD26805ECD00EE4AE0 /* YXProbabilityAllSecView.m in Sources */,
 				845B87DF24D804F800944062 /* YXPieChartLineGraphicsCenterView.m in Sources */,
 				845B87DE24D804F800944062 /* YXPieChartLineGraphicsView.m in Sources */,
 				847FB86D249357C00083A71A /* YXProbabilityManager.m in Sources */,

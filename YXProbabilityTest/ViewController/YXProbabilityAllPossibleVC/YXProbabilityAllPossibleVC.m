@@ -11,6 +11,7 @@
 #import "YXProbabilityAllPossibleCell.h"
 #import "NSObject+YXCategory.h"
 #import "YXProbabilityManager.h"
+#import "YXProbabilityAllSecView.h"
 
 #define kCycleCount 50000000
 #define kCalculateCount 5
@@ -30,6 +31,9 @@
 @property (nonatomic, assign) NSInteger count; //计数
 
 @property (nonatomic, strong) NSMutableArray *lastArr; //上一期数据集合
+
+@property (nonatomic, assign) NSInteger textFieldEndCurrent; //筛选结果当前显示
+@property (nonatomic, strong) NSMutableArray *textFieldEndArr; //筛选结果数组
 
 @end
 
@@ -304,6 +308,7 @@
 #pragma mark - 计算最终统计
 - (NSMutableArray *)assemblyEndArrByModel:(YXProbabilityAllPossibleModel *)model fourCount:(NSInteger)fourCount fiveCount:(NSInteger)fiveCount sixCount:(NSInteger)sixCount sevenCount:(NSInteger)sevenCount arr:(NSMutableArray *)arr {
     
+    
     YXProbabilityAllPossibleModel *endModel = [[YXProbabilityAllPossibleModel alloc] init];
     endModel.item = model.item;
     endModel.fourCount = model.fourCount + fourCount < 2 ? 0 : fourCount;
@@ -311,14 +316,26 @@
     endModel.sixCount = model.sixCount + sixCount < 2 ? 0 : sixCount;
     endModel.sevenCount = model.sevenCount + sevenCount < 2 ? 0 : sevenCount;
     
-    if (((endModel.fourCount > endModel.fiveCount) && (endModel.fiveCount > endModel.sixCount) && (endModel.sixCount > endModel.sevenCount))) {
-        if ((endModel.fourCount != 0) && (endModel.fiveCount >= 800 && endModel.fiveCount <= 2000) && (endModel.sixCount >= 60 && endModel.sixCount <= 200) && (endModel.sevenCount <= 20)) {
+    if ([self endValueFilterByModel:endModel]) {
+        [arr addObject:endModel];
+    }
+    return arr;
+}
+
+#pragma mark - 最终结果筛选条件
+- (BOOL)endValueFilterByModel:(YXProbabilityAllPossibleModel *)model {
+    
+    //四位相同总数 > 五位相同总数 > 六位相同总数 > 七位相同总数
+    if (((model.fourCount > model.fiveCount) && (model.fiveCount > model.sixCount) && (model.sixCount > model.sevenCount))) {
+        //四位相同总数 != 0 且 2000 >= 五位相同总数 >= 800 且 200 >= 六位相同总数 >= 60 且 20 >= 七位相同总数
+        if ((model.fourCount != 0) && (model.fiveCount >= 800 && model.fiveCount <= 2000) && (model.sixCount >= 60 && model.sixCount <= 200) && (model.sevenCount <= 20)) {
+            //本期数与上期数对比，相同数 <= 2 且 本期蓝球 != 上期蓝球
             if ([self getNowValueSameToOldValueByNowValue:model.item] <= 2 && ![self getBlueBallBoolSameByNowValue:model.item]) {
-                [arr addObject:endModel];
+                return YES;
             }
         }
     }
-    return arr;
+    return NO;
 }
 
 #pragma mark - 获取当前数值与上期数值相同位数
@@ -382,19 +399,48 @@
     YXProbabilityAllPossibleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllPossibleCell class])];
     [cell reloadValueByIndexPath:indexPath arr:self.resultArr];
     
+    if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
+        cell.collectionView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
+        [_activityIndicatorView stopAnimating];
+    }
+    else {
+        cell.collectionView.backgroundColor = [UIColor whiteColor];
+    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    YXProbabilityAllSecView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([YXProbabilityAllSecView class])];
+    
+    if (self.resultArr.count != 0) [view reloadValueBySec:section arr:self.resultArr tableView:tableView];
+    
+    __weak typeof(self) weakSelf = self;
+    view.yxProbabilityAllSecViewBlock = ^(NSInteger current, NSMutableArray * _Nonnull endArr) {
+      
+        weakSelf.textFieldEndCurrent = current;
+        weakSelf.textFieldEndArr = endArr;
+    };
+    
+    return view;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 100;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     return 100;
 }
 
 #pragma mark - 初始化视图
 - (void)initView {
+    
+    _textFieldEndArr = [[NSMutableArray alloc] init];
     
     [self.tableView reloadData];
 }
@@ -411,6 +457,7 @@
         [self.view addSubview:_tableView];
         
         [_tableView registerNib:[UINib nibWithNibName:[YXProbabilityAllPossibleCell.class description] bundle:nil] forCellReuseIdentifier:NSStringFromClass([YXProbabilityAllPossibleCell class])];
+        [_tableView registerNib:[UINib nibWithNibName:[YXProbabilityAllSecView.class description] bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([YXProbabilityAllSecView class])];
     }
     return _tableView;
 }
