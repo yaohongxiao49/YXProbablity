@@ -22,7 +22,17 @@
     YXProbabilityAllPossibleModel *model = arr[indexPath.row];
     self.titleLab.text = [NSString stringWithFormat:@"中四：%ld，中五：%ld，中六：%ld，中七：%ld", model.fourCount, model.fiveCount, model.sixCount, model.sevenCount];
     
+    [self judgeMoneyShowByMoney:model.money];
     [self judgeBallArrByBall:model.item];
+}
+
+#pragma mark - 金额显示
+- (void)judgeMoneyShowByMoney:(NSInteger)money {
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSString *newAmount = [formatter stringFromNumber:[NSNumber numberWithInteger:money]];
+    self.moneyLab.text = [NSString stringWithFormat:@"大致金额：%@", newAmount];
 }
 
 #pragma mark - 组装球数据

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YXProbabilityAllPossibleCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *moneyLab;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 

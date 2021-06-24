@@ -13,8 +13,13 @@
 #import "YXProbabilityManager.h"
 #import "YXProbabilityAllSecView.h"
 
-#define kCycleCount 50000000
+#define kCycleCount 100000
 #define kCalculateCount 5
+
+/** 往上排查的期数 */
+#define kOldArrCompareNum 3
+/** 排查相同位数 */
+#define kOldArrCompareCount 2
 
 @interface YXProbabilityAllPossibleVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -30,7 +35,7 @@
 @property (nonatomic, assign) BOOL boolCancel; //是否结束
 @property (nonatomic, assign) NSInteger count; //计数
 
-@property (nonatomic, strong) NSMutableArray *lastArr; //上一期数据集合
+@property (nonatomic, strong) NSMutableArray *oldArr; //往期数据集合
 
 @property (nonatomic, assign) NSInteger textFieldEndCurrent; //筛选结果当前显示
 @property (nonatomic, strong) NSMutableArray *textFieldEndArr; //筛选结果数组
@@ -120,8 +125,8 @@
         if ([obj1 isKindOfClass:[YXProbabilityAllPossibleModel class]]) {
             YXProbabilityAllPossibleModel *model1 = obj1;
             YXProbabilityAllPossibleModel *model2 = obj2;
-            NSNumber *number1 = @(model1.sevenCount);
-            NSNumber *number2 = @(model2.sevenCount);
+            NSNumber *number1 = @(model1.money);
+            NSNumber *number2 = @(model2.money);
             
             NSComparisonResult result = [number1 compare:number2];
             
@@ -171,7 +176,7 @@
         
         NSLog(@"拆分统计完成，开始合并统计!");
         
-        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedDescending]];
+        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedAscending]];
         
         dispatch_queue_t queue = dispatch_queue_create("com.resultArrCountQueue", DISPATCH_QUEUE_CONCURRENT);
         dispatch_async(queue, ^{
@@ -308,7 +313,7 @@
 #pragma mark - 计算最终统计
 - (NSMutableArray *)assemblyEndArrByModel:(YXProbabilityAllPossibleModel *)model fourCount:(NSInteger)fourCount fiveCount:(NSInteger)fiveCount sixCount:(NSInteger)sixCount sevenCount:(NSInteger)sevenCount arr:(NSMutableArray *)arr {
     
-    
+    //传入数量小于2时 则不用增加计数
     YXProbabilityAllPossibleModel *endModel = [[YXProbabilityAllPossibleModel alloc] init];
     endModel.item = model.item;
     endModel.fourCount = model.fourCount + fourCount < 2 ? 0 : fourCount;
@@ -317,6 +322,7 @@
     endModel.sevenCount = model.sevenCount + sevenCount < 2 ? 0 : sevenCount;
     
     if ([self endValueFilterByModel:endModel]) {
+        endModel.money = endModel.fourCount *10 + endModel.fiveCount *200 + endModel.sixCount *150000 + endModel.sevenCount *5000000;
         [arr addObject:endModel];
     }
     return arr;
@@ -329,8 +335,8 @@
     if (((model.fourCount > model.fiveCount) && (model.fiveCount > model.sixCount) && (model.sixCount > model.sevenCount))) {
         //四位相同总数 != 0 且 2000 >= 五位相同总数 >= 800 且 200 >= 六位相同总数 >= 60 且 20 >= 七位相同总数
         if ((model.fourCount != 0) && (model.fiveCount >= 800 && model.fiveCount <= 2000) && (model.sixCount >= 60 && model.sixCount <= 200) && (model.sevenCount <= 20)) {
-            //本期数与上期数对比，相同数 <= 2 且 本期蓝球 != 上期蓝球
-            if ([self getNowValueSameToOldValueByNowValue:model.item] <= 2 && ![self getBlueBallBoolSameByNowValue:model.item]) {
+            //本期数与上期数对比，相同数 <= kOldArrCompareCount 且 本期蓝球 != 上期蓝球
+            if (![self getNowValueSameToOldValueByNowValue:model.item] && ![self getBlueBallBoolSameByNowValue:model.item]) {
                 return YES;
             }
         }
@@ -338,27 +344,35 @@
     return NO;
 }
 
-#pragma mark - 获取当前数值与上期数值相同位数
-- (NSInteger)getNowValueSameToOldValueByNowValue:(NSString *)nowValue {
+#pragma mark - 获取当前数值与上期数值相同位数（往上 kOldArrCompareNum 期排查）
+- (BOOL)getNowValueSameToOldValueByNowValue:(NSString *)nowValue {
     
-    NSInteger i = 0;
     NSArray *nowArr = [nowValue componentsSeparatedByString:@" "];
-    for (NSString *last in _lastArr) {
-        for (NSString *now in nowArr) {
-            if ([last isEqualToString:now]) {
-                i++;
+    NSArray *valueArr = [self.oldArr subarrayWithRange:NSMakeRange(0, kOldArrCompareNum)];
+    for (NSArray *arr in valueArr) {
+        NSInteger i = 0;
+        for (NSString *last in arr) {
+            for (NSString *now in nowArr) {
+                if ([last isEqualToString:now]) {
+                    i++;
+                    if (i > kOldArrCompareCount) { return YES; }
+                }
             }
         }
     }
-    return i;
+    
+    return NO;
 }
 
-#pragma mark - 获取蓝色球是否相同
+#pragma mark - 获取蓝色球是否相同（往上 kOldArrCompareNum 期排查）
 - (BOOL)getBlueBallBoolSameByNowValue:(NSString *)nowValue {
     
     NSArray *nowArr = [nowValue componentsSeparatedByString:@" "];
-    if ([[_lastArr lastObject] isEqualToString:[nowArr lastObject]]) {
-        return YES;
+    NSArray *valueArr = [self.oldArr subarrayWithRange:NSMakeRange(0, kOldArrCompareNum)];
+    for (NSArray *arr in valueArr) {
+        if ([[arr lastObject] isEqualToString:[nowArr lastObject]]) {
+            return YES;
+        }
     }
     
     return NO;
@@ -397,7 +411,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YXProbabilityAllPossibleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllPossibleCell class])];
-    [cell reloadValueByIndexPath:indexPath arr:self.resultArr];
     
     if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
         cell.collectionView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
@@ -408,6 +421,11 @@
     }
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    YXProbabilityAllPossibleCell *allCell = (YXProbabilityAllPossibleCell *)cell;
+    [allCell reloadValueByIndexPath:indexPath arr:self.resultArr];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -524,15 +542,19 @@
     }
     return _resultArr;
 }
-- (NSMutableArray *)lastArr {
+- (NSMutableArray *)oldArr {
     
-    if (!_lastArr) {
-        _lastArr = [[NSMutableArray alloc] init];
-        for (NSDictionary *dic in [[[[YXProbabilityManager sharedManager] allArr] firstObject] objectForKey:kValueArr]) {
-            [_lastArr addObject:[dic objectForKey:kValue]];
+    if (!_oldArr) {
+        _oldArr = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in [[YXProbabilityManager sharedManager] allArr]) {
+            NSMutableArray *valueArr = [[NSMutableArray alloc] init];
+            for (NSDictionary *valueDic in [dic objectForKey:kValueArr]) {
+                [valueArr addObject:[valueDic objectForKey:kValue]];
+            }
+            [_oldArr addObject:valueArr];
         }
     }
-    return _lastArr;
+    return _oldArr;
 }
 
 @end

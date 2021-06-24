@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger fiveCount;
 @property (nonatomic, assign) NSInteger sixCount;
 @property (nonatomic, assign) NSInteger sevenCount;
+@property (nonatomic, assign) NSInteger money;
 
 + (NSMutableArray *)arrayOfModelsFromDictionaries:(NSArray *)arr;
 - (instancetype)initWithDic:(NSDictionary *)dic;

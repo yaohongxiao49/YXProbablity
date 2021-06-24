@@ -27,12 +27,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大致金额：0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1Q-AN-rhP">
+                                <rect key="frame" x="15" y="0.0" width="290" height="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="tsz-vF-20W" firstAttribute="leading" secondItem="iki-aZ-I8w" secondAttribute="leading" constant="15" id="407-fs-cWF"/>
                             <constraint firstAttribute="trailing" secondItem="tsz-vF-20W" secondAttribute="trailing" constant="15" id="4Sx-PL-9D8"/>
+                            <constraint firstItem="tsz-vF-20W" firstAttribute="leading" secondItem="B1Q-AN-rhP" secondAttribute="leading" id="5hi-lF-DQn"/>
+                            <constraint firstItem="tsz-vF-20W" firstAttribute="top" relation="greaterThanOrEqual" secondItem="B1Q-AN-rhP" secondAttribute="bottom" id="DWS-bg-HuM"/>
                             <constraint firstAttribute="height" constant="40" id="IEo-8C-LdW"/>
+                            <constraint firstItem="tsz-vF-20W" firstAttribute="trailing" secondItem="B1Q-AN-rhP" secondAttribute="trailing" id="d2g-uf-z9x"/>
+                            <constraint firstItem="B1Q-AN-rhP" firstAttribute="top" secondItem="iki-aZ-I8w" secondAttribute="top" id="oJB-pr-Hcy"/>
                             <constraint firstAttribute="bottom" secondItem="tsz-vF-20W" secondAttribute="bottom" id="tC8-t0-mmi"/>
                         </constraints>
                     </view>
@@ -63,6 +73,7 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="collectionView" destination="hg1-5g-bmU" id="O2w-br-0pi"/>
+                <outlet property="moneyLab" destination="B1Q-AN-rhP" id="rWh-LW-fSp"/>
                 <outlet property="titleLab" destination="tsz-vF-20W" id="ihu-kV-yCq"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="79.6875"/>
