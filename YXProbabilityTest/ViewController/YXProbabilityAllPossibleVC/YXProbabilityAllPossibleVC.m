@@ -274,37 +274,31 @@
     NSCountedSet *sevenSet = [[NSCountedSet alloc] initWithArray:(NSArray *)sevenArr];
     
     NSMutableArray *amountArr = [[NSMutableArray alloc] init];
-    __block NSMutableArray *endArr = [[NSMutableArray alloc] init];
+    NSMutableArray *endArr = [[NSMutableArray alloc] init];
     
-    dispatch_queue_t queue = dispatch_queue_create("com.conditionsQueue", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(modelArr.count);
     for (YXProbabilityAllPossibleModel *model in modelArr) { //去重并统计
-        dispatch_async(queue, ^{
-            dispatch_semaphore_signal(semaphore);
-            NSInteger fourCount = [fourSet countForObject:[model.item substringToIndex:11]];
-            if (fourCount < 2) {
-                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:model.fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
-                return;
-            }
-            NSInteger fiveCount = [fiveSet countForObject:[model.item substringToIndex:14]];
-            if (fiveCount < 2) {
-                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
-                return;
-            }
-            NSInteger sixCount = [sixSet countForObject:[model.item substringToIndex:17]];
-            if (sixCount < 2) {
-                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:model.sevenCount arr:amountArr];
-                return;
-            }
-            NSInteger sevenCount = [sevenSet countForObject:[model.item substringToIndex:20]];
-            if (sevenCount < 2) {
-                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
-                return;
-            }
-            
+        NSInteger fourCount = [fourSet countForObject:[model.item substringToIndex:11]];
+        if (fourCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:model.fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;;
+        }
+        NSInteger fiveCount = [fiveSet countForObject:[model.item substringToIndex:14]];
+        if (fiveCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;;
+        }
+        NSInteger sixCount = [sixSet countForObject:[model.item substringToIndex:17]];
+        if (sixCount < 2) {
+            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:model.sevenCount arr:amountArr];
+            continue;;
+        }
+        NSInteger sevenCount = [sevenSet countForObject:[model.item substringToIndex:20]];
+        if (sevenCount < 2) {
             endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
-        });
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+            continue;;
+        }
+        
+        endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
     }
     return endArr;
 }
