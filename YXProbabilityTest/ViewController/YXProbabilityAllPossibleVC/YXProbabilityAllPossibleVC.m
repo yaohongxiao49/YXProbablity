@@ -424,7 +424,7 @@
     
     YXProbabilityAllPossibleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllPossibleCell class])];
     
-    if (_textFieldEndCurrent != indexPath.row || _textFieldEndArr.count == 0) {
+    if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
         cell.contentView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
         [_activityIndicatorView stopAnimating];
     }

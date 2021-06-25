@@ -59,7 +59,8 @@
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_textFieldEndCurrent inSection:0];
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [_tableView reloadData];
         _textFieldEndPage++;
     }
     else {
@@ -69,10 +70,11 @@
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_textFieldEndCurrent inSection:0];
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [_tableView reloadData];
     }
 
-    [self.searchBtn setTitle:[NSString stringWithFormat:@"%@/%@", @(_textFieldEndPage), @(_textFieldEndArr.count - 1)] forState:UIControlStateNormal];
+    [self.searchBtn setTitle:[NSString stringWithFormat:@"%@/%@ 下一个", @(_textFieldEndPage), @(_textFieldEndArr.count - 1)] forState:UIControlStateNormal];
 }
 
 #pragma mark - 综合排序按钮事件
