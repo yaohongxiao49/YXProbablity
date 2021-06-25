@@ -25,9 +25,6 @@
                                     <rect key="frame" x="15" y="8" width="207" height="34"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="iN0-l3-epB" id="FQ6-CL-XQB"/>
-                                    </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvI-Vk-dEz">
                                     <rect key="frame" x="237" y="10" width="31" height="30"/>

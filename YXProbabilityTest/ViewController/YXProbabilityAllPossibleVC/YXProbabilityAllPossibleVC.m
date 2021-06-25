@@ -176,7 +176,7 @@
         
         NSLog(@"拆分统计完成，开始合并统计!");
         
-        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf statisticalRepeatNumByModelArr:repeatNumArr] type:NSOrderedAscending]];
+        NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf duplicateRemovalByArr:[weakSelf statisticalRepeatNumByModelArr:repeatNumArr]] type:NSOrderedAscending]];
         
         dispatch_queue_t queue = dispatch_queue_create("com.resultArrCountQueue", DISPATCH_QUEUE_CONCURRENT);
         dispatch_async(queue, ^{
@@ -364,6 +364,18 @@
     return NO;
 }
 
+#pragma mark - 循环去重
+- (NSMutableArray *)duplicateRemovalByArr:(NSMutableArray *)arr {
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    for (YXProbabilityAllPossibleModel *model in arr) {
+        [dic setValue:model forKey:model.item];
+    }
+    NSMutableArray *valueArr = [[NSMutableArray alloc] initWithArray:[[dic allValues] mutableCopy]];
+    
+    return valueArr;
+}
+
 #pragma mark - 获取蓝色球是否相同（往上 kOldArrCompareNum 期排查）
 - (BOOL)getBlueBallBoolSameByNowValue:(NSString *)nowValue {
     
@@ -412,12 +424,12 @@
     
     YXProbabilityAllPossibleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YXProbabilityAllPossibleCell class])];
     
-    if (_textFieldEndCurrent == indexPath.row && _textFieldEndArr.count != 0) {
-        cell.collectionView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
+    if (_textFieldEndCurrent != indexPath.row || _textFieldEndArr.count == 0) {
+        cell.contentView.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.1];
         [_activityIndicatorView stopAnimating];
     }
     else {
-        cell.collectionView.backgroundColor = [UIColor whiteColor];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
     return cell;
@@ -448,7 +460,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 100;
+    return 120;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     

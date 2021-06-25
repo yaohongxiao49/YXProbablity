@@ -23,7 +23,7 @@ typedef void(^YXProbabilityAllSecViewBlock)(NSInteger current, NSMutableArray *e
 
 @property (nonatomic, copy) YXProbabilityAllSecViewBlock yxProbabilityAllSecViewBlock;
 
-- (void)reloadValueBySec:(NSInteger)sec arr:(NSArray *)arr tableView:(UITableView *)tableView;
+- (void)reloadValueBySec:(NSInteger)sec arr:(NSMutableArray *)arr tableView:(UITableView *)tableView;
 
 @end
 

@@ -17,19 +17,21 @@
 @property (nonatomic, assign) NSInteger textFieldEndPage; //筛选结果页码
 @property (nonatomic, assign) NSInteger textFieldEndCurrent; //筛选结果当前显示
 @property (nonatomic, weak) UITableView *tableView;
+
 @end
 
 @implementation YXProbabilityAllSecView
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    
+
+    self.textField.delegate = self;
+    [self.textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
-- (void)reloadValueBySec:(NSInteger)sec arr:(NSArray *)arr tableView:(UITableView *)tableView {
+- (void)reloadValueBySec:(NSInteger)sec arr:(NSMutableArray *)arr tableView:(UITableView *)tableView {
     
-    _dataSourceArr = arr[sec];
+    _dataSourceArr = arr;
     _tableView = tableView;
 }
 
@@ -118,6 +120,5 @@
     [self endEditing:YES];
     return YES;
 }
-
 
 @end
