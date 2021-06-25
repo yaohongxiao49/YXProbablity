@@ -161,7 +161,6 @@
     dispatch_group_t group = dispatch_group_create();
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(breakUpArr.count);
     for (NSInteger i = 0; i < breakUpArr.count; i ++) {
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_group_async(group, queue, ^{
 
@@ -171,34 +170,27 @@
                 [repeatNumArr addObjectsFromArray:[YXProbabilityAllPossibleModel arrayOfModelsFromDictionaries:(NSArray *)[weakSelf statisticalRepeatNum:breakUpArr[i]]]];
             }
         });
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         
         NSLog(@"拆分统计完成，开始合并统计!");
         
         NSMutableArray *endArr = [[NSMutableArray alloc] initWithArray:[weakSelf sortingByArr:(NSArray *)[weakSelf duplicateRemovalByArr:[weakSelf statisticalRepeatNumByModelArr:repeatNumArr]] type:NSOrderedAscending]];
+        weakSelf.resultArr = [[NSMutableArray alloc] initWithArray:(NSArray *)endArr];
+        NSLog(@"合并统计排序完成！结果个数 == %@", @(weakSelf.resultArr.count));
         
-        dispatch_queue_t queue = dispatch_queue_create("com.resultArrCountQueue", DISPATCH_QUEUE_CONCURRENT);
-        dispatch_async(queue, ^{
-            
-            weakSelf.resultArr = [[NSMutableArray alloc] initWithArray:(NSArray *)endArr];
-            NSLog(@"合并统计排序完成！结果个数 == %@", @(weakSelf.resultArr.count));
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf.activityIndicatorView stopAnimating];
+        if (weakSelf.resultArr.count != 0) {
+            [weakSelf.tableView reloadData];
+        }
+        else {
+            NSLog(@"数组为空！");
+            [weakSelf presentAlertByMsg:@"数组为空！" boolCancel:NO sureBlock:^{
                 
-                [weakSelf.activityIndicatorView stopAnimating];
-                if (weakSelf.resultArr.count != 0) {
-                    [weakSelf.tableView reloadData];
-                }
-                else {
-                    NSLog(@"数组为空！");
-                    [weakSelf presentAlertByMsg:@"数组为空！" boolCancel:NO sureBlock:^{
-                      
-                        [weakSelf.navigationController popViewControllerAnimated:YES];
-                    }];
-                }
-            });
-        });
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        }
     });
 }
 
@@ -282,30 +274,37 @@
     NSCountedSet *sevenSet = [[NSCountedSet alloc] initWithArray:(NSArray *)sevenArr];
     
     NSMutableArray *amountArr = [[NSMutableArray alloc] init];
-    NSMutableArray *endArr = [[NSMutableArray alloc] init];
+    __block NSMutableArray *endArr = [[NSMutableArray alloc] init];
+    
+    dispatch_queue_t queue = dispatch_queue_create("com.conditionsQueue", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(modelArr.count);
     for (YXProbabilityAllPossibleModel *model in modelArr) { //去重并统计
-        NSInteger fourCount = [fourSet countForObject:[model.item substringToIndex:11]];
-        if (fourCount < 2) {
-            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:model.fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
-            continue;
-        }
-        NSInteger fiveCount = [fiveSet countForObject:[model.item substringToIndex:14]];
-        if (fiveCount < 2) {
-            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
-            continue;
-        }
-        NSInteger sixCount = [sixSet countForObject:[model.item substringToIndex:17]];
-        if (sixCount < 2) {
-            endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:model.sevenCount arr:amountArr];
-            continue;
-        }
-        NSInteger sevenCount = [sevenSet countForObject:[model.item substringToIndex:20]];
-        if (sevenCount < 2) {
+        dispatch_async(queue, ^{
+            dispatch_semaphore_signal(semaphore);
+            NSInteger fourCount = [fourSet countForObject:[model.item substringToIndex:11]];
+            if (fourCount < 2) {
+                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:model.fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+                return;
+            }
+            NSInteger fiveCount = [fiveSet countForObject:[model.item substringToIndex:14]];
+            if (fiveCount < 2) {
+                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:model.sixCount sevenCount:model.sevenCount arr:amountArr];
+                return;
+            }
+            NSInteger sixCount = [sixSet countForObject:[model.item substringToIndex:17]];
+            if (sixCount < 2) {
+                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:model.sevenCount arr:amountArr];
+                return;
+            }
+            NSInteger sevenCount = [sevenSet countForObject:[model.item substringToIndex:20]];
+            if (sevenCount < 2) {
+                endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
+                return;
+            }
+            
             endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
-            continue;
-        }
-        
-        endArr = [self assemblyEndArrByModel:model fourCount:fourCount fiveCount:fiveCount sixCount:sixCount sevenCount:sevenCount arr:amountArr];
+        });
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     }
     return endArr;
 }
@@ -323,7 +322,9 @@
     
     if ([self endValueFilterByModel:endModel]) {
         endModel.money = endModel.fourCount *10 + endModel.fiveCount *200 + endModel.sixCount *150000 + endModel.sevenCount *5000000;
-        [arr addObject:endModel];
+        @synchronized (self) {
+            [arr addObject:endModel];
+        }
     }
     return arr;
 }
