@@ -13,7 +13,7 @@
 #import "YXProbabilityManager.h"
 #import "YXProbabilityAllSecView.h"
 
-#define kCycleCount 100000
+#define kCycleCount 5000000
 #define kCalculateCount 5
 
 /** 往上排查的期数 */
@@ -328,11 +328,19 @@
     
     //四位相同总数 > 五位相同总数 > 六位相同总数 > 七位相同总数
     if (((model.fourCount > model.fiveCount) && (model.fiveCount > model.sixCount) && (model.sixCount > model.sevenCount))) {
-        //四位相同总数 != 0 且 2000 >= 五位相同总数 >= 800 且 200 >= 六位相同总数 >= 60 且 20 >= 七位相同总数
-        if ((model.fourCount != 0) && (model.fiveCount >= 800 && model.fiveCount <= 2000) && (model.sixCount >= 60 && model.sixCount <= 200) && (model.sevenCount <= 20)) {
+        if (kCycleCount < 10000000) {
             //本期数与上期数对比，相同数 <= kOldArrCompareCount 且 本期蓝球 != 上期蓝球
             if (![self getNowValueSameToOldValueByNowValue:model.item] && ![self getBlueBallBoolSameByNowValue:model.item]) {
                 return YES;
+            }
+        }
+        else {
+            //四位相同总数 != 0 且 2000 >= 五位相同总数 >= 800 且 200 >= 六位相同总数 >= 60 且 20 >= 七位相同总数
+            if ((model.fourCount != 0) && (model.fiveCount >= 800 && model.fiveCount <= 2000) && (model.sixCount >= 60 && model.sixCount <= 200) && (model.sevenCount <= 20)) {
+                //本期数与上期数对比，相同数 <= kOldArrCompareCount 且 本期蓝球 != 上期蓝球
+                if (![self getNowValueSameToOldValueByNowValue:model.item] && ![self getBlueBallBoolSameByNowValue:model.item]) {
+                    return YES;
+                }
             }
         }
     }
