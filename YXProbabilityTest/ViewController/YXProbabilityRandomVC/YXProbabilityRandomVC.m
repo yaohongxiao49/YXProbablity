@@ -14,7 +14,7 @@
 #import "YXProbabilityCompareVC.h"
 #import "YXMinArrAssemblyMananger.h"
 
-#define kCycleCount 5000000
+#define kCycleCount 80000000
 #define kcalculateCount 4
 
 #define kShowSecCount 2

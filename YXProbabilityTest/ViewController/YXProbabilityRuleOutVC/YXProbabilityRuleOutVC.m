@@ -12,7 +12,7 @@
 #import "YXProbabilityCompareVC.h"
 #import "YXPieChartLineGraphicsModel.h"
 
-#define kCycleCount 50000000
+#define kCycleCount 80000000
 #define kcalculateCount 4
 #define kShowCount 2
 #define kGetValuesCount @"1"

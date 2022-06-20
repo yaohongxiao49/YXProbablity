@@ -13,8 +13,8 @@
 #import "YXProbabilityManager.h"
 #import "YXProbabilityAllSecView.h"
 
-#define kCycleCount 5000000
-#define kCalculateCount 5
+#define kCycleCount 80000000
+#define kCalculateCount 4
 
 /** 往上排查的期数 */
 #define kOldArrCompareNum 3
