@@ -14,7 +14,7 @@
 #import "YXProbabilityCompareVC.h"
 #import "YXMinArrAssemblyMananger.h"
 
-#define kCycleCount 80000000
+#define kCycleCount 10000000
 #define kcalculateCount 4
 
 #define kShowSecCount 2
@@ -35,6 +35,7 @@
 @property (nonatomic, strong) YXProbabilityRandomHeaderView *headerView;
 @property (nonatomic, assign) BOOL boolCancel; //是否结束
 @property (nonatomic, assign) NSInteger cycleCount; //周期计数
+@property (nonatomic, assign) NSInteger diyCycleCount; //自定义周期计数
 
 @property (nonatomic, assign) NSInteger begainTime;
 @property (nonatomic, copy) NSArray *probabilityRedArr; //随机概率红球
@@ -46,6 +47,11 @@
 @end
 
 @implementation YXProbabilityRandomVC
+
+- (void)dealloc {
+    
+    [self removeAlertView:^(BOOL isFinished) {}];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -313,6 +319,7 @@
 #pragma mark - 循环取数
 - (void)getRandomCollectionByCount:(NSInteger)count {
     
+    __weak typeof(self) weakSelf = self;
     if (count == 0) {
         [self showChance];
         return;
@@ -330,18 +337,18 @@
 
             dispatch_semaphore_signal(semaphore);
             for (int i = 0; i < calculateCount; i++) {
-                if (self.boolCancel) {
+                if (weakSelf.boolCancel) {
                     break;
                 }
                 else {
-                    [self getRandomByRedArr:self.redArr blueArr:self.blueArr randomCount:kCycleCount];
+                    [weakSelf getRandomByRedArr:weakSelf.redArr blueArr:weakSelf.blueArr randomCount:weakSelf.diyCycleCount];
                 }
             }
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
-        [self endCount];
+        [weakSelf endCount];
     });
 }
 
@@ -385,7 +392,7 @@
         [weakSelf.blueCollecArr addObject:blue];
         
         [weakSelf.resultRandomArr addObject:randomStr];
-        weakSelf.headerView.prgressValue = (float)weakSelf.count /weakSelf.cycleCount;
+        weakSelf.headerView.prgressValue = (float)weakSelf.count /weakSelf.diyCycleCount;
     });
 }
 
@@ -607,10 +614,11 @@
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
-    _headerView.yxProbabilityRandomHVBlock = ^{
-      
+    _headerView.yxProbabilityRandomHVBlock = ^(NSInteger diyCount) {
+
+        weakSelf.diyCycleCount = diyCount == 0 ? kCycleCount : diyCount;
         [weakSelf initDataSource];
-        [weakSelf getRandomCollectionByCount:weakSelf.cycleCount];
+        [weakSelf getRandomCollectionByCount:weakSelf.diyCycleCount];
     };
     _headerView.yxProbabilityRandomHVEndBlock = ^{
       

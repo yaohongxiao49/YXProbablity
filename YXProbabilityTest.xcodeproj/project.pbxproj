@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -854,19 +854,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2HSQ24Z864;
+				DEVELOPMENT_TEAM = X5B3QS66Y3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXProbabilityTest",
 				);
 				INFOPLIST_FILE = YXProbabilityTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "来财";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yhx.YXProbabilityTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zcyc.YXProbabilityTest;
 				PRODUCT_NAME = "福利彩";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -878,19 +879,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2HSQ24Z864;
+				DEVELOPMENT_TEAM = X5B3QS66Y3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXProbabilityTest",
 				);
 				INFOPLIST_FILE = YXProbabilityTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "来财";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yhx.YXProbabilityTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zcyc.YXProbabilityTest;
 				PRODUCT_NAME = "福利彩";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

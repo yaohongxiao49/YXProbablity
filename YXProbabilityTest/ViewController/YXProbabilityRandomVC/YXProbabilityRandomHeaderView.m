@@ -8,6 +8,13 @@
 
 #import "YXProbabilityRandomHeaderView.h"
 
+@interface YXProbabilityRandomHeaderView () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *textfiled;
+@property (nonatomic, assign) NSInteger count;
+
+@end
+
 @implementation YXProbabilityRandomHeaderView
 
 #pragma mark - 更新开启按钮
@@ -28,13 +35,14 @@
 #pragma mark - 开启
 - (IBAction)progressStartBtn:(UIButton *)sender {
     
+    [self endEditing:YES];
     [self upDateOpenBtn:YES];
     
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         if (weakSelf.yxProbabilityRandomHVBlock) {
-            weakSelf.yxProbabilityRandomHVBlock();
+            weakSelf.yxProbabilityRandomHVBlock(weakSelf.count);
         }
     });
 }
@@ -52,6 +60,25 @@
     if (self.yxProbabilityRandomHVCompareBlock) {
         self.yxProbabilityRandomHVCompareBlock();
     }
+}
+
+#pragma mark - <UITextFieldDelegate>
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    return YES;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [self endEdit:textField];
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    [self endEdit:textField];
+}
+- (void)endEdit:(UITextField *)textField {
+    
+    self.count = [textField.text integerValue];
 }
 
 #pragma mark - setting
@@ -73,6 +100,8 @@
     self.progressView.progressViewStyle = UIProgressViewStyleDefault;
     self.progressView.progressTintColor = [UIColor orangeColor];
     self.progressView.progress = 0;
+    
+    self.textfiled.delegate = self;
 }
 
 @end

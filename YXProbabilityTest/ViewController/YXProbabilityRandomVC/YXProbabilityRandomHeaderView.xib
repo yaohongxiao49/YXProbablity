@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,7 +33,7 @@
                     </constraints>
                 </progressView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCA-mT-rED">
-                    <rect key="frame" x="187.5" y="46" width="39.5" height="21"/>
+                    <rect key="frame" x="231" y="46" width="39.333333333333314" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -57,6 +57,15 @@
                         <action selector="progressCompareBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="Zo3-Ci-WHH"/>
                     </connections>
                 </button>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="随机x组号码,默认随机一千万组号码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YPB-q3-dfM">
+                    <rect key="frame" x="15" y="44.666666666666664" width="200" height="23.999999999999993"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="CCD-Sl-V7K"/>
+                        <constraint firstAttribute="width" constant="200" id="MTH-re-y5p"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -65,13 +74,15 @@
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="top" secondItem="gbu-of-QKy" secondAttribute="top" id="8Ya-oB-pYI"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="leading" secondItem="DPs-XD-27y" secondAttribute="trailing" constant="15" id="Kxg-SP-zpH"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Oj0-IF-ZQJ"/>
-                <constraint firstItem="XCA-mT-rED" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PLr-T1-G8H"/>
+                <constraint firstItem="XCA-mT-rED" firstAttribute="leading" secondItem="YPB-q3-dfM" secondAttribute="trailing" constant="16" id="QHa-wK-w6z"/>
                 <constraint firstAttribute="trailing" secondItem="VKK-IZ-PL9" secondAttribute="trailing" constant="15" id="ayg-3t-Tu5"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="height" secondItem="gbu-of-QKy" secondAttribute="height" id="due-yv-S1e"/>
+                <constraint firstItem="XCA-mT-rED" firstAttribute="centerY" secondItem="YPB-q3-dfM" secondAttribute="centerY" id="eFb-1O-fCN"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="ekB-1M-9YU"/>
                 <constraint firstAttribute="bottom" secondItem="KEq-bJ-Nkm" secondAttribute="bottom" constant="20" id="mNy-9H-rnw"/>
                 <constraint firstItem="DPs-XD-27y" firstAttribute="centerY" secondItem="gbu-of-QKy" secondAttribute="centerY" id="oH4-sT-LIV"/>
                 <constraint firstItem="VKK-IZ-PL9" firstAttribute="width" secondItem="gbu-of-QKy" secondAttribute="width" id="q4w-w1-Jwo"/>
+                <constraint firstItem="KEq-bJ-Nkm" firstAttribute="leading" secondItem="YPB-q3-dfM" secondAttribute="leading" id="sRx-aa-zu1"/>
                 <constraint firstItem="KEq-bJ-Nkm" firstAttribute="top" secondItem="XCA-mT-rED" secondAttribute="bottom" constant="10" id="tAG-GK-V8d"/>
                 <constraint firstItem="gbu-of-QKy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="tVb-ll-Xjb"/>
             </constraints>
@@ -81,6 +92,7 @@
                 <outlet property="progressLab" destination="XCA-mT-rED" id="s8F-83-bdN"/>
                 <outlet property="progressView" destination="KEq-bJ-Nkm" id="YvM-Hg-U4X"/>
                 <outlet property="startBtn" destination="gbu-of-QKy" id="Sct-wR-hHz"/>
+                <outlet property="textfiled" destination="YPB-q3-dfM" id="9W3-s6-YFj"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
         </view>

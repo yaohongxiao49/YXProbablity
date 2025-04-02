@@ -77,6 +77,46 @@
     [_tableView.mj_footer endRefreshing];
 }
 
+#pragma mark - 基础信息提示
+- (void)basicAlertView:(void(^)(void))finishedBlock {
+    
+    __weak typeof(self) weakSelf = self;
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"需要往期数据参与计算时，需上拉加载更多数据，并进入图形化统计后才可准确使用" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [weakSelf removeAlertView:^{}];
+    }];
+    [sureAlertAction setValue:[UIColor redColor] forKey:@"titleTextColor"];
+    [alertVC addAction:sureAlertAction];
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+#pragma mark - 清除提示弹窗
+- (void)removeAlertView:(void(^)(void))finishedBlock {
+    
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否立即清除以往随机数据缓存" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *sureAlertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSString *path1 = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kRandomListArr];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path1]) {
+            [[NSFileManager defaultManager] removeItemAtPath:path1 error:nil];
+        }
+        
+        NSString *path2 = [NSString stringWithFormat:@"%@/%@", kYXToolLocalSaveDocDirectoryPath, kProbablityRandomListArr];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path2]) {
+            [[NSFileManager defaultManager] removeItemAtPath:path2 error:nil];
+        }
+    }];
+    [sureAlertAction setValue:[UIColor redColor] forKey:@"titleTextColor"];
+    [alertVC addAction:sureAlertAction];
+    
+    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+    [cancelAlertAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [alertVC addAction:cancelAlertAction];
+    
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
 #pragma mark - <UITableViewDataSource, UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -131,6 +171,8 @@
     [_tableView.mj_header beginRefreshing];
     
     _dataSourceArr = [YXProbabilityListArrModel arrayOfModelsFromDictionaries:[[YXProbabilityManager sharedManager] allArr]];
+    
+    [self basicAlertView:^{}];
 }
 
 @end

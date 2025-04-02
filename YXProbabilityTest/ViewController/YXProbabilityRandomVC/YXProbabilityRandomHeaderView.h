@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^YXProbabilityRandomHVBlock)(void);
+typedef void(^YXProbabilityRandomHVBlock)(NSInteger diyCount);
 typedef void(^YXProbabilityRandomHVEndBlock)(void);
 typedef void(^YXProbabilityRandomHVCompareBlock)(void);
 

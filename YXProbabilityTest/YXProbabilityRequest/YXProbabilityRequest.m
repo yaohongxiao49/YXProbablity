@@ -12,7 +12,7 @@
 
 + (void)getBallHistoryListByIssueCount:(NSInteger)issueCount successBlock:(requestSuccessBlock)successBlock failBlock:(requestFailureBlock)failBlock {
     
-    NSString *url = [NSString stringWithFormat:@"%@", @"http://www.cwl.gov.cn/cwl_admin/kjxx/findDrawNotice"];
+    NSString *url = [NSString stringWithFormat:@"%@", @"https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice"];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:@"ssq" forKey:@"name"];
     [params setObject:@(issueCount) forKey:@"issueCount"];

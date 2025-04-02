@@ -13,7 +13,7 @@
 #import "YXProbabilityManager.h"
 #import "YXProbabilityAllSecView.h"
 
-#define kCycleCount 50000000
+#define kCycleCount 10000000
 #define kCalculateCount 4
 
 /** 往上排查的期数 */
@@ -502,8 +502,8 @@
         _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
         _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
         _headerView.compareBtn.hidden = YES;
-        _headerView.yxProbabilityRandomHVBlock = ^{
-          
+        _headerView.yxProbabilityRandomHVBlock = ^(NSInteger diyCount) {
+            
             [weakSelf getRandomCollectionByCount:kCycleCount];
         };
         _headerView.yxProbabilityRandomHVEndBlock = ^{

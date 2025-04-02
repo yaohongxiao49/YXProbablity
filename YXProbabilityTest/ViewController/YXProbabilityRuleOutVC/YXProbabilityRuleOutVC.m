@@ -587,8 +587,8 @@
     
     _headerView = [[[NSBundle mainBundle] loadNibNamed:[YXProbabilityRandomHeaderView.class description] owner:self options:nil] lastObject];
     _headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
-    _headerView.yxProbabilityRandomHVBlock = ^{
-      
+    _headerView.yxProbabilityRandomHVBlock = ^(NSInteger diyCount) {
+        
         [weakSelf initDataSource];
         [weakSelf getRandomCollectionByCount:kCycleCount];
     };
